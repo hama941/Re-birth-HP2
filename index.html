@@ -3,40 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>便利屋サービス - 最短15分で駆けつけます</title>
+    <title>便利屋サービス総合案内</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
     
     <style>
         /* =========================================
-           1. 稼働状況ステータスバー (提供コード)
+           共通変数 & ベース
+           ========================================= */
+        :root {
+            --dark-blue: #00254d;
+            --primary-blue: #0056b3;
+            --accent-cyan: #0088ea;
+            --yellow: #ffeb00;
+            --green: #43a047;
+            --primary-pink: #ff8e8e;
+            --border-blue: #a3d5ff;
+            --bg-gray: #f9f9f9;
+            --icon-bg: rgba(255, 255, 255, 0.2);
+        }
+
+        body {
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            margin: 0; padding: 35px 0 120px 0; /* 上下バーの余白 */
+            background-color: #fff; color: #333; line-height: 1.6;
+        }
+
+        /* =========================================
+           1. 上部：稼働状況ステータスバー
            ========================================= */
         .status-bar {
             position: fixed; top: 0; left: 0; width: 100%; height: 35px;
             background-color: #000; color: #fff; font-weight: bold; font-size: 0.85rem;
-            z-index: 10000; overflow: hidden; display: flex; align-items: center; font-family: sans-serif;
+            z-index: 10000; overflow: hidden; display: flex; align-items: center;
         }
         .scroll-container { display: flex; white-space: nowrap; width: 100%; overflow: hidden; }
-        .scroll-content { display: flex; white-space: nowrap; width: max-content; will-change: transform; animation: scroll-left 20s linear infinite; }
+        .scroll-content { display: flex; width: max-content; animation: scroll-left 20s linear infinite; }
         @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-25%); } }
         .text-item { padding-right: 50px; display: flex; align-items: center; }
         .bar-highlight { color: #ffcc00; margin: 0 5px; }
 
         /* =========================================
-           共通ベース
-           ========================================= */
-        :root {
-            --primary-pink: #ff8e8e; --border-blue: #a3d5ff; --bg-gray: #f9f9f9;
-            --primary-blue: #0056b3; --accent-cyan: #0088ea; --main-yellow: #fff9c4;
-        }
-        body {
-            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-            margin: 0; padding-top: 35px; /* ステータスバーの高さ分 */
-            color: #333; line-height: 1.6;
-        }
-
-        /* =========================================
-           2. サービス紹介 (Case Cards)
+           2. サービス紹介 (Service Cards)
            ========================================= */
         .service-section { padding: 60px 20px; background-color: var(--bg-gray); }
         .service-container { max-width: 500px; margin: 0 auto; }
@@ -51,72 +59,99 @@
         .case-badge {
             position: absolute; top: 5px; left: -10px; background: #3a5b96; color: #fff;
             padding: 2px 15px; font-weight: bold; font-size: 12px; transform: rotate(-25deg);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2); z-index: 1;
+            z-index: 1; box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
-        .text-content .title { color: var(--primary-pink); font-size: 1.1rem; font-weight: bold; margin: 0; }
+        .text-content .title { color: var(--primary-pink); font-size: 1.1rem; font-weight: bold; }
         .text-content .price-display { color: var(--primary-pink); font-size: 1.4rem; font-weight: bold; }
 
         /* =========================================
-           3. 料金シミュレーション (Full Logic)
+           3. 料金シミュレーション (完全版)
            ========================================= */
-        .simulation-wrapper { background: linear-gradient(to bottom, #f0faff, #dcefff); padding: 80px 20px; }
-        .simulation-container { width: 100%; max-width: 900px; margin: 0 auto; }
+        .simulation-wrapper { background: linear-gradient(to bottom, #f0faff, #dcefff); padding: 50px 20px; display: flex; justify-content: center; }
+        .simulation-container { width: 100%; max-width: 900px; }
         .sim-header { text-align: center; margin-bottom: 25px; }
         .sim-main-title { font-size: 32px; font-weight: bold; color: #005691; text-shadow: 2px 2px 0px #fff; }
-        
-        .step-tabs { display: flex; width: 100%; border-radius: 5px 5px 0 0; overflow: hidden; }
-        .tab-item { flex: 1; padding: 15px 5px; text-align: center; font-weight: bold; font-size: 14px; color: #666; background-color: #aebdce; border-right: 1px solid #999; }
+        .step-tabs { display: flex; width: 100%; border-radius: 5px 5px 0 0; overflow: hidden; box-shadow: 0 -2px 5px rgba(0,0,0,0.05); }
+        .tab-item { flex: 1; padding: 15px 5px; text-align: center; font-weight: bold; font-size: 15px; color: #666; background-color: #aebdce; border-right: 1px solid #999; }
         .tab-item.active { background-color: #0088ea; color: #fff; }
         .tab-item.completed { background-color: #9ac6e8; color: #00406b; cursor: pointer; }
         .tab-item.result-btn { background-color: #fef29e; color: #e85a5a; font-weight: 900; }
         .tab-item.result-btn.ready { background-color: #ffeb3b; }
 
-        .content-box { background-color: #fff; border: 3px solid #0088ea; border-radius: 0 0 8px 8px; min-height: 400px; position: relative; }
-        .content-box.mode-result { border-color: var(--main-yellow); background-color: var(--main-yellow); }
-        .content-box.mode-form { border: 8px solid var(--main-yellow); }
-        
-        .selection-panel { padding: 30px 20px; text-align: center; display: none; }
+        .content-box { background-color: #fff; border: 3px solid #0088ea; border-radius: 0 0 8px 8px; min-height: 280px; position: relative; }
+        .content-box.mode-result { border-color: #fff9c4; background-color: #fff9c4; }
+        .content-box.mode-form { border: 8px solid #fff9c4; }
+
+        .selection-panel { padding: 30px 20px; text-align: center; display: none; animation: fadeIn 0.4s ease; }
         .active-panel { display: block !important; }
-        .box-title-sim { color: #005691; font-size: 18px; font-weight: bold; margin-bottom: 25px; }
-        
-        .options-grid { display: grid; gap: 15px; margin: 0 auto; }
+        .options-grid { display: grid; gap: 20px; max-width: 800px; margin: 0 auto; }
         .col-3 { grid-template-columns: repeat(3, 1fr); }
         .col-4 { grid-template-columns: repeat(4, 1fr); }
-        .option-btn { background-color: #fff; border: 1px solid #0088ea; border-radius: 50px; font-weight: bold; padding: 12px 5px; font-size: 14px; cursor: pointer; transition: 0.2s; }
+        .option-btn { background-color: #fff; border: 1px solid #0088ea; border-radius: 50px; font-weight: bold; padding: 15px 5px; font-size: 15px; cursor: pointer; transition: 0.2s; }
         .option-btn:hover { background-color: #eaf6ff; transform: translateY(-2px); box-shadow: 0 3px 6px rgba(0,0,0,0.1); }
         
-        /* 結果表示 */
         .result-panel-design { padding: 40px 20px; text-align: center; }
         .price-number { font-size: 56px; color: #ff5722; font-weight: 900; }
-        .call-number { display: block; font-size: 45px; font-weight: 900; color: #005691; text-decoration: none; margin: 20px 0; }
-        .detail-btn { background-color: #fff; border: 2px solid #4caf50; color: #4caf50; font-weight: bold; padding: 15px 40px; border-radius: 5px; font-size: 18px; cursor: pointer; }
+        .call-number-sim { display: block; font-size: 50px; font-weight: 900; color: #005691; text-decoration: none; margin: 15px 0; }
+        
+        /* シミュレーション内詳細フォーム */
+        .form-panel-design { padding: 30px 20px; }
+        .confirm-btn { background-color: #0088ea; color: #fff; padding: 12px; border-radius: 30px; text-align: center; font-weight: bold; margin-bottom: 10px; }
 
         /* =========================================
-           4. お客様の声 (Full 10 Reviews)
+           4. お客様の声 (Reviews Slider)
            ========================================= */
         #reviews-section { background-color: #f9f7f2; padding: 80px 0; overflow: hidden; }
         .slider-track { display: flex; width: max-content; animation: loop-scroll 70s linear infinite; }
         .review-card { flex: 0 0 350px; background: #fff; border-radius: 15px; padding: 25px; margin: 0 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.06); border: 1px solid #eee; }
-        .star-line { color: #f1c40f; font-size: 18px; }
-        .tag-svc { background: #2563eb; color: #fff; font-size: 10px; font-weight: bold; padding: 4px 10px; border-radius: 4px; }
-        .tag-loc { border: 1px solid #333; font-size: 10px; font-weight: bold; padding: 3px 10px; border-radius: 4px; margin-left: 5px; }
 
         /* =========================================
-           5. フッターお問い合わせフォーム (Full Fields)
+           5. 下部：ダイナミック固定バナー
            ========================================= */
-        .footer-form-section { background: linear-gradient(to bottom, #f0faff, #dcefff); padding: 80px 20px; display: flex; justify-content: center; }
-        .footer-form-box { background-color: #fff; border: 8px solid var(--main-yellow); border-radius: 10px; padding: 40px 30px; width: 100%; max-width: 800px; }
-        .form-group { margin-bottom: 20px; max-width: 500px; margin-left: auto; margin-right: auto; }
-        .form-label { display: block; font-weight: bold; margin-bottom: 8px; font-size: 14px; }
-        .badge-required { background-color: #f36e21; color: #fff; font-size: 11px; padding: 2px 6px; border-radius: 4px; margin-left: 8px; }
-        .form-input, .form-textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 16px; background-color: #f9f9f9; box-sizing: border-box;}
-        .submit-btn { background: linear-gradient(to bottom, #5cb1f7, #2d7cd1); color: #fff; font-size: 20px; font-weight: bold; border: none; padding: 15px 60px; border-radius: 8px; cursor: pointer; display: inline-flex; align-items: center; }
-        .submit-btn::after { content: "▶"; margin-left: 15px; }
+        .banner-fixed-container {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            z-index: 9999; filter: drop-shadow(0 -4px 6px rgba(0,0,0,0.1));
+        }
+        .banner-top-bar {
+            background-color: var(--dark-blue); color: white;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 8px 20px; font-weight: bold; font-size: 1rem;
+        }
+        .price-free-tag { background-color: var(--yellow); color: black; padding: 4px 15px; border-radius: 4px; }
+        .price-free-tag span { color: #e60012; font-weight: 900; font-size: 1.2rem; }
+
+        .main-action-button {
+            background: linear-gradient(to bottom, #4caf50, #2e7d32);
+            padding: 15px 20px 15px 110px; position: relative;
+            color: white; text-decoration: none; display: flex; flex-direction: column;
+            justify-content: center; min-height: 90px; border-bottom: 5px solid #1b5e20;
+        }
+        .action-main-text { font-size: 1.8rem; font-weight: bold; text-shadow: 1px 1px 3px rgba(0,0,0,0.3); }
+        .action-sub-text { font-size: 0.85rem; margin-bottom: 2px; }
+        .action-icon-badge {
+            position: absolute; left: 20px; top: 50%; transform: translateY(-50%);
+            width: 70px; height: 70px; background-color: var(--icon-bg);
+            border-radius: 50%; display: flex; justify-content: center; align-items: center;
+        }
+        .action-icon-badge svg { width: 40px; height: 40px; fill: white; }
+
+        /* =========================================
+           汎用パーツ & レスポンシブ
+           ========================================= */
+        .form-group { margin-bottom: 15px; max-width: 500px; margin-left: auto; margin-right: auto; }
+        .form-label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px; }
+        .form-input, .form-textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+        .submit-btn { background: linear-gradient(to bottom, #5cb1f7, #2d7cd1); color: #fff; font-size: 18px; font-weight: bold; border: none; padding: 12px 40px; border-radius: 8px; cursor: pointer; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         @media (max-width: 768px) {
             .col-4, .col-3 { grid-template-columns: repeat(2, 1fr); }
-            .price-number { font-size: 40px; }
-            .call-number { font-size: 30px; }
+            .sim-main-title { font-size: 22px; }
+            .call-number-sim { font-size: 32px; }
+            .main-action-button { padding-left: 85px; }
+            .action-main-text { font-size: 1.3rem; }
+            .action-icon-badge { width: 55px; height: 55px; }
         }
     </style>
 </head>
@@ -125,10 +160,10 @@
     <div class="status-bar">
         <div class="scroll-container">
             <div class="scroll-content">
-                <div class="text-item">【稼働状況】<span class="current-date"></span> <span class="current-time bar-highlight"></span> 現在 <span style="margin-left: 30px;" class="status-text bar-highlight"></span> <span class="arrival-msg">（最短15分で到着可能です！）</span></div>
-                <div class="text-item">【稼働状況】<span class="current-date"></span> <span class="current-time bar-highlight"></span> 現在 <span style="margin-left: 30px;" class="status-text bar-highlight"></span> <span class="arrival-msg">（最短15分で到着可能です！）</span></div>
-                <div class="text-item">【稼働状況】<span class="current-date"></span> <span class="current-time bar-highlight"></span> 現在 <span style="margin-left: 30px;" class="status-text bar-highlight"></span> <span class="arrival-msg">（最短15分で到着可能です！）</span></div>
-                <div class="text-item">【稼働状況】<span class="current-date"></span> <span class="current-time bar-highlight"></span> 現在 <span style="margin-left: 30px;" class="status-text bar-highlight"></span> <span class="arrival-msg">（最短15分で到着可能です！）</span></div>
+                <div class="text-item">【稼働状況】<span class="current-date"></span> <span class="current-time bar-highlight"></span> 現在 <span class="status-text bar-highlight"></span> <span class="arrival-msg">（最短15分で到着可能です！）</span></div>
+                <div class="text-item">【稼働状況】<span class="current-date"></span> <span class="current-time bar-highlight"></span> 現在 <span class="status-text bar-highlight"></span> <span class="arrival-msg">（最短15分で到着可能です！）</span></div>
+                <div class="text-item">【稼働状況】<span class="current-date"></span> <span class="current-time bar-highlight"></span> 現在 <span class="status-text bar-highlight"></span> <span class="arrival-msg">（最短15分で到着可能です！）</span></div>
+                <div class="text-item">【稼働状況】<span class="current-date"></span> <span class="current-time bar-highlight"></span> 現在 <span class="status-text bar-highlight"></span> <span class="arrival-msg">（最短15分で到着可能です！）</span></div>
             </div>
         </div>
     </div>
@@ -137,35 +172,29 @@
         <div class="service-container">
             <div class="service-card">
                 <div class="image-container"><div class="case-badge">CASE01</div><img src="https://via.placeholder.com/150" alt="不用品"></div>
-                <div class="text-content"><h3 class="title">不用品回収</h3><div class="price-display">5,000円～</div><p class="description">一点から回収。分別不要でお任せください。</p></div>
+                <div class="text-content"><h3 class="title">不用品回収</h3><div class="price-display">5,000円～</div><p>一点から回収。分別不要でお任せください。</p></div>
             </div>
             <div class="service-card">
                 <div class="image-container"><div class="case-badge">CASE02</div><img src="https://via.placeholder.com/150" alt="引越し"></div>
-                <div class="text-content"><h3 class="title">お引っ越し</h3><div class="price-display">20,000円～</div><p class="description">単身から家族まで。配置換えも承ります。</p></div>
-            </div>
-            <div class="service-card">
-                <div class="image-container"><div class="case-badge">CASE03</div><img src="https://via.placeholder.com/150" alt="遺品"></div>
-                <div class="text-content"><h3 class="title">遺品整理</h3><div class="price-display">30,000円～</div><p class="description">大切な思い出を丁寧に。資格者が対応します。</p></div>
-            </div>
-            <div class="service-card">
-                <div class="image-container"><div class="case-badge">CASE04</div><img src="https://via.placeholder.com/150" alt="草刈り"></div>
-                <div class="text-content"><h3 class="title">草刈り・庭手入れ</h3><div class="price-display">5,000円～</div><p class="description">枝切りや雑草対策など。定期管理も可能です。</p></div>
+                <div class="text-content"><h3 class="title">お引っ越し</h3><div class="price-display">20,000円～</div><p>単身から家族まで。家具移動も承ります。</p></div>
             </div>
         </div>
     </section>
 
-    <div class="simulation-wrapper">
+    <div class="simulation-wrapper" id="simulation-section">
         <div class="simulation-container">
             <div class="sim-header">
                 <div class="sim-sub-title">簡単10秒！</div>
                 <h2 class="sim-main-title">便利屋料金シミュレーション</h2>
             </div>
+
             <div class="step-tabs">
-                <div id="tab-1" class="tab-item active" onclick="jumpToStep(1)">依頼内容</div>
-                <div id="tab-2" class="tab-item" onclick="jumpToStep(2)">作業場所</div>
-                <div id="tab-3" class="tab-item" onclick="jumpToStep(3)">物件の種類</div>
+                <div id="tab-1" class="tab-item active" data-default="依頼内容" onclick="jumpToStep(1)">依頼内容</div>
+                <div id="tab-2" class="tab-item" data-default="作業場所" onclick="jumpToStep(2)">作業場所</div>
+                <div id="tab-3" class="tab-item" data-default="物件の種類" onclick="jumpToStep(3)">物件の種類</div>
                 <div id="tab-result" class="tab-item result-btn">結果をみる</div>
             </div>
+
             <div id="main-content-box" class="content-box">
                 <div id="panel-1" class="step-panel active-panel selection-panel">
                     <div class="box-title-sim">お困りごとの種類を選択してください。</div>
@@ -178,6 +207,7 @@
                         <button class="option-btn" onclick="nextStep(1, 'その他')">その他</button>
                     </div>
                 </div>
+
                 <div id="panel-2" class="step-panel selection-panel">
                     <div class="box-title-sim">作業場所はどこですか？</div>
                     <div class="options-grid col-4">
@@ -190,8 +220,9 @@
                         <button class="option-btn" onclick="nextStep(2, '家全体')">家全体</button>
                         <button class="option-btn" onclick="nextStep(2, 'その他')">その他</button>
                     </div>
-                    <button class="back-btn" onclick="jumpToStep(1)" style="margin-top:20px;">前に戻る</button>
+                    <button class="option-btn" style="margin-top:20px; background:#eee;" onclick="jumpToStep(1)">前に戻る</button>
                 </div>
+
                 <div id="panel-3" class="step-panel selection-panel">
                     <div class="box-title-sim">物件の種類を選択してください。</div>
                     <div class="options-grid col-3">
@@ -202,22 +233,29 @@
                         <button class="option-btn" onclick="finishStep('ビル・施設')">ビル・施設</button>
                         <button class="option-btn" onclick="finishStep('その他')">その他</button>
                     </div>
-                    <button class="back-btn" onclick="jumpToStep(2)" style="margin-top:20px;">前に戻る</button>
+                    <button class="option-btn" style="margin-top:20px; background:#eee;" onclick="jumpToStep(2)">前に戻る</button>
                 </div>
+
                 <div id="panel-result" class="step-panel result-panel-design">
                     <p>お見積もり目安は...</p>
-                    <div class="result-price"><span id="price-value" class="price-number">2,980</span><span style="font-size:24px; color:#ff5722;">円～</span></div>
+                    <div class="result-price">
+                        <span id="price-value" class="price-number">2,980</span><span style="font-size:24px; color:#ff5722;">円～</span>
+                    </div>
                     <p style="color:red; font-weight:bold;">「ホームページ見た！」で初回割引！</p>
-                    <a href="tel:0000000000" class="call-number">000-0000-0000</a>
-                    <button class="detail-btn" onclick="showSimForm()">より詳細な見積もりを依頼</button>
+                    <a href="tel:0000000000" class="call-number-sim">000-0000-0000</a>
+                    <button class="submit-btn" style="background:#4caf50;" onclick="showSimForm()">より詳細な見積もりを確認</button>
                 </div>
-                <div id="panel-sim-form" class="step-panel selection-panel" style="text-align:left;">
-                    <div class="box-title-sim" style="text-align:center;">お客様情報の入力</div>
-                    <div class="form-group"><label class="form-label">お名前<span class="badge-required">必須</span></label><input type="text" class="form-input" placeholder="山田花子"></div>
-                    <div class="form-group"><label class="form-label">電話番号<span class="badge-required">必須</span></label><input type="tel" class="form-input" placeholder="000-0000-0000"></div>
-                    <div class="form-group"><label class="form-label">具体的な内容</label><textarea class="form-textarea" placeholder="詳細な状況をご記入ください"></textarea></div>
+
+                <div id="panel-form" class="step-panel form-panel-design">
+                    <div style="text-align:center; margin-bottom:20px;">
+                        <div id="conf-type" class="confirm-btn">依頼内容</div>
+                        <div id="conf-place" class="confirm-btn">場所</div>
+                        <div id="conf-building" class="confirm-btn">物件</div>
+                    </div>
+                    <div class="form-group"><label class="form-label">お名前</label><input type="text" class="form-input" placeholder="例：山田花子"></div>
+                    <div class="form-group"><label class="form-label">電話番号</label><input type="tel" class="form-input" placeholder="000-0000-0000"></div>
                     <div style="text-align:center;"><button class="submit-btn" onclick="alert('送信しました')">送信する</button></div>
-                    <div style="text-align:center; margin-top:15px;"><button onclick="goBackToResult()">戻る</button></div>
+                    <div style="text-align:center; margin-top:10px;"><button onclick="goBackToResult()">戻る</button></div>
                 </div>
             </div>
         </div>
@@ -225,109 +263,131 @@
 
     <section id="reviews-section">
         <h2 style="text-align:center; margin-bottom:40px;">お客様からの喜びの声</h2>
-        <div class="slider-viewport">
-            <div class="slider-track">
-                <div class="review-card">
-                    <div class="user-header">👤 50代 男性<div class="star-line">★★★★★</div></div>
-                    <div style="margin-bottom:10px;"><span class="tag-svc">不用品回収</span><span class="tag-loc">大阪市</span></div>
-                    <h3 style="font-size:16px;">引越し前日のゴミを即回収！</h3>
-                    <p style="font-size:13px;">片付けが間に合わず途方に暮れていましたが、即座に駆けつけてくれました。</p>
-                </div>
-                <div class="review-card">
-                    <div class="user-header">👤 60代 女性<div class="star-line">★★★★★</div></div>
-                    <div><span class="tag-svc">庭の草むしり</span><span class="tag-loc">西宮市</span></div>
-                    <h3 style="font-size:16px;">腰を痛めていたので助かりました</h3>
-                    <p style="font-size:13px;">自分では無理な広さでしたが、一日で綺麗に。アドバイスも感謝です。</p>
-                </div>
-                <div class="review-card">
-                    <div class="user-header">👤 30代 女性<div class="star-line">★★★★★</div></div>
-                    <div><span class="tag-svc">家具組み立て</span><span class="tag-loc">京都市</span></div>
-                    <h3 style="font-size:16px;">大型家具もあっという間</h3>
-                    <p style="font-size:13px;">IKEAの大きな棚でしたが、手際よく完成。ゴミも持ち帰ってくれました。</p>
-                </div>
-                <div class="review-card">
-                    <div class="user-header">👤 50代 男性<div class="star-line">★★★★★</div></div>
-                    <div style="margin-bottom:10px;"><span class="tag-svc">不用品回収</span><span class="tag-loc">大阪市</span></div>
-                    <h3 style="font-size:16px;">引越し前日のゴミを即回収！</h3>
-                    <p style="font-size:13px;">片付けが間に合わず途方に暮れていましたが、即座に駆けつけてくれました。</p>
-                </div>
-                <div class="review-card">
-                    <div class="user-header">👤 60代 女性<div class="star-line">★★★★★</div></div>
-                    <div><span class="tag-svc">庭の草むしり</span><span class="tag-loc">西宮市</span></div>
-                    <h3 style="font-size:16px;">腰を痛めていたので助かりました</h3>
-                    <p style="font-size:13px;">自分では無理な広さでしたが、一日で綺麗に。アドバイスも感謝です。</p>
-                </div>
+        <div class="slider-track">
+            <div class="review-card">
+                <div style="color:#f1c40f;">★★★★★</div>
+                <h3 style="font-size:16px;">即座に解決してくれました！</h3>
+                <p style="font-size:13px; color:#666;">急な不用品回収でしたが、連絡したその日に来ていただけて本当に助かりました。</p>
+            </div>
+            <div class="review-card">
+                <div style="color:#f1c40f;">★★★★★</div>
+                <h3 style="font-size:16px;">丁寧な作業に感謝です</h3>
+                <p style="font-size:13px; color:#666;">庭の草むしりをお願いしました。隅々まで綺麗にしていただき、大満足です。</p>
+            </div>
+            <div class="review-card">
+                <div style="color:#f1c40f;">★★★★★</div>
+                <h3 style="font-size:16px;">即座に解決してくれました！</h3>
+                <p style="font-size:13px; color:#666;">急な不用品回収でしたが、連絡したその日に来ていただけて本当に助かりました。</p>
             </div>
         </div>
     </section>
 
-    <section class="footer-form-section">
-        <div class="footer-form-box">
-            <h2 style="text-align:center; color:#005691;">お問い合わせフォーム</h2>
-            <form onsubmit="event.preventDefault(); alert('送信しました');">
-                <div class="form-group"><label class="form-label">お名前<span class="badge-required">必須</span></label><input type="text" class="form-input" required></div>
-                <div class="form-group"><label class="form-label">電話番号<span class="badge-required">必須</span></label><input type="tel" class="form-input" required></div>
-                <div class="form-group"><label class="form-label">住所<span class="badge-required">必須</span></label><input type="text" class="form-input" required></div>
-                <div class="form-group"><label class="form-label">メールアドレス<span class="badge-required">必須</span></label><input type="email" class="form-input" required></div>
-                <div class="form-group"><label class="form-label">内容<span class="badge-required">必須</span></label><textarea class="form-textarea" required></textarea></div>
-                <div style="text-align:center; margin-top:30px;"><button type="submit" class="submit-btn">送信する</button></div>
-            </form>
+    <div class="banner-fixed-container">
+        <div class="banner-top-bar">
+            <div>Webからは24時間受付中！</div>
+            <div class="price-free-tag">出張費/見積り <span>0円</span></div>
         </div>
-    </section>
+        <a href="#" id="dynamic-contact-link" class="main-action-button">
+            <div id="dynamic-icon-container" class="action-icon-badge"></div>
+            <div>
+                <span id="dynamic-status-msg" class="action-sub-text">読み込み中...</span>
+                <div id="dynamic-btn-text" class="action-main-text">お問い合わせ</div>
+            </div>
+        </a>
+    </div>
 
     <script>
-        // --- 1. ステータスバーの更新スクリプト ---
-        function updateStatusBar() {
+        // --- アイコン定義 ---
+        const phoneIcon = '<svg viewBox="0 0 24 24"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.994.994 0 0 0-1.01.24l-2.2 2.2a15.05 15.05 0 0 1-6.59-6.59l2.2-2.21c.28-.26.36-.65.25-1.01A11.36 11.36 0 0 1 8.5 3.99c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/></svg>';
+        const mailIcon = '<svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>';
+
+        // --- 時間連動アップデート ---
+        function updateGlobalStatus() {
             const now = new Date();
-            const dateStr = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日`;
-            const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+            const hour = now.getHours();
+            const isBusinessTime = (hour >= 10 && hour < 20); // 10:00-19:59
+
+            // 1. 上部ステータスバー
+            const dateStr = `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日`;
+            const timeStr = `${String(hour).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
             document.querySelectorAll('.current-date').forEach(el => el.textContent = dateStr);
             document.querySelectorAll('.current-time').forEach(el => el.textContent = timeStr);
-            const isOpen = (now.getHours() >= 10 && now.getHours() < 20);
-            document.querySelectorAll('.status-text').forEach(el => el.textContent = isOpen ? "受付可能！" : "メール受付中");
-            document.querySelectorAll('.arrival-msg').forEach(el => el.style.display = isOpen ? "inline" : "none");
-        }
-        updateStatusBar(); setInterval(updateStatusBar, 60000);
+            document.querySelectorAll('.status-text').forEach(el => el.textContent = isBusinessTime ? "受付可能！" : "メール受付中");
+            document.querySelectorAll('.arrival-msg').forEach(el => el.style.display = isBusinessTime ? "inline" : "none");
 
-        // --- 2. 料金シミュレーションのスクリプト ---
-        let category = '';
+            // 2. 下部固定バナー
+            const statusMsg = document.getElementById('dynamic-status-msg');
+            const btnText = document.getElementById('dynamic-btn-text');
+            const link = document.getElementById('dynamic-contact-link');
+            const iconWrap = document.getElementById('dynamic-icon-container');
+
+            if (isBusinessTime) {
+                statusMsg.textContent = "お電話での受付時間内です。お気軽におかけください。";
+                btnText.textContent = "お電話でお問い合わせ";
+                iconWrap.innerHTML = phoneIcon;
+                link.href = "tel:0120000000";
+            } else {
+                statusMsg.textContent = "現在お電話は受付時間外です。フォームよりご連絡ください。";
+                btnText.textContent = "メールでお問い合わせ";
+                iconWrap.innerHTML = mailIcon;
+                link.href = "#simulation-section";
+            }
+        }
+
+        // --- 料金シミュレーションロジック ---
+        let selCat = '', selPlace = '', selBuild = '';
+
         function jumpToStep(step) {
             document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active-panel'));
             document.getElementById('panel-' + step).classList.add('active-panel');
-            document.querySelectorAll('.tab-item').forEach((t, i) => {
-                t.classList.remove('active', 'completed');
-                if(i+1 < step) t.classList.add('completed');
-                if(i+1 === step) t.classList.add('active');
+            
+            document.querySelectorAll('.tab-item').forEach((tab, i) => {
+                tab.classList.remove('active', 'completed');
+                if (i + 1 < step) tab.classList.add('completed');
+                if (i + 1 === step) tab.classList.add('active');
             });
-            const box = document.getElementById('main-content-box');
-            box.classList.remove('mode-result', 'mode-form');
+            document.getElementById('main-content-box').classList.remove('mode-result', 'mode-form');
         }
-        function nextStep(current, text) {
-            if(current === 1) category = text;
-            document.getElementById('tab-' + current).innerText = text;
-            jumpToStep(current + 1);
+
+        function nextStep(step, text) {
+            if(step === 1) selCat = text;
+            if(step === 2) selPlace = text;
+            document.getElementById('tab-' + step).innerText = text;
+            jumpToStep(step + 1);
         }
+
         function finishStep(text) {
+            selBuild = text;
             document.getElementById('tab-3').innerText = text;
-            let p = ['家具の組み立て', '掃除・片付け', '住まいの修繕'].includes(category) ? '2,980' : '4,980';
-            document.getElementById('price-value').innerText = p;
+            let price = (['家具の組み立て', '掃除・片付け', '住まいの修繕'].includes(selCat)) ? '2,980' : '4,980';
+            document.getElementById('price-value').innerText = price;
+            
             document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active-panel'));
             document.getElementById('panel-result').classList.add('active-panel');
             document.getElementById('tab-result').classList.add('ready');
             document.getElementById('main-content-box').classList.add('mode-result');
         }
+
         function showSimForm() {
             document.getElementById('panel-result').classList.remove('active-panel');
-            document.getElementById('panel-sim-form').classList.add('active-panel');
+            document.getElementById('panel-form').classList.add('active-panel');
             document.getElementById('main-content-box').classList.remove('mode-result');
             document.getElementById('main-content-box').classList.add('mode-form');
+            document.getElementById('conf-type').innerText = selCat;
+            document.getElementById('conf-place').innerText = selPlace;
+            document.getElementById('conf-building').innerText = selBuild;
         }
+
         function goBackToResult() {
-            document.getElementById('panel-sim-form').classList.remove('active-panel');
+            document.getElementById('panel-form').classList.remove('active-panel');
             document.getElementById('panel-result').classList.add('active-panel');
-            document.getElementById('main-content-box').classList.add('mode-result');
             document.getElementById('main-content-box').classList.remove('mode-form');
+            document.getElementById('main-content-box').classList.add('mode-result');
         }
+
+        // 起動
+        updateGlobalStatus();
+        setInterval(updateGlobalStatus, 60000);
     </script>
 </body>
 </html>
