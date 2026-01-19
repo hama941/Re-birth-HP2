@@ -25,9 +25,6 @@
             --main-color: #ff9800;
             --text-dark: #333;
             --dark-blue: #00254d;
-            --yellow: #ffeb00;
-            --green: #43a047;
-            --icon-bg: rgba(255, 255, 255, 0.2);
         }
 
         body {
@@ -399,105 +396,51 @@
         .review-p { font-size: 14px; line-height: 1.7; color: #555; margin: 0; }
 
         /* =========================================
-           5. 動的バナー CSS
+           5. お問い合わせフォーム CSS
            ========================================= */
-        .banner-wrapper {
-            background-color: #fff;
-            padding: 40px 20px;
-            /* フッター直前の強調エリアとして配置 */
+        .footer-form-section {
+            background: linear-gradient(to bottom, #f0faff, #dcefff);
+            padding: 50px 20px;
+            display: flex;
+            justify-content: center;
         }
 
-        .banner-container {
+        .footer-form-container {
+            width: 100%;
             max-width: 800px;
-            margin: 0 auto;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
         }
 
-        .top-bar {
-            background-color: var(--dark-blue);
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-
-        .price-free {
-            background-color: var(--yellow);
-            color: black;
-            padding: 5px 15px;
-            font-size: 1.2rem;
-        }
-        .price-free span {
-            color: #e60012;
-            font-size: 1.4rem;
-        }
-
-        .main-button {
-            background: linear-gradient(to bottom, #4caf50, #2e7d32);
-            border-radius: 0 0 15px 15px;
-            padding: 20px 20px 20px 120px;
-            position: relative;
+        .footer-form-box {
+            background-color: #fff;
+            border: 8px solid #fff9c4;
+            border-radius: 10px;
+            padding: 40px 30px;
+            width: 100%;
             text-align: left;
-            color: white;
-            text-decoration: none;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            min-height: 100px;
-            margin-top: -1px;
-            border-bottom: 5px solid #1b5e20;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-sizing: border-box;
         }
 
-        .sub-text {
-            font-size: 0.9rem;
-            margin-bottom: 5px;
-            display: block;
-            line-height: 1.4;
+        .footer-form-title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: 900;
+            color: #005691;
+            margin: 0 0 40px 0;
+            padding-bottom: 15px;
+            border-bottom: 2px dashed #ddd;
         }
 
-        .main-text {
-            font-size: 2.2rem;
-            font-weight: bold;
-            letter-spacing: 1px;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
-        }
+        /* フォーム要素はシミュレーションと共通クラスを使用 */
 
-        .icon-badge {
-            position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 80px;
-            height: 80px;
-            background-color: var(--icon-bg);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .icon-badge svg {
-            width: 50px;
-            height: 50px;
-            fill: white;
-        }
-
-        @media (max-width: 600px) {
-            .main-button {
-                padding-left: 90px;
-                min-height: 80px;
+        @media (max-width: 768px) {
+            .footer-form-box {
+                padding: 30px 15px;
             }
-            .main-text { font-size: 1.5rem; }
-            .sub-text { font-size: 0.75rem; }
-            .icon-badge { width: 60px; height: 60px; left: 15px; }
-            .icon-badge svg { width: 35px; height: 35px; }
-            .top-bar { font-size: 0.8rem; padding: 8px 10px; }
-            .price-free { font-size: 0.9rem; padding: 4px 10px; }
+            .footer-form-title {
+                font-size: 20px;
+            }
         }
-
     </style>
 </head>
 <body>
@@ -753,23 +696,47 @@
         </div>
     </section>
 
-    <section class="banner-wrapper">
-        <div class="banner-container">
-            <div class="top-bar">
-                <div>Webからは24時間受付中！</div>
-                <div class="price-free">出張費/見積り <span>0円</span></div>
-            </div>
-
-            <a href="#" id="contact-link" class="main-button">
-                <div id="icon-container" class="icon-badge"></div>
+    <section class="footer-form-section" id="contact-form-area">
+        <div class="footer-form-container">
+            <div class="footer-form-box">
+                <h1 class="footer-form-title">お問い合わせフォーム</h1>
                 
-                <div>
-                    <span id="status-message" class="sub-text">読み込み中...</span>
-                    <div id="button-text" class="main-text">お問い合わせ</div>
-                </div>
-            </a>
+                <form action="" method="post" onsubmit="event.preventDefault(); alert('送信完了しました（デモ）');">
+                    
+                    <div class="form-group-sim">
+                        <label class="form-label">お名前<span class="badge badge-required">必須</span></label>
+                        <input type="text" class="form-input" placeholder="例：山田花子" required>
+                    </div>
+
+                    <div class="form-group-sim">
+                        <label class="form-label">電話番号<span class="badge badge-required">必須</span></label>
+                        <input type="tel" class="form-input" placeholder="000-000-0000" required>
+                    </div>
+
+                    <div class="form-group-sim">
+                        <label class="form-label">住所<span class="badge badge-required">必須</span></label>
+                        <input type="text" class="form-input" placeholder="住所を入力してください" required>
+                    </div>
+
+                    <div class="form-group-sim">
+                        <label class="form-label">メールアドレス<span class="badge badge-required">必須</span></label>
+                        <input type="email" class="form-input" placeholder="abc@abc.com" required>
+                    </div>
+
+                    <div class="form-group-sim">
+                        <label class="form-label">お問い合わせ内容<span class="badge badge-required">必須</span></label>
+                        <textarea class="form-textarea" placeholder="お問い合わせ内容を入力してください" required></textarea>
+                    </div>
+
+                    <div class="submit-area">
+                        <button type="submit" class="submit-btn">送信する</button>
+                    </div>
+
+                </form>
+            </div>
         </div>
     </section>
+
 
     <script>
         /* --- ステータスバー用スクリプト --- */
@@ -925,40 +892,10 @@
             document.getElementById('panel-result').classList.add('active-panel');
         }
 
-        /* --- 動的バナー用スクリプト --- */
-        const phoneIcon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.994.994 0 0 0-1.01.24l-2.2 2.2a15.05 15.05 0 0 1-6.59-6.59l2.2-2.21c.28-.26.36-.65.25-1.01A11.36 11.36 0 0 1 8.5 3.99c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/></svg>';
-        const mailIcon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>';
-
-        function updateBanner() {
-            const now = new Date();
-            const hour = now.getHours();
-            
-            const statusMsg = document.getElementById('status-message');
-            const btnText = document.getElementById('button-text');
-            const contactLink = document.getElementById('contact-link');
-            const iconContainer = document.getElementById('icon-container');
-
-            // 10時から20時（19:59まで）の間：電話モード
-            if (hour >= 10 && hour < 20) {
-                statusMsg.textContent = "お電話での受付時間内です。お気軽におかけください。";
-                btnText.textContent = "お電話でお問い合わせ";
-                iconContainer.innerHTML = phoneIcon; 
-                contactLink.href = "tel:0120000000"; 
-            } else {
-                // 時間外：メールモード
-                statusMsg.textContent = "現在はお電話での受付時間外です。フォームよりお問い合わせください。";
-                btnText.textContent = "メールでお問い合わせ";
-                iconContainer.innerHTML = mailIcon; 
-                // フッターフォームが削除されたため、シミュレーションエリアへリンク
-                contactLink.href = "#simulation-section"; 
-            }
-        }
-
         /* --- ページ読み込み時の実行 --- */
         window.onload = function() {
             updateStatusBarDateTime();
             setInterval(updateStatusBarDateTime, 60000);
-            updateBanner();
         };
     </script>
 </body>
