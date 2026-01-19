@@ -2,178 +2,189 @@
     /* --- レビューセクション全体の調整 --- */
     #reviews-section {
         background-color: #f9f7f2;
-        padding: 80px 0;
-        overflow: hidden;
+        padding: 60px 0;
+        font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
     }
 
-    /* --- スライダーの外枠 --- */
-    .review-slider-viewport {
-        width: 100%;
-        overflow: hidden;
-        position: relative;
+    .section-title {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #333;
+        font-size: 28px;
+        font-weight: 900;
+        padding: 0 20px;
     }
 
-    /* --- 横に並ぶカードの入れ物（アニメーション） --- */
-    .review-slider-track {
+    /* --- タッチスクロールコンテナ --- */
+    .review-scroll-wrapper {
         display: flex;
-        width: max-content;
-        /* カード枚数に合わせて速度を調整（60秒で一周） */
-        animation: slide-reviews 60s linear infinite;
+        overflow-x: auto; /* 横スクロールを許可 */
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch; /* iOSの慣性スクロール */
+        scroll-snap-type: x mandatory; /* スクロールが止まる位置を固定 */
+        padding: 20px 20px 40px;
+        gap: 20px; /* カード間の隙間 */
+        scrollbar-width: none; /* Firefox用：スクロールバー非表示 */
     }
 
-    /* マウスホバーで停止 */
-    .review-slider-track:hover {
-        animation-play-state: paused;
+    /* Chrome, Safari用：スクロールバー非表示 */
+    .review-scroll-wrapper::-webkit-scrollbar {
+        display: none;
     }
 
-    @keyframes slide-reviews {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(-50%); } /* 2セット用意するので半分でループ */
-    }
-
-    /* --- カードのスタイル --- */
+    /* --- 各レビューカード --- */
     .review-card {
+        flex: 0 0 320px; /* カードの幅を固定 */
         background: #fff;
         border-radius: 15px;
-        padding: 30px;
-        width: 400px;
-        margin: 0 20px;
-        box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-        flex-shrink: 0;
+        padding: 25px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        scroll-snap-align: center; /* カードが中央で止まるようにする */
         border: 1px solid #eee;
+        display: flex;
+        flex-direction: column;
     }
 
-    .review-user-info { display: flex; align-items: center; margin-bottom: 15px; }
-    .user-avatar { width: 55px; height: 55px; border-radius: 50%; margin-right: 15px; display: flex; align-items: center; justify-content: center; font-size: 28px; }
-    .user-meta { font-size: 14px; color: #666; font-weight: bold; }
-    .stars { color: #f1c40f; font-size: 20px; margin-top: 2px; }
-
-    .service-tags { display: flex; gap: 10px; margin-bottom: 15px; }
-    .tag-service { background: #2563eb; color: #fff; font-size: 11px; font-weight: bold; padding: 4px 12px; border-radius: 4px; }
-    .tag-area { border: 1px solid #333; color: #333; font-size: 11px; font-weight: bold; padding: 3px 12px; border-radius: 4px; }
-
-    .review-title { font-size: 19px; font-weight: bold; line-height: 1.5; margin-bottom: 12px; color: #333; border-bottom: 1px dashed #ddd; padding-bottom: 10px; }
-    .review-text { font-size: 15px; line-height: 1.8; color: #555; margin: 0; }
-
+    /* モバイルでの見え方調整：カードの端を少し見せて「スクロールできる感」を出す */
     @media (max-width: 600px) {
-        .review-card { width: 320px; padding: 20px; }
-        .review-title { font-size: 17px; }
+        .review-card {
+            flex: 0 0 85%; /* 画面の85%の幅に設定 */
+        }
+    }
+
+    .user-info { display: flex; align-items: center; margin-bottom: 15px; }
+    .avatar { width: 50px; height: 50px; border-radius: 50%; margin-right: 15px; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+    .meta-text { font-size: 13px; color: #666; font-weight: bold; }
+    .star-rating { color: #f1c40f; font-size: 18px; margin-top: 2px; }
+
+    .tag-container { display: flex; gap: 8px; margin-bottom: 12px; }
+    .svc-tag { background: #2563eb; color: #fff; font-size: 11px; font-weight: bold; padding: 3px 10px; border-radius: 4px; }
+    .loc-tag { border: 1px solid #333; color: #333; font-size: 11px; font-weight: bold; padding: 2px 10px; border-radius: 4px; }
+
+    .review-h3 { font-size: 17px; font-weight: bold; line-height: 1.5; margin: 0 0 10px 0; color: #333; height: 3em; display: flex; align-items: center; }
+    .review-p { font-size: 14px; line-height: 1.7; color: #555; margin: 0; }
+
+    /* 操作ガイド（スワイプしてねのアイコン） */
+    .swipe-guide {
+        text-align: center;
+        color: #999;
+        font-size: 12px;
+        margin-top: -10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
     }
 </style>
 
 <section id="reviews-section">
-    <h2 style="text-align: center; margin-bottom: 50px; color: #333; font-size: 32px; font-weight: 900;">お客様からの喜びの声</h2>
+    <h2 class="section-title">お客様からの喜びの声</h2>
     
-    <div class="review-slider-viewport">
-        <div class="review-slider-track">
-            
-            <div class="review-card">
-                <div class="review-user-info">
-                    <div class="user-avatar" style="background:#e0e0e0;">👤</div>
-                    <div class="user-meta">50代 男性（持ち家）<div class="stars">★★★★★</div></div>
-                </div>
-                <div class="service-tags"><span class="tag-service">不用品回収</span><span class="tag-area">大阪府大阪市</span></div>
-                <h3 class="review-title">引越し前日の大量ゴミを即回収！</h3>
-                <p class="review-text">片付けが間に合わずパニックでしたが、電話一本でその日に来てくれました。重い家電もテキパキ運んでくださり、本当に助かりました。</p>
+    <div class="review-scroll-wrapper">
+        
+        <div class="review-card">
+            <div class="user-info">
+                <div class="avatar" style="background:#e0e0e0;">👤</div>
+                <div class="meta-text">50代 男性（持ち家）<div class="star-rating">★★★★★</div></div>
             </div>
-
-            <div class="review-card">
-                <div class="review-user-info">
-                    <div class="user-avatar" style="background:#e8f5e9;">👤</div>
-                    <div class="user-meta">60代 女性（主婦）<div class="stars">★★★★★</div></div>
-                </div>
-                <div class="service-tags"><span class="tag-service">お庭の草むしり</span><span class="tag-area">兵庫県西宮市</span></div>
-                <h3 class="review-title">腰を痛めていたので、本当に救われました</h3>
-                <p class="review-text">荒れ放題だった庭が1日でピカピカに。除草剤の散布も提案していただき、その後の手入れが劇的に楽になりました。またお願いします。</p>
-            </div>
-
-            <div class="review-card">
-                <div class="review-user-info">
-                    <div class="user-avatar" style="background:#fce4ec;">👤</div>
-                    <div class="user-meta">30代 女性（一人暮らし）<div class="stars">★★★★★</div></div>
-                </div>
-                <div class="service-tags"><span class="tag-service">家具組み立て</span><span class="tag-area">京都府京都市</span></div>
-                <h3 class="review-title">複雑な大型家具もあっという間に完成</h3>
-                <p class="review-text">ネットで買った棚が難解すぎて断念。プロに頼んだら1時間足らずで完成させてくれました。梱包ゴミも持ち帰ってくれて大満足です。</p>
-            </div>
-
-            <div class="review-card">
-                <div class="review-user-info">
-                    <div class="user-avatar" style="background:#fff3e0;">👤</div>
-                    <div class="user-meta">70代 男性（独居）<div class="stars">★★★★★</div></div>
-                </div>
-                <div class="service-tags"><span class="tag-service">買い物・家事代行</span><span class="tag-area">奈良県奈良市</span></div>
-                <h3 class="review-title">体調を崩した時の買い物、助かりました</h3>
-                <p class="review-text">数日間動けず困っていたところ、食材や日用品の買い出しを快く引き受けてくれました。丁寧な領収書の管理も安心できました。</p>
-            </div>
-
-            <div class="review-card">
-                <div class="review-user-info">
-                    <div class="user-avatar" style="background:#e3f2fd;">👤</div>
-                    <div class="user-meta">40代 男性（持ち家）<div class="stars">★★★★★</div></div>
-                </div>
-                <div class="service-tags"><span class="tag-service">雨どい掃除</span><span class="tag-area">滋賀県大津市</span></div>
-                <h3 class="review-title">自分では怖くてできない高所もお任せ</h3>
-                <p class="review-text">2階の雨どいが詰まり、困っていました。ハシゴを使って手際よく掃除していただき、梅雨前に直ってホッとしました。料金も良心的！</p>
-            </div>
-
-            <div class="review-card">
-                <div class="review-user-info">
-                    <div class="user-avatar" style="background:#f3e5f5;">👤</div>
-                    <div class="user-meta">80代 女性（独居）<div class="stars">★★★★★</div></div>
-                </div>
-                <div class="service-tags"><span class="tag-service">日常の軽作業</span><span class="tag-area">和歌山県和歌山市</span></div>
-                <h3 class="review-title">電球1個の交換から、笑顔で対応</h3>
-                <p class="review-text">高い所の電球が切れ、誰にも頼めず不安でした。些細な依頼にも関わらず、優しく対応していただき本当に嬉しかったです。</p>
-            </div>
-
-            <div class="review-card">
-                <div class="review-user-info">
-                    <div class="user-avatar" style="background:#ffebee;">👤</div>
-                    <div class="user-meta">20代 男性（マンション）<div class="stars">★★★★★</div></div>
-                </div>
-                <div class="service-tags"><span class="tag-service">模様替え・家具移動</span><span class="tag-area">大阪府吹田市</span></div>
-                <h3 class="review-title">大型ソファの移動、プロの技でした</h3>
-                <p class="review-text">自分一人ではビクともしないソファを2階へ。壁に傷がつかないようしっかり養生して運び入れてくれました。さすがプロです！</p>
-            </div>
-
-            <div class="review-card">
-                <div class="review-user-info">
-                    <div class="user-avatar" style="background:#e0f7fa;">👤</div>
-                    <div class="user-meta">40代 女性（主婦）<div class="stars">★★★★★</div></div>
-                </div>
-                <div class="service-tags"><span class="tag-service">蛇口の水漏れ修理</span><span class="tag-area">兵庫県明石市</span></div>
-                <h3 class="review-title">深夜のトラブルに迅速に駆けつけてくれた</h3>
-                <p class="review-text">キッチンの水が止まらなくなりパニック。夜遅くでしたが30分で到着。部品交換で安く修理していただき、本当に助かりました。</p>
-            </div>
-
-            <div class="review-card">
-                <div class="review-user-info">
-                    <div class="user-avatar" style="background:#efebe9;">👤</div>
-                    <div class="user-meta">50代 男性（会社員）<div class="stars">★★★★★</div></div>
-                </div>
-                <div class="service-tags"><span class="tag-service">空き家清掃・巡回</span><span class="tag-area">京都府宇治市</span></div>
-                <h3 class="review-title">実家の管理、安心してお任せしています</h3>
-                <p class="review-text">遠方に住んでいるため、定期的な換気と掃除を依頼。作業前後の写真を送ってくれるので、現状がよくわかり非常に信頼できます。</p>
-            </div>
-
-            <div class="review-card">
-                <div class="review-user-info">
-                    <div class="user-avatar" style="background:#f1f8e9;">👤</div>
-                    <div class="user-meta">60代 男性（親族）<div class="stars">★★★★★</div></div>
-                </div>
-                <div class="service-tags"><span class="tag-service">遺品整理・片付け</span><span class="tag-area">奈良県生駒市</span></div>
-                <h3 class="review-title">心のこもった丁寧な作業に感謝</h3>
-                <p class="review-text">ただ捨てるのではなく、貴重品をしっかり探しながら作業してくれました。精神的にも大変な時期だったので、寄り添う対応に救われました。</p>
-            </div>
-
-            <div class="review-card">
-                <div class="review-user-info"><div class="user-avatar" style="background:#e0e0e0;">👤</div><div class="user-meta">50代 男性（持ち家）<div class="stars">★★★★★</div></div></div>
-                <div class="service-tags"><span class="tag-service">不用品回収</span><span class="tag-area">大阪府大阪市</span></div>
-                <h3 class="review-title">引越し前日の大量ゴミを即回収！</h3>
-                <p class="review-text">片付けが間に合わずパニックでしたが、電話一本でその日に来てくれました。重い家電もテキパキ運んでくださり、本当に助かりました。</p>
-            </div>
-            <div class="review-card"> ...（以下、ループ用コピー）... </div>
+            <div class="tag-container"><span class="svc-tag">不用品回収</span><span class="loc-tag">大阪府大阪市</span></div>
+            <h3 class="review-h3">引越し前日の大量ゴミを即回収！</h3>
+            <p class="review-p">片付けが間に合わずパニックでしたが、電話一本でその日に来てくれました。重い家電もテキパキ運んでくださり、本当に助かりました。</p>
         </div>
+
+        <div class="review-card">
+            <div class="user-info">
+                <div class="avatar" style="background:#e8f5e9;">👤</div>
+                <div class="meta-text">60代 女性（主婦）<div class="star-rating">★★★★★</div></div>
+            </div>
+            <div class="tag-container"><span class="svc-tag">お庭の草むしり</span><span class="loc-tag">兵庫県西宮市</span></div>
+            <h3 class="review-h3">腰を痛めていたので、本当に救われました</h3>
+            <p class="review-p">荒れ放題だった庭が1日でピカピカに。除草剤の散布も提案していただき、その後の手入れが劇的に楽になりました。</p>
+        </div>
+
+        <div class="review-card">
+            <div class="user-info">
+                <div class="avatar" style="background:#fce4ec;">👤</div>
+                <div class="meta-text">30代 女性（一人暮らし）<div class="star-rating">★★★★★</div></div>
+            </div>
+            <div class="tag-container"><span class="svc-tag">家具組み立て</span><span class="loc-tag">京都府京都市</span></div>
+            <h3 class="review-h3">大型家具もプロの手であっという間に完成</h3>
+            <p class="review-p">ネットで買った棚が難解すぎて断念。プロに頼んだら1時間足らずで完成。梱包ゴミも持ち帰ってくれて大満足です。</p>
+        </div>
+
+        <div class="review-card">
+            <div class="user-info">
+                <div class="avatar" style="background:#fff3e0;">👤</div>
+                <div class="meta-text">70代 男性（独居）<div class="star-rating">★★★★★</div></div>
+            </div>
+            <div class="tag-container"><span class="svc-tag">買い物代行</span><span class="loc-tag">奈良県奈良市</span></div>
+            <h3 class="review-h3">体調を崩した時の買い物、助かりました</h3>
+            <p class="review-p">数日間動けず困っていたところ、食材の買い出しを快く引き受けてくれました。丁寧な対応で非常に安心できました。</p>
+        </div>
+
+        <div class="review-card">
+            <div class="user-info">
+                <div class="avatar" style="background:#e3f2fd;">👤</div>
+                <div class="meta-text">40代 男性（持ち家）<div class="star-rating">★★★★★</div></div>
+            </div>
+            <div class="tag-container"><span class="svc-tag">雨どい掃除</span><span class="loc-tag">滋賀県大津市</span></div>
+            <h3 class="review-h3">自分では危ない高所もお任せできました</h3>
+            <p class="review-p">2階の雨どいが詰まり、困っていました。ハシゴを使って手際よく掃除していただき、料金も良心的でホッとしました。</p>
+        </div>
+
+        <div class="review-card">
+            <div class="user-info">
+                <div class="avatar" style="background:#f3e5f5;">👤</div>
+                <div class="meta-text">80代 女性（独居）<div class="star-rating">★★★★★</div></div>
+            </div>
+            <div class="tag-container"><span class="svc-tag">日常の軽作業</span><span class="loc-tag">和歌山県和歌山市</span></div>
+            <h3 class="review-h3">電球1個の交換から、笑顔で対応</h3>
+            <p class="review-p">高い所の電球が切れ、誰にも頼めず不安でした。些細な依頼にも関わらず、優しく対応していただき本当に嬉しかったです。</p>
+        </div>
+
+        <div class="review-card">
+            <div class="user-info">
+                <div class="avatar" style="background:#ffebee;">👤</div>
+                <div class="meta-text">20代 男性（マンション）<div class="star-rating">★★★★★</div></div>
+            </div>
+            <div class="tag-container"><span class="svc-tag">模様替え・家具移動</span><span class="loc-tag">大阪府吹田市</span></div>
+            <h3 class="review-h3">大型ソファの移動、プロの技でした</h3>
+            <p class="review-p">自分一人ではビクともしないソファを移動。壁に傷がつかないようしっかり養生して運び入れてくれました。流石です！</p>
+        </div>
+
+        <div class="review-card">
+            <div class="user-info">
+                <div class="avatar" style="background:#e0f7fa;">👤</div>
+                <div class="meta-text">40代 女性（主婦）<div class="star-rating">★★★★★</div></div>
+            </div>
+            <div class="tag-container"><span class="svc-tag">蛇口修理</span><span class="loc-tag">兵庫県明石市</span></div>
+            <h3 class="review-h3">深夜の緊急トラブルに即対応で安心</h3>
+            <p class="review-p">水が止まらなくなりパニック。夜遅くでしたが30分で到着。部品交換で安く修理していただき、本当に助かりました。</p>
+        </div>
+
+        <div class="review-card">
+            <div class="user-info">
+                <div class="avatar" style="background:#f1f8e9;">👤</div>
+                <div class="meta-text">40代 女性（主婦）<div class="star-rating">★★★★★</div></div>
+            </div>
+            <div class="tag-container"><span class="svc-tag">窓・サッシ掃除</span><span class="loc-tag">京都府宇治市</span></div>
+            <h3 class="review-h3">手の届かない高い窓がピカピカに</h3>
+            <p class="review-p">吹き抜けの窓汚れがずっと気になっていました。専用の道具で綺麗にしていただき、部屋がパッと明るくなりました！</p>
+        </div>
+
+        <div class="review-card">
+            <div class="user-info">
+                <div class="avatar" style="background:#efebe9;">👤</div>
+                <div class="meta-text">60代 男性（会社員）<div class="star-rating">★★★★★</div></div>
+            </div>
+            <div class="tag-container"><span class="svc-tag">実家の整理</span><span class="loc-tag">奈良県生駒市</span></div>
+            <h3 class="review-h3">心のこもった丁寧な作業に感謝</h3>
+            <p class="review-p">遺品の整理を依頼。貴重品を一緒に探しながら丁寧に作業してくれました。寄り添う対応に精神的にも救われました。</p>
+        </div>
+
+    </div>
+
+    <div class="swipe-guide">
+        <i class="fas fa-arrows-alt-h"></i> 左右にスワイプしてご覧ください
     </div>
 </section>
