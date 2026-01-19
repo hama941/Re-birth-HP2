@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>害獣トラブル119＆便利屋サービス統合LP</title>
+    <title>害獣トラブル119 - 総合案内</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
 
@@ -17,22 +17,13 @@
             --border-blue: #a3d5ff;
             --bg-gray: #f9f9f9;
             --primary-blue: #0056b3;
-            --accent-cyan: #0099e6;
             --text-black: #333333;
-            --bg-light: #f0f8ff;
-            --box-bg: #ffffff;
-            --gray-border: #e0e0e0;
-            --main-color: #ff9800;
-            --text-dark: #333;
-            --dark-blue: #00254d;
-
+            
             /* 害獣LP系カラー */
-            --primary-navy: #0f2c52; /* 濃紺 */
-            --accent-gold: #c5a059; /* ゴールド */
-            --accent-orange: #ff9800; /* 明るいオレンジ */
-            --bg-body: #dce4eb; 
-            --bg-paper: #fcfcfc;
-            --solid-shadow: 0 10px 25px rgba(15, 44, 82, 0.15);
+            --primary-navy: #0f2c52;
+            --accent-gold: #c5a059;
+            --accent-orange: #ff9800;
+            --bg-gaiju-body: #dce4eb; /* 害獣エリアの背景色 */
             --area-main-navy: #1a2a45;
             --area-accent-yellow: #ffcc00;
             --area-accent-orange: #ff6600;
@@ -43,27 +34,17 @@
             margin: 0;
             padding: 0;
             color: #333;
-            background-color: var(--bg-body); /* 全体の背景色 */
-            padding-top: 35px; /* ステータスバーの高さ分下げる */
+            background-color: #fff; /* 全体のベースは白 */
+            padding-top: 35px; /* ステータスバーの分だけ下げる */
         }
 
         * {
             box-sizing: border-box;
         }
 
-        /* 共通ラッパー（害獣LPパーツの中央寄せ用） */
-        .lp-wrapper-narrow {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 30px;
-            width: 100%;
-            padding: 20px;
-            max-width: 100%;
-        }
-
-        /* セクション設定 */
-        section {
+        /* 便利屋用の汎用セクション設定 */
+        /* ※害獣エリアに影響しないようにクラス指定または構成で除外 */
+        section.benriya-section {
             padding: 60px 20px;
         }
 
@@ -81,7 +62,7 @@
         }
 
         /* =========================================
-           1. ステータスバー CSS
+           1. ステータスバー (便利屋パーツ)
            ========================================= */
         .status-bar {
             position: fixed;
@@ -104,8 +85,9 @@
         .text-item { padding-right: 50px; display: flex; align-items: center; }
         .bar-highlight { color: #ffcc00; margin: 0 5px; }
 
+
         /* =========================================
-           2. ヘッダーエリア (害獣LP) CSS
+           2. ヘッダーエリア (害獣LPパーツ)
            ========================================= */
         .header-container {
             display: flex;
@@ -161,10 +143,22 @@
             .contact-buttons .btn { width: 65px; height: 65px; font-size: 11px; }
         }
 
+
         /* =========================================
-           3. 害獣LP系パーツ (幅狭) CSS
+           3. 害獣LPエリア専用ラッパー
+           (ここだけ背景色を変えて、中央寄せレイアウトにする)
            ========================================= */
-        /* LPコンテナ */
+        .gaiju-area-wrapper {
+            background-color: var(--bg-gaiju-body);
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            width: 100%;
+        }
+
+        /* 以下、害獣LPのスタイル */
         .lp-container {
             width: 100%; max-width: 480px;
             background-color: var(--bg-paper);
@@ -172,7 +166,6 @@
             border-radius: 10px; box-shadow: var(--solid-shadow);
             position: relative; padding-bottom: 40px; overflow: hidden;
             border-top: 8px solid var(--primary-navy); border-bottom: 8px solid var(--primary-navy);
-            margin: 0 auto;
         }
         .content { position: relative; z-index: 1; padding: 0 0 30px 0; text-align: center; }
         .header-band {
@@ -212,9 +205,10 @@
             box-shadow: 0 4px 0 rgba(0,0,0,0.2); transition: transform 0.1s; border-bottom: 2px solid rgba(0,0,0,0.2);
         }
         .inner-content .btn:active { transform: translateY(3px); box-shadow: none; border-bottom: none; }
-        .inner-content .btn i { margin-right: 12px; font-size: 26px; }
         .inner-content .btn-tel { background: linear-gradient(to bottom, #ff9800, #ef6c00); }
         .inner-content .btn-mail { background: linear-gradient(to bottom, #4caf50, #2e7d32); }
+        .inner-content .btn i { margin-right: 12px; font-size: 26px; }
+
         .payment-box {
             background: #fff; border: 2px solid var(--accent-gold); border-radius: 8px; width: 100%;
             margin: 40px auto 0; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
@@ -242,7 +236,7 @@
         /* エリアカード */
         .area-card {
             width: 100%; max-width: 480px; background: #fff; border: 3px solid var(--area-main-navy);
-            border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(26, 42, 69, 0.15); text-align: center; margin: 0 auto;
+            border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(26, 42, 69, 0.15); text-align: center;
         }
         .card-header { background-color: var(--area-main-navy); color: var(--area-accent-yellow); padding: 15px 5px; font-weight: bold; }
         .header-pref { font-size: clamp(1rem, 4.5vw, 1.4rem); margin: 0; line-height: 1.4; white-space: nowrap; }
@@ -263,9 +257,10 @@
             color: var(--area-main-navy); padding: 50px 0; font-size: 0.9rem; font-weight: bold;
         }
 
-        /* 理由セクション */
+        /* 理由セクション (Gaiju Part) */
+        /* ※ .reason-section に padding を直接指定することで、汎用 section の余白を上書き */
         .reason-section {
-            width: 100%; max-width: 480px; margin: 0 auto; padding: 40px 20px; background-color: #fff;
+            width: 100%; max-width: 480px; padding: 40px 20px; background-color: #fff;
             text-align: center; border-radius: 12px; box-shadow: 0 4px 15px rgba(26, 42, 69, 0.15);
         }
         .header-area { margin-bottom: 30px; }
@@ -324,8 +319,9 @@
             .d-arrow { font-size: 12px; margin: 0; }
         }
 
+
         /* =========================================
-           4. 便利屋系パーツ (全幅) CSS
+           4. 便利屋系パーツ (全幅・背景独自設定)
            ========================================= */
         .service-section { background-color: var(--bg-gray); }
         .service-container { max-width: 600px; margin: 0 auto; }
@@ -346,7 +342,6 @@
         .service-price span { font-size: 0.9rem; }
         .service-description { font-size: 0.85rem; line-height: 1.5; margin: 0; }
 
-        /* シミュレーション */
         .simulation-wrapper {
             background: linear-gradient(to bottom, #f0faff, #dcefff); padding: 50px 20px;
             display: flex; justify-content: center; align-items: flex-start;
@@ -464,7 +459,6 @@
             .confirm-items { width: 100%; }
         }
 
-        /* お客様の声 */
         #reviews-section {
             background-color: #f9f7f2; padding: 80px 0; overflow: hidden;
         }
@@ -491,7 +485,6 @@
         .review-h3 { font-size: 17px; font-weight: bold; line-height: 1.5; margin: 0 0 10px 0; color: #333; border-bottom: 1px dashed #ddd; padding-bottom: 8px; }
         .review-p { font-size: 14px; line-height: 1.7; color: #555; margin: 0; }
 
-        /* お問い合わせフォーム */
         .footer-form-section { background: linear-gradient(to bottom, #f0faff, #dcefff); padding: 50px 20px; display: flex; justify-content: center; }
         .footer-form-container { width: 100%; max-width: 800px; }
         .footer-form-box {
@@ -542,7 +535,7 @@
         </div>
     </header>
 
-    <div class="lp-wrapper-narrow">
+    <div class="gaiju-area-wrapper">
         
         <div class="lp-container">
             <picture>
@@ -682,7 +675,7 @@
             </div>
         </section>
 
-    </div><section class="service-section">
+    </div><section class="benriya-section service-section">
         <div class="section-title-wrapper">
             <h2>サービス一覧</h2>
         </div>
