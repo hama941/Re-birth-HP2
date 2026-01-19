@@ -8,7 +8,7 @@
             --dark-blue: #00254d;
             --yellow: #ffeb00;
             --green: #43a047;
-            --red: #e60012;
+            --icon-bg: rgba(255, 255, 255, 0.2); /* アイコンの背景色 */
         }
 
         body {
@@ -42,7 +42,7 @@
             font-size: 1.2rem;
         }
         .price-free span {
-            color: var(--red);
+            color: #e60012;
             font-size: 1.4rem;
         }
 
@@ -50,12 +50,15 @@
         .main-button {
             background: linear-gradient(to bottom, #4caf50, #2e7d32);
             border-radius: 0 0 15px 15px;
-            padding: 20px;
+            padding: 20px 20px 20px 120px; /* 左側にアイコン用の余白を確保 */
             position: relative;
-            text-align: center;
+            text-align: left; /* テキストを左寄せに変更 */
             color: white;
             text-decoration: none;
-            display: block;
+            display: flex; /* Flexboxでレイアウト調整 */
+            flex-direction: column;
+            justify-content: center;
+            min-height: 100px; /* 最小の高さを確保 */
             margin-top: -1px;
             border-bottom: 5px solid #1b5e20;
         }
@@ -64,43 +67,49 @@
             font-size: 0.9rem;
             margin-bottom: 5px;
             display: block;
+            line-height: 1.4;
         }
 
         .main-text {
             font-size: 2.2rem;
             font-weight: bold;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
         }
 
-        /* 20% OFF バッジ */
-        .badge {
+        /* アイコンバッジ */
+        .icon-badge {
             position: absolute;
-            left: 15px;
+            left: 20px;
             top: 50%;
             transform: translateY(-50%);
-            background-color: var(--yellow);
-            width: 90px;
-            height: 90px;
+            width: 80px;
+            height: 80px;
+            background-color: var(--icon-bg);
             border-radius: 50%;
-            border: 3px dashed var(--red);
-            color: var(--red);
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            line-height: 1.2;
-            font-weight: bold;
         }
-        .badge .hp-text { font-size: 0.7rem; color: black; }
-        .badge .percent { font-size: 1.4rem; border-bottom: 2px solid var(--red); }
-        .badge .off { font-size: 1.2rem; }
+        
+        /* SVGアイコンの色設定 */
+        .icon-badge svg {
+            width: 50px;
+            height: 50px;
+            fill: white;
+        }
 
         @media (max-width: 600px) {
+            .main-button {
+                padding-left: 90px; /* スマホでの左余白調整 */
+                min-height: 80px;
+            }
             .main-text { font-size: 1.5rem; }
-            .badge { width: 70px; height: 70px; font-size: 0.6rem; }
-            .top-bar { font-size: 0.8rem; }
-            .price-free { font-size: 0.9rem; }
+            .sub-text { font-size: 0.75rem; }
+            .icon-badge { width: 60px; height: 60px; left: 15px; }
+            .icon-badge svg { width: 35px; height: 35px; }
+            .top-bar { font-size: 0.8rem; padding: 8px 10px; }
+            .price-free { font-size: 0.9rem; padding: 4px 10px; }
         }
     </style>
 </head>
@@ -113,18 +122,21 @@
     </div>
 
     <a href="#" id="contact-link" class="main-button">
-        <div class="badge">
-            <span class="hp-text">「HP見た」<br>で</span>
-            <span class="percent">20%</span>
-            <span class="off">OFF</span>
-        </div>
+        <div id="icon-container" class="icon-badge"></div>
         
-        <span id="status-message" class="sub-text">読み込み中...</span>
-        <div id="button-text" class="main-text">お問い合わせ</div>
+        <div>
+            <span id="status-message" class="sub-text">読み込み中...</span>
+            <div id="button-text" class="main-text">お問い合わせ</div>
+        </div>
     </a>
 </div>
 
 <script>
+    // SVGアイコンの定義
+    const phoneIcon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.994.994 0 0 0-1.01.24l-2.2 2.2a15.05 15.05 0 0 1-6.59-6.59l2.2-2.21c.28-.26.36-.65.25-1.01A11.36 11.36 0 0 1 8.5 3.99c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/></svg>';
+    
+    const mailIcon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>';
+
     function updateBanner() {
         const now = new Date();
         const hour = now.getHours();
@@ -132,17 +144,20 @@
         const statusMsg = document.getElementById('status-message');
         const btnText = document.getElementById('button-text');
         const contactLink = document.getElementById('contact-link');
+        const iconContainer = document.getElementById('icon-container');
 
-        // 10時から20時（19:59まで）の間
+        // 10時から20時（19:59まで）の間：電話モード
         if (hour >= 10 && hour < 20) {
             statusMsg.textContent = "お電話での受付時間内です。お気軽におかけください。";
             btnText.textContent = "お電話でお問い合わせ";
-            contactLink.href = "tel:0120000000"; // 実際の電話番号に変更してください
+            iconContainer.innerHTML = phoneIcon; // 電話アイコンを設定
+            contactLink.href = "tel:0120000000"; // 【要変更】実際の電話番号
         } else {
-            // 時間外（画像の状態）
-            statusMsg.textContent = "現在はぉ電話での受付時間外です。フォームよりお問い合わせください。";
+            // 時間外：メールモード
+            statusMsg.textContent = "現在はお電話での受付時間外です。フォームよりお問い合わせください。";
             btnText.textContent = "メールでお問い合わせ";
-            contactLink.href = "/contact-form"; // 実際のフォームURLに変更してください
+            iconContainer.innerHTML = mailIcon; // メールアイコンを設定
+            contactLink.href = "/contact-form"; // 【要変更】実際のフォームURL
         }
     }
 
