@@ -1,39 +1,199 @@
-<section class="footer-form-section" id="contact-form-area">
-    <div class="footer-form-container">
-        <div class="footer-form-box">
-            <h1 class="footer-form-title">お問い合わせフォーム</h1>
-            <form action="" method="post" onsubmit="event.preventDefault(); alert('送信完了（デモ）');">
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お問い合わせフォーム</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* =========================================
+           フォーム専用デザイン (完全再現)
+           ========================================= */
+        
+        /* セクション全体の背景（薄い青のグラデーション） */
+        .footer-form-section {
+            background: linear-gradient(to bottom, #f0faff, #dcefff);
+            padding: 50px 20px;
+            display: flex;
+            justify-content: center;
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+        }
+
+        .footer-form-container {
+            width: 100%;
+            max-width: 800px;
+        }
+
+        /* フォームの白い外枠（黄色の太枠デザイン） */
+        .footer-form-box {
+            background-color: #fff;
+            border: 8px solid #fff9c4; /* 特徴的な太い黄枠 */
+            border-radius: 10px;
+            padding: 40px 30px;
+            width: 100%;
+            text-align: left;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-sizing: border-box;
+        }
+
+        /* タイトル（点線の下線付き） */
+        .footer-form-title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: 900;
+            color: #005691;
+            margin: 0 0 40px 0;
+            padding-bottom: 15px;
+            border-bottom: 2px dashed #ddd;
+        }
+
+        /* 各入力項目のまとまり */
+        .form-group {
+            margin-bottom: 20px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ラベル（項目名） */
+        .form-label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        /* 必須バッジ（オレンジ） */
+        .badge {
+            display: inline-block;
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+
+        .badge-required {
+            background-color: #f36e21;
+            color: #fff;
+        }
+
+        /* 入力エリア（インプット・テキストエリア） */
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            background-color: #f9f9f9;
+            box-sizing: border-box;
+        }
+
+        .form-textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        /* 送信ボタンのエリア */
+        .submit-area {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        /* 送信ボタン（青のグラデーション） */
+        .submit-btn {
+            background: linear-gradient(to bottom, #5cb1f7, #2d7cd1);
+            color: #fff;
+            font-size: 20px;
+            font-weight: bold;
+            border: none;
+            padding: 15px 60px;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+            transition: transform 0.1s, opacity 0.2s;
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        /* ボタン内の矢印アイコン */
+        .submit-btn::after {
+            content: "▶";
+            font-size: 14px;
+            margin-left: 15px;
+        }
+
+        /* ホバー・クリック時の動き */
+        .submit-btn:hover {
+            opacity: 0.9;
+        }
+
+        .submit-btn:active {
+            transform: translateY(2px);
+            box-shadow: none;
+        }
+
+        /* レスポンシブ対応（スマホ表示） */
+        @media (max-width: 768px) {
+            .footer-form-box {
+                padding: 30px 15px;
+            }
+            .footer-form-title {
+                font-size: 20px;
+            }
+            .submit-btn {
+                width: 100%;
+                justify-content: center;
+                padding: 15px 20px;
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="footer-form-section" id="contact-form-area">
+        <div class="footer-form-container">
+            <div class="footer-form-box">
+                <h1 class="footer-form-title">お問い合わせフォーム</h1>
                 
-                <div class="form-group">
-                    <label class="form-label">お名前<span class="badge badge-required">必須</span></label>
-                    <input type="text" class="form-input" placeholder="例：山田花子" required>
-                </div>
+                <form action="" method="post" onsubmit="event.preventDefault(); alert('送信完了しました（デモ）');">
+                    
+                    <div class="form-group">
+                        <label class="form-label">お名前<span class="badge badge-required">必須</span></label>
+                        <input type="text" class="form-input" placeholder="例：山田花子" required>
+                    </div>
 
-                <div class="form-group">
-                    <label class="form-label">電話番号<span class="badge badge-required">必須</span></label>
-                    <input type="tel" class="form-input" placeholder="000-000-0000" required>
-                </div>
+                    <div class="form-group">
+                        <label class="form-label">電話番号<span class="badge badge-required">必須</span></label>
+                        <input type="tel" class="form-input" placeholder="000-000-0000" required>
+                    </div>
 
-                <div class="form-group">
-                    <label class="form-label">住所<span class="badge badge-required">必須</span></label>
-                    <input type="text" class="form-input" placeholder="住所を入力してください" required>
-                </div>
+                    <div class="form-group">
+                        <label class="form-label">住所<span class="badge badge-required">必須</span></label>
+                        <input type="text" class="form-input" placeholder="住所を入力してください" required>
+                    </div>
 
-                <div class="form-group">
-                    <label class="form-label">メールアドレス<span class="badge badge-required">必須</span></label>
-                    <input type="email" class="form-input" placeholder="abc@abc.com" required>
-                </div>
+                    <div class="form-group">
+                        <label class="form-label">メールアドレス<span class="badge badge-required">必須</span></label>
+                        <input type="email" class="form-input" placeholder="abc@abc.com" required>
+                    </div>
 
-                <div class="form-group">
-                    <label class="form-label">お問い合わせ内容<span class="badge badge-required">必須</span></label>
-                    <textarea class="form-textarea" placeholder="お問い合わせ内容を入力してください" required></textarea>
-                </div>
+                    <div class="form-group">
+                        <label class="form-label">お問い合わせ内容<span class="badge badge-required">必須</span></label>
+                        <textarea class="form-textarea" placeholder="お問い合わせ内容を入力してください" required></textarea>
+                    </div>
 
-                <div class="submit-area">
-                    <button type="submit" class="submit-btn">送信する</button>
-                </div>
+                    <div class="submit-area">
+                        <button type="submit" class="submit-btn">送信する</button>
+                    </div>
 
-            </form>
+                </form>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+
+</body>
+</html>
