@@ -1,122 +1,70 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <style>
-        /* --- バー全体の基本設定 --- */
-        .status-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 35px;
-            background-color: #000;
-            color: #fff;
-            font-weight: bold;
-            font-size: 0.85rem;
-            z-index: 10000;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            font-family: sans-serif;
-        }
-
-        /* --- 横流しアニメーションの設定 --- */
-        .scroll-container {
-            display: flex;
-            white-space: nowrap;
-            width: 100%;
-            overflow: hidden;
-        }
-
-        .scroll-content {
-            display: flex;
-            white-space: nowrap;
-            width: max-content;
-            will-change: transform;
-            /* 20秒かけて左へ流れるループ */
-            animation: scroll-left 20s linear infinite;
-        }
-
-        @keyframes scroll-left {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-25%); }
-        }
-
-        .text-item {
-            padding-right: 50px;
-            display: flex;
-            align-items: center;
-        }
-
-        /* --- 強調文字（黄色） --- */
-        .bar-highlight {
-            color: #ffcc00;
-            margin: 0 5px;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="status-bar">
-        <div class="scroll-container">
-            <div id="scroll-target" class="scroll-content">
-                <div class="text-item">
-                    【稼働状況】<span class="current-date"></span> <span class="current-time bar-highlight"></span> 現在 
-                    <span style="margin-left: 30px;" class="status-text bar-highlight"></span> 
-                    <span class="arrival-msg">（最短15分で到着可能です！）</span>
-                </div>
-                <div class="text-item">
-                    【稼働状況】<span class="current-date"></span> <span class="current-time bar-highlight"></span> 現在 
-                    <span style="margin-left: 30px;" class="status-text bar-highlight"></span> 
-                    <span class="arrival-msg">（最短15分で到着可能です！）</span>
-                </div>
-                <div class="text-item">
-                    【稼働状況】<span class="current-date"></span> <span class="current-time bar-highlight"></span> 現在 
-                    <span style="margin-left: 30px;" class="status-text bar-highlight"></span> 
-                    <span class="arrival-msg">（最短15分で到着可能です！）</span>
-                </div>
-                <div class="text-item">
-                    【稼働状況】<span class="current-date"></span> <span class="current-time bar-highlight"></span> 現在 
-                    <span style="margin-left: 30px;" class="status-text bar-highlight"></span> 
-                    <span class="arrival-msg">（最短15分で到着可能です！）</span>
+<section id="reviews-section">
+    <h2 style="text-align: center; margin-bottom: 40px; color: #333; font-size: 28px;">お客様からの喜びの声</h2>
+    <div class="review-container">
+        
+        <div class="review-card">
+            <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                <div style="width: 50px; height: 50px; border-radius: 50%; background: #fce4ec; margin-right: 15px; display: flex; align-items: center; justify-content: center; font-size: 24px;">👤</div>
+                <div>
+                    <div style="font-size: 13px; color: #666; font-weight: bold;">30代 女性（一人暮らし）</div>
+                    <div style="color: #f1c40f; font-size: 18px;">★★★★★</div>
                 </div>
             </div>
+            <div style="display: flex; gap: 8px; margin-bottom: 15px;">
+                <span style="background: #2563eb; color: #fff; font-size: 11px; font-weight: bold; padding: 3px 10px; border-radius: 4px;">家具の組み立て</span>
+                <span style="border: 1px solid #333; color: #333; font-size: 11px; font-weight: bold; padding: 2px 10px; border-radius: 4px;">東京都</span>
+            </div>
+            <h3 style="font-size: 18px; font-weight: bold; line-height: 1.5; margin-bottom: 12px; border-bottom: 1px dashed #ddd; padding-bottom: 10px;">複雑な大型家具もあっという間に完成！</h3>
+            <p style="font-size: 14px; line-height: 1.8; color: #444; margin: 0;">ネットで購入した大型の棚が自分では組み立てられず、途方に暮れて依頼しました。丁寧な作業で1時間足らずで完成。梱包材のゴミまで持ち帰っていただき、本当に助かりました。</p>
         </div>
+
+        <div class="review-card">
+            <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                <div style="width: 50px; height: 50px; border-radius: 50%; background: #e0e0e0; margin-right: 15px; display: flex; align-items: center; justify-content: center; font-size: 24px;">👤</div>
+                <div>
+                    <div style="font-size: 13px; color: #666; font-weight: bold;">50代 男性（持ち家）</div>
+                    <div style="color: #f1c40f; font-size: 18px;">★★★★★</div>
+                </div>
+            </div>
+            <div style="display: flex; gap: 8px; margin-bottom: 15px;">
+                <span style="background: #2563eb; color: #fff; font-size: 11px; font-weight: bold; padding: 3px 10px; border-radius: 4px;">不用品回収</span>
+                <span style="border: 1px solid #333; color: #333; font-size: 11px; font-weight: bold; padding: 2px 10px; border-radius: 4px;">大阪府</span>
+            </div>
+            <h3 style="font-size: 18px; font-weight: bold; line-height: 1.5; margin-bottom: 12px; border-bottom: 1px dashed #ddd; padding-bottom: 10px;">急な引越しで出た大量のゴミを即日回収</h3>
+            <p style="font-size: 14px; line-height: 1.8; color: #444; margin: 0;">急な転勤で片付けが間に合わず、無理を承知で電話しましたが、その日のうちに来てくれました。重い家電や古い家具もテキパキ運んでくださり、誠実な対応に感謝しています。</p>
+        </div>
+
+        <div class="review-card">
+            <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                <div style="width: 50px; height: 50px; border-radius: 50%; background: #e8f5e9; margin-right: 15px; display: flex; align-items: center; justify-content: center; font-size: 24px;">👤</div>
+                <div>
+                    <div style="font-size: 13px; color: #666; font-weight: bold;">60代 女性（主婦）</div>
+                    <div style="color: #f1c40f; font-size: 18px;">★★★★★</div>
+                </div>
+            </div>
+            <div style="display: flex; gap: 8px; margin-bottom: 15px;">
+                <span style="background: #2563eb; color: #fff; font-size: 11px; font-weight: bold; padding: 3px 10px; border-radius: 4px;">庭の草むしり</span>
+                <span style="border: 1px solid #333; color: #333; font-size: 11px; font-weight: bold; padding: 2px 10px; border-radius: 4px;">神奈川県</span>
+            </div>
+            <h3 style="font-size: 18px; font-weight: bold; line-height: 1.5; margin-bottom: 12px; border-bottom: 1px dashed #ddd; padding-bottom: 10px;">腰を痛めて困っていたので、本当に救われました</h3>
+            <p style="font-size: 14px; line-height: 1.8; color: #444; margin: 0;">荒れ放題だった庭を驚くほど綺麗にしてくださいました。除草剤の散布も提案していただき、その後の手入れが楽になりました。次回もぜひ同じ方にお願いしたいです。</p>
+        </div>
+
+        <div class="review-card">
+            <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                <div style="width: 50px; height: 50px; border-radius: 50%; background: #fff3e0; margin-right: 15px; display: flex; align-items: center; justify-content: center; font-size: 24px;">👤</div>
+                <div>
+                    <div style="font-size: 13px; color: #666; font-weight: bold;">70代 男性（一人暮らし）</div>
+                    <div style="color: #f1c40f; font-size: 18px;">★★★★★</div>
+                </div>
+            </div>
+            <div style="display: flex; gap: 8px; margin-bottom: 15px;">
+                <span style="background: #2563eb; color: #fff; font-size: 11px; font-weight: bold; padding: 3px 10px; border-radius: 4px;">軽作業・修理</span>
+                <span style="border: 1px solid #333; color: #333; font-size: 11px; font-weight: bold; padding: 2px 10px; border-radius: 4px;">兵庫県</span>
+            </div>
+            <h3 style="font-size: 18px; font-weight: bold; line-height: 1.5; margin-bottom: 12px; border-bottom: 1px dashed #ddd; padding-bottom: 10px;">電球1個の交換から快く引き受けてくれました</h3>
+            <p style="font-size: 14px; line-height: 1.8; color: #444; margin: 0;">高い所の電球交換や、建具のちょっとしたガタつきの調整をお願いしました。こんな些細なことで呼んでいいのか不安でしたが、「何でも相談してください」と笑顔で対応していただき安心しました。</p>
+        </div>
+        
     </div>
-
-    <script>
-        function updateStatusBarDateTime() {
-            const now = new Date();
-            const y = now.getFullYear();
-            const m = now.getMonth() + 1;
-            const d = now.getDate();
-            const hh = String(now.getHours()).padStart(2, '0');
-            const mm = String(now.getMinutes()).padStart(2, '0');
-            
-            const dateStr = `${y}年${m}月${d}日`;
-            const timeStr = `${hh}:${mm}`;
-            
-            // 日付と時刻を各要素に反映
-            document.querySelectorAll('.current-date').forEach(el => el.textContent = dateStr);
-            document.querySelectorAll('.current-time').forEach(el => el.textContent = timeStr);
-
-            // 営業時間外（20時〜翌10時）の判定
-            const currentHour = now.getHours();
-            const isBusinessTime = (currentHour >= 10 && currentHour < 20);
-
-            document.querySelectorAll('.status-text').forEach(el => {
-                el.textContent = isBusinessTime ? "受付可能！" : "メールでの受付中";
-            });
-            document.querySelectorAll('.arrival-msg').forEach(el => {
-                el.style.display = isBusinessTime ? "inline" : "none";
-            });
-        }
-
-        // ページ読み込み時に実行し、以降1分ごとに更新
-        updateStatusBarDateTime();
-        setInterval(updateStatusBarDateTime, 60000);
-    </script>
-
-</body>
-</html>
+</section>
