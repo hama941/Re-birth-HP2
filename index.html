@@ -1,70 +1,155 @@
+<style>
+    /* --- レビューセクション全体の調整 --- */
+    #reviews-section {
+        background-color: #f9f7f2;
+        padding: 60px 0;
+        overflow: hidden; /* はみ出しを隠す */
+    }
+
+    /* --- スライダーの外枠 --- */
+    .review-slider-viewport {
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+    }
+
+    /* --- 横に並ぶカードの入れ物（アニメーション本体） --- */
+    .review-slider-track {
+        display: flex;
+        width: max-content;
+        animation: slide-reviews 40s linear infinite; /* 40秒で一周、お好みの速度に調整 */
+    }
+
+    /* --- マウスホバーで停止 --- */
+    .review-slider-track:hover {
+        animation-play-state: paused;
+    }
+
+    @keyframes slide-reviews {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); } /* 半分（1セット分）進んだらリセット */
+    }
+
+    /* --- カードのスタイル --- */
+    .review-card {
+        background: #fff;
+        border-radius: 12px;
+        padding: 25px;
+        width: 380px; /* カードの幅 */
+        margin: 0 15px; /* カード間の余白 */
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        flex-shrink: 0;
+    }
+
+    /* モバイル対応：カードを少し小さく */
+    @media (max-width: 600px) {
+        .review-card { width: 300px; padding: 20px; }
+    }
+</style>
+
 <section id="reviews-section">
     <h2 style="text-align: center; margin-bottom: 40px; color: #333; font-size: 28px;">お客様からの喜びの声</h2>
-    <div class="review-container">
-        
-        <div class="review-card">
-            <div style="display: flex; align-items: center; margin-bottom: 15px;">
-                <div style="width: 50px; height: 50px; border-radius: 50%; background: #fce4ec; margin-right: 15px; display: flex; align-items: center; justify-content: center; font-size: 24px;">👤</div>
-                <div>
-                    <div style="font-size: 13px; color: #666; font-weight: bold;">30代 女性（一人暮らし）</div>
-                    <div style="color: #f1c40f; font-size: 18px;">★★★★★</div>
+    
+    <div class="review-slider-viewport">
+        <div class="review-slider-track">
+            
+            <div class="review-card">
+                <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                    <div style="width: 50px; height: 50px; border-radius: 50%; background: #fce4ec; margin-right: 15px; display: flex; align-items: center; justify-content: center; font-size: 24px;">👤</div>
+                    <div>
+                        <div style="font-size: 13px; color: #666; font-weight: bold;">30代 女性（一人暮らし）</div>
+                        <div style="color: #f1c40f; font-size: 18px;">★★★★★</div>
+                    </div>
                 </div>
+                <div style="display: flex; gap: 8px; margin-bottom: 15px;">
+                    <span style="background: #2563eb; color: #fff; font-size: 11px; font-weight: bold; padding: 3px 10px; border-radius: 4px;">家具の組み立て</span>
+                    <span style="border: 1px solid #333; color: #333; font-size: 11px; font-weight: bold; padding: 2px 10px; border-radius: 4px;">東京都</span>
+                </div>
+                <h3 style="font-size: 17px; font-weight: bold; line-height: 1.5; margin-bottom: 12px;">大型棚もあっという間に完成！</h3>
+                <p style="font-size: 14px; line-height: 1.8; color: #444; margin: 0;">ネットで買った棚が複雑すぎて断念…。依頼したら1時間足らずで完成させてくれました。梱包ゴミも持ち帰ってくれて助かりました。</p>
             </div>
-            <div style="display: flex; gap: 8px; margin-bottom: 15px;">
-                <span style="background: #2563eb; color: #fff; font-size: 11px; font-weight: bold; padding: 3px 10px; border-radius: 4px;">家具の組み立て</span>
-                <span style="border: 1px solid #333; color: #333; font-size: 11px; font-weight: bold; padding: 2px 10px; border-radius: 4px;">東京都</span>
-            </div>
-            <h3 style="font-size: 18px; font-weight: bold; line-height: 1.5; margin-bottom: 12px; border-bottom: 1px dashed #ddd; padding-bottom: 10px;">複雑な大型家具もあっという間に完成！</h3>
-            <p style="font-size: 14px; line-height: 1.8; color: #444; margin: 0;">ネットで購入した大型の棚が自分では組み立てられず、途方に暮れて依頼しました。丁寧な作業で1時間足らずで完成。梱包材のゴミまで持ち帰っていただき、本当に助かりました。</p>
-        </div>
 
-        <div class="review-card">
-            <div style="display: flex; align-items: center; margin-bottom: 15px;">
-                <div style="width: 50px; height: 50px; border-radius: 50%; background: #e0e0e0; margin-right: 15px; display: flex; align-items: center; justify-content: center; font-size: 24px;">👤</div>
-                <div>
-                    <div style="font-size: 13px; color: #666; font-weight: bold;">50代 男性（持ち家）</div>
-                    <div style="color: #f1c40f; font-size: 18px;">★★★★★</div>
+            <div class="review-card">
+                <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                    <div style="width: 50px; height: 50px; border-radius: 50%; background: #e0e0e0; margin-right: 15px; display: flex; align-items: center; justify-content: center; font-size: 24px;">👤</div>
+                    <div>
+                        <div style="font-size: 13px; color: #666; font-weight: bold;">50代 男性（持ち家）</div>
+                        <div style="color: #f1c40f; font-size: 18px;">★★★★★</div>
+                    </div>
                 </div>
+                <div style="display: flex; gap: 8px; margin-bottom: 15px;">
+                    <span style="background: #2563eb; color: #fff; font-size: 11px; font-weight: bold; padding: 3px 10px; border-radius: 4px;">不用品回収</span>
+                    <span style="border: 1px solid #333; color: #333; font-size: 11px; font-weight: bold; padding: 2px 10px; border-radius: 4px;">大阪府</span>
+                </div>
+                <h3 style="font-size: 17px; font-weight: bold; line-height: 1.5; margin-bottom: 12px;">引越し前日の大量ゴミを即回収</h3>
+                <p style="font-size: 14px; line-height: 1.8; color: #444; margin: 0;">片付けが間に合わずパニックでしたが、即日対応してくれました。重い家電もテキパキ運んでくださり、誠実な対応でした。</p>
             </div>
-            <div style="display: flex; gap: 8px; margin-bottom: 15px;">
-                <span style="background: #2563eb; color: #fff; font-size: 11px; font-weight: bold; padding: 3px 10px; border-radius: 4px;">不用品回収</span>
-                <span style="border: 1px solid #333; color: #333; font-size: 11px; font-weight: bold; padding: 2px 10px; border-radius: 4px;">大阪府</span>
-            </div>
-            <h3 style="font-size: 18px; font-weight: bold; line-height: 1.5; margin-bottom: 12px; border-bottom: 1px dashed #ddd; padding-bottom: 10px;">急な引越しで出た大量のゴミを即日回収</h3>
-            <p style="font-size: 14px; line-height: 1.8; color: #444; margin: 0;">急な転勤で片付けが間に合わず、無理を承知で電話しましたが、その日のうちに来てくれました。重い家電や古い家具もテキパキ運んでくださり、誠実な対応に感謝しています。</p>
-        </div>
 
-        <div class="review-card">
-            <div style="display: flex; align-items: center; margin-bottom: 15px;">
-                <div style="width: 50px; height: 50px; border-radius: 50%; background: #e8f5e9; margin-right: 15px; display: flex; align-items: center; justify-content: center; font-size: 24px;">👤</div>
-                <div>
-                    <div style="font-size: 13px; color: #666; font-weight: bold;">60代 女性（主婦）</div>
-                    <div style="color: #f1c40f; font-size: 18px;">★★★★★</div>
+            <div class="review-card">
+                <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                    <div style="width: 50px; height: 50px; border-radius: 50%; background: #e8f5e9; margin-right: 15px; display: flex; align-items: center; justify-content: center; font-size: 24px;">👤</div>
+                    <div>
+                        <div style="font-size: 13px; color: #666; font-weight: bold;">60代 女性（主婦）</div>
+                        <div style="color: #f1c40f; font-size: 18px;">★★★★★</div>
+                    </div>
                 </div>
+                <div style="display: flex; gap: 8px; margin-bottom: 15px;">
+                    <span style="background: #2563eb; color: #fff; font-size: 11px; font-weight: bold; padding: 3px 10px; border-radius: 4px;">庭の草むしり</span>
+                    <span style="border: 1px solid #333; color: #333; font-size: 11px; font-weight: bold; padding: 2px 10px; border-radius: 4px;">神奈川県</span>
+                </div>
+                <h3 style="font-size: 17px; font-weight: bold; line-height: 1.5; margin-bottom: 12px;">腰を痛めていたので大助かり</h3>
+                <p style="font-size: 14px; line-height: 1.8; color: #444; margin: 0;">荒れ放題だった庭が驚くほど綺麗に。除草剤の提案もいただき、その後の手入れが楽になりました。次回もお願いします。</p>
             </div>
-            <div style="display: flex; gap: 8px; margin-bottom: 15px;">
-                <span style="background: #2563eb; color: #fff; font-size: 11px; font-weight: bold; padding: 3px 10px; border-radius: 4px;">庭の草むしり</span>
-                <span style="border: 1px solid #333; color: #333; font-size: 11px; font-weight: bold; padding: 2px 10px; border-radius: 4px;">神奈川県</span>
-            </div>
-            <h3 style="font-size: 18px; font-weight: bold; line-height: 1.5; margin-bottom: 12px; border-bottom: 1px dashed #ddd; padding-bottom: 10px;">腰を痛めて困っていたので、本当に救われました</h3>
-            <p style="font-size: 14px; line-height: 1.8; color: #444; margin: 0;">荒れ放題だった庭を驚くほど綺麗にしてくださいました。除草剤の散布も提案していただき、その後の手入れが楽になりました。次回もぜひ同じ方にお願いしたいです。</p>
-        </div>
 
-        <div class="review-card">
-            <div style="display: flex; align-items: center; margin-bottom: 15px;">
-                <div style="width: 50px; height: 50px; border-radius: 50%; background: #fff3e0; margin-right: 15px; display: flex; align-items: center; justify-content: center; font-size: 24px;">👤</div>
-                <div>
-                    <div style="font-size: 13px; color: #666; font-weight: bold;">70代 男性（一人暮らし）</div>
-                    <div style="color: #f1c40f; font-size: 18px;">★★★★★</div>
+            <div class="review-card">
+                <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                    <div style="width: 50px; height: 50px; border-radius: 50%; background: #e3f2fd; margin-right: 15px; display: flex; align-items: center; justify-content: center; font-size: 24px;">👤</div>
+                    <div>
+                        <div style="font-size: 13px; color: #666; font-weight: bold;">40代 男性（マンション）</div>
+                        <div style="color: #f1c40f; font-size: 18px;">★★★★★</div>
+                    </div>
                 </div>
+                <div style="display: flex; gap: 8px; margin-bottom: 15px;">
+                    <span style="background: #2563eb; color: #fff; font-size: 11px; font-weight: bold; padding: 3px 10px; border-radius: 4px;">蛇口の水漏れ</span>
+                    <span style="border: 1px solid #333; color: #333; font-size: 11px; font-weight: bold; padding: 2px 10px; border-radius: 4px;">千葉県</span>
+                </div>
+                <h3 style="font-size: 17px; font-weight: bold; line-height: 1.5; margin-bottom: 12px;">夜間の緊急トラブルに即対応</h3>
+                <p style="font-size: 14px; line-height: 1.8; color: #444; margin: 0;">キッチンの蛇口が止まらなくなり深夜に電話。30分で駆けつけ、パッキン交換であっさり直してくれました。料金も良心的でした。</p>
             </div>
-            <div style="display: flex; gap: 8px; margin-bottom: 15px;">
-                <span style="background: #2563eb; color: #fff; font-size: 11px; font-weight: bold; padding: 3px 10px; border-radius: 4px;">軽作業・修理</span>
-                <span style="border: 1px solid #333; color: #333; font-size: 11px; font-weight: bold; padding: 2px 10px; border-radius: 4px;">兵庫県</span>
+
+            <div class="review-card">
+                <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                    <div style="width: 50px; height: 50px; border-radius: 50%; background: #fff3e0; margin-right: 15px; display: flex; align-items: center; justify-content: center; font-size: 24px;">👤</div>
+                    <div>
+                        <div style="font-size: 13px; color: #666; font-weight: bold;">20代 男性（一人暮らし）</div>
+                        <div style="color: #f1c40f; font-size: 18px;">★★★★★</div>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 8px; margin-bottom: 15px;">
+                    <span style="background: #2563eb; color: #fff; font-size: 11px; font-weight: bold; padding: 3px 10px; border-radius: 4px;">家具移動</span>
+                    <span style="border: 1px solid #333; color: #333; font-size: 11px; font-weight: bold; padding: 2px 10px; border-radius: 4px;">埼玉県</span>
+                </div>
+                <h3 style="font-size: 17px; font-weight: bold; line-height: 1.5; margin-bottom: 12px;">大型ソファを2階へ運搬</h3>
+                <p style="font-size: 14px; line-height: 1.8; color: #444; margin: 0;">自分一人ではビクともしなかった大型ソファを2階に運んでもらいました。壁を傷つけない養生も完璧。プロの技に感動しました。</p>
             </div>
-            <h3 style="font-size: 18px; font-weight: bold; line-height: 1.5; margin-bottom: 12px; border-bottom: 1px dashed #ddd; padding-bottom: 10px;">電球1個の交換から快く引き受けてくれました</h3>
-            <p style="font-size: 14px; line-height: 1.8; color: #444; margin: 0;">高い所の電球交換や、建具のちょっとしたガタつきの調整をお願いしました。こんな些細なことで呼んでいいのか不安でしたが、「何でも相談してください」と笑顔で対応していただき安心しました。</p>
-        </div>
-        
+
+            <div class="review-card">
+                <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                    <div style="width: 50px; height: 50px; border-radius: 50%; background: #f3e5f5; margin-right: 15px; display: flex; align-items: center; justify-content: center; font-size: 24px;">👤</div>
+                    <div>
+                        <div style="font-size: 13px; color: #666; font-weight: bold;">40代 女性（主婦）</div>
+                        <div style="color: #f1c40f; font-size: 18px;">★★★★★</div>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 8px; margin-bottom: 15px;">
+                    <span style="background: #2563eb; color: #fff; font-size: 11px; font-weight: bold; padding: 3px 10px; border-radius: 4px;">高所窓掃除</span>
+                    <span style="border: 1px solid #333; color: #333; font-size: 11px; font-weight: bold; padding: 2px 10px; border-radius: 4px;">兵庫県</span>
+                </div>
+                <h3 style="font-size: 17px; font-weight: bold; line-height: 1.5; margin-bottom: 12px;">手の届かない窓がピカピカに！</h3>
+                <p style="font-size: 14px; line-height: 1.8; color: #444; margin: 0;">吹き抜けの高い窓が汚れ、ずっと気になっていました。専門の道具でピカピカにしていただき、部屋が明るくなった気がします！</p>
+            </div>
+
+            <div class="review-card"> ...（1と同じ内容）... </div>
+            </div>
     </div>
 </section>
