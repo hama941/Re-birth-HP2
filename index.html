@@ -3,172 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* --- お客様の声セクション専用スタイル --- */
-        #reviews-section {
-            background-color: #f9f7f2;
-            padding: 80px 0;
-            overflow: hidden; /* はみ出しを隠す */
+        :root {
+            --primary-pink: #ff8e8e;
+            --border-blue: #a3d5ff;
+            --bg-gray: #f9f9f9;
+        }
+
+        body {
             font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-        }
-
-        .section-h2 {
-            text-align: center;
-            margin-bottom: 50px;
+            background-color: var(--bg-gray);
+            margin: 0;
+            padding: 20px;
             color: #333;
-            font-size: 28px;
-            font-weight: 900;
         }
 
-        /* スライダーの外枠 */
-        .slider-viewport {
-            width: 100%;
-            overflow: hidden;
-            display: flex;
-            cursor: grab;
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
         }
 
-        /* 横に並ぶカードの入れ物（アニメーション本体） */
-        .slider-track {
-            display: flex;
-            width: max-content;
-            /* 50秒で1周。速度を調整したい場合は数字を変更 */
-            animation: loop-scroll 50s linear infinite;
-        }
-
-        /* マウスホバーまたは指で触れている間は一時停止 */
-        .slider-track:hover,
-        .slider-track:active {
-            animation-play-state: paused;
-        }
-
-        /* 無限ループのアニメーション：2セット並べたうちの半分（-50%）まで行ったら0に戻る */
-        @keyframes loop-scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        /* 各レビューカードのスタイル */
-        .review-card {
-            flex: 0 0 350px; /* カードの幅 */
+        /* カード全体のスタイル */
+        .service-card {
             background: #fff;
+            border: 2px solid var(--border-blue);
             border-radius: 15px;
-            padding: 25px;
-            margin: 0 15px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
-            border: 1px solid #eee;
-            box-sizing: border-box;
+            margin-bottom: 20px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+            overflow: hidden;
         }
 
-        @media (max-width: 600px) {
-            .review-card { flex: 0 0 280px; padding: 20px; }
-            .section-h2 { font-size: 24px; }
+        /* 偶数番目のカードは左右反転 */
+        .service-card:nth-child(even) {
+            flex-direction: row-reverse;
+            text-align: left;
         }
 
-        /* カード内パーツ */
-        .user-header { display: flex; align-items: center; margin-bottom: 12px; }
-        .user-avatar { width: 45px; height: 45px; border-radius: 50%; margin-right: 15px; display: flex; align-items: center; justify-content: center; font-size: 22px; background: #eee; }
-        .user-info { font-size: 13px; color: #666; font-weight: bold; }
-        .star-line { color: #f1c40f; font-size: 18px; margin-top: 2px; }
-        .tag-container { display: flex; gap: 8px; margin-bottom: 12px; }
-        .tag-svc { background: #2563eb; color: #fff; font-size: 10px; font-weight: bold; padding: 4px 10px; border-radius: 4px; }
-        .tag-loc { border: 1px solid #333; color: #333; font-size: 10px; font-weight: bold; padding: 3px 10px; border-radius: 4px; }
-        .review-h3 { font-size: 17px; font-weight: bold; line-height: 1.5; margin: 0 0 10px 0; color: #333; border-bottom: 1px dashed #ddd; padding-bottom: 8px; }
-        .review-p { font-size: 14px; line-height: 1.7; color: #555; margin: 0; }
+        /* 画像コンテナ（円形） */
+        .image-container {
+            position: relative;
+            flex-shrink: 0;
+            width: 130px;
+            height: 130px;
+        }
 
-        /* ガイド表示 */
-        .swipe-guide { text-align: center; color: #999; font-size: 12px; margin-top: 20px; }
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        /* CASEバッジ */
+        .case-badge {
+            position: absolute;
+            top: 5px;
+            left: -10px;
+            background: #3a5b96;
+            color: #fff;
+            padding: 2px 15px;
+            font-weight: bold;
+            font-size: 12px;
+            transform: rotate(-25deg);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        /* テキストエリア */
+        .text-content {
+            flex-grow: 1;
+        }
+
+        .title {
+            color: var(--primary-pink);
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin: 0 0 5px 0;
+        }
+
+        .price {
+            color: var(--primary-pink);
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .price span {
+            font-size: 0.9rem;
+        }
+
+        .description {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* 電話ボタン（フッター固定用） */
+        .footer-btn {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--primary-pink);
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            font-weight: bold;
+            font-size: 1.2rem;
+            text-decoration: none;
+            z-index: 100;
+        }
     </style>
 </head>
 <body>
 
-<section id="reviews-section">
-    <h2 class="section-h2">お客様からの喜びの声</h2>
-    
-    <div class="slider-viewport">
-        <div class="slider-track">
-            
-            <div class="review-card">
-                <div class="user-header"><div class="user-avatar">👤</div><div class="user-info">50代 男性（持ち家）<div class="star-line">★★★★★</div></div></div>
-                <div class="tag-container"><span class="tag-svc">不用品回収</span><span class="tag-loc">大阪府大阪市</span></div>
-                <h3 class="review-h3">引越し前日の大量ゴミを即回収！</h3>
-                <p class="review-p">片付けが間に合わずパニックでしたが、電話一本でその日に対応。重い家電もテキパキ運んでくださり本当に助かりました。</p>
-            </div>
-            <div class="review-card">
-                <div class="user-header"><div class="user-avatar" style="background:#e8f5e9;">👤</div><div class="user-info">60代 女性（主婦）<div class="star-line">★★★★★</div></div></div>
-                <div class="tag-container"><span class="tag-svc">庭の草むしり</span><span class="tag-loc">兵庫県西宮市</span></div>
-                <h3 class="review-h3">腰を痛めていたので、本当に救われました</h3>
-                <p class="review-p">荒れ放題だった庭が1日でピカピカに。除草剤の提案もいただき、その後の手入れが楽になりました。またお願いします。</p>
-            </div>
-            <div class="review-card">
-                <div class="user-header"><div class="user-avatar" style="background:#fce4ec;">👤</div><div class="user-info">30代 女性（一人暮らし）<div class="star-line">★★★★★</div></div></div>
-                <div class="tag-container"><span class="tag-svc">家具組み立て</span><span class="tag-loc">京都府京都市</span></div>
-                <h3 class="review-h3">大型家具もプロの手であっという間に完成</h3>
-                <p class="review-p">ネットで買った棚が難解すぎて断念。プロに頼んだら1時間足らずで完成。梱包ゴミも持ち帰ってくれて大満足です。</p>
-            </div>
-            <div class="review-card">
-                <div class="user-header"><div class="user-avatar" style="background:#fff3e0;">👤</div><div class="user-info">70代 男性（独居）<div class="star-line">★★★★★</div></div></div>
-                <div class="tag-container"><span class="tag-svc">買い物代行</span><span class="tag-loc">奈良県奈良市</span></div>
-                <h3 class="review-h3">体調を崩した時の買い物、助かりました</h3>
-                <p class="review-p">数日間動けず困っていたところ、食材の買い出しを快く引き受けてくれました。丁寧な対応で非常に安心できました。</p>
-            </div>
-            <div class="review-card">
-                <div class="user-header"><div class="user-avatar" style="background:#e3f2fd;">👤</div><div class="user-info">40代 男性（持ち家）<div class="star-line">★★★★★</div></div></div>
-                <div class="tag-container"><span class="tag-svc">雨どい掃除</span><span class="tag-loc">滋賀県大津市</span></div>
-                <h3 class="review-h3">自分では危ない高所もお任せできました</h3>
-                <p class="review-p">2階の雨どいが詰まり、困っていました。ハシゴを使って手際よく掃除していただき、料金も良心的でホッとしました。</p>
-            </div>
-            <div class="review-card">
-                <div class="user-header"><div class="user-avatar" style="background:#f3e5f5;">👤</div><div class="user-info">80代 女性（独居）<div class="star-line">★★★★★</div></div></div>
-                <div class="tag-container"><span class="tag-svc">日常の軽作業</span><span class="tag-loc">和歌山県和歌山市</span></div>
-                <h3 class="review-h3">電球1個の交換から、笑顔で対応</h3>
-                <p class="review-p">高い所の電球が切れ、誰にも頼めず不安でした。些細な依頼にも関わらず、優しく対応していただき本当に嬉しかったです。</p>
-            </div>
-            <div class="review-card">
-                <div class="user-header"><div class="user-avatar" style="background:#ffebee;">👤</div><div class="user-info">20代 男性（マンション）<div class="star-line">★★★★★</div></div></div>
-                <div class="tag-container"><span class="tag-svc">模様替え・移動</span><span class="tag-loc">大阪府吹田市</span></div>
-                <h3 class="review-h3">大型ソファの移動、プロの技でした</h3>
-                <p class="review-p">自分一人ではビクともしないソファを移動。壁に傷がつかないようしっかり養生して運び入れてくれました。流石です！</p>
-            </div>
-            <div class="review-card">
-                <div class="user-header"><div class="user-avatar" style="background:#e0f7fa;">👤</div><div class="user-info">40代 女性（主婦）<div class="star-line">★★★★★</div></div></div>
-                <div class="tag-container"><span class="tag-svc">蛇口修理</span><span class="tag-loc">兵庫県明石市</span></div>
-                <h3 class="review-h3">深夜の緊急トラブルに即対応で安心</h3>
-                <p class="review-p">水が止まらなくなりパニック。夜遅くでしたが30分で到着。部品交換で安く修理していただき、本当に助かりました。</p>
-            </div>
-            <div class="review-card">
-                <div class="user-header"><div class="user-avatar" style="background:#f1f8e9;">👤</div><div class="user-info">40代 女性（主婦）<div class="star-line">★★★★★</div></div></div>
-                <div class="tag-container"><span class="tag-svc">窓・サッシ掃除</span><span class="tag-loc">京都府宇治市</span></div>
-                <h3 class="review-h3">手の届かない高い窓がピカピカに</h3>
-                <p class="review-p">吹き抜けの窓汚れがずっと気になっていました。専用の道具で綺麗にしていただき、部屋がパッと明るくなりました！</p>
-            </div>
-            <div class="review-card">
-                <div class="user-header"><div class="user-avatar" style="background:#efebe9;">👤</div><div class="user-info">60代 男性（会社員）<div class="star-line">★★★★★</div></div></div>
-                <div class="tag-container"><span class="tag-svc">実家の整理</span><span class="tag-loc">奈良県生駒市</span></div>
-                <h3 class="review-h3">心のこもった丁寧な作業に感謝</h3>
-                <p class="review-p">遺品の整理を依頼。貴重品を一緒に探しながら丁寧に作業してくれました。寄り添う対応に精神的にも救われました。</p>
-            </div>
+<div class="container">
 
-            <div class="review-card">
-                <div class="user-header"><div class="user-avatar">👤</div><div class="user-info">50代 男性（大阪市）<div class="star-line">★★★★★</div></div></div>
-                <div class="tag-container"><span class="tag-svc">不用品回収</span><span class="tag-loc">大阪府</span></div>
-                <h3 class="review-h3">引越し前日のゴミを即回収！</h3>
-                <p class="review-p">片付けが間に合わずパニックでしたが、その日のうちに対応してくれました。</p>
-            </div>
-            <div class="review-card">
-                <div class="user-header"><div class="user-avatar" style="background:#e8f5e9;">👤</div><div class="user-info">60代 女性（西宮市）<div class="star-line">★★★★★</div></div></div>
-                <div class="tag-container"><span class="tag-svc">庭の草むしり</span><span class="tag-loc">兵庫県</span></div>
-                <h3 class="review-h3">腰を痛めていたので助かりました</h3>
-                <p class="review-p">荒れた庭が1日で綺麗に。除草剤の提案も助かりました。</p>
-            </div>
-            </div>
+    <div class="service-card">
+        <div class="image-container">
+            <div class="case-badge">CASE01</div>
+            <img src="https://via.placeholder.com/150" alt="エアコン掃除">
+        </div>
+        <div class="text-content">
+            <h3 class="title">エアコン掃除</h3>
+            <div class="price">10,000円～</div>
+            <p class="description">冷暖房の効きが悪くなったり、カビ臭い匂いはありませんか？独自の機材・洗剤で内部を洗浄します。</p>
+        </div>
     </div>
 
-    <div class="swipe-guide">
-        <i class="fas fa-arrows-alt-h"></i> スワイプ・マウスホバーで停止します
+    <div class="service-card">
+        <div class="image-container">
+            <div class="case-badge">CASE02</div>
+            <img src="https://via.placeholder.com/150" alt="お引っ越し">
+        </div>
+        <div class="text-content">
+            <h3 class="title">お引っ越し</h3>
+            <div class="price">20,000円～</div>
+            <p class="description">単身の方からご家族まで。家具の配置換えや、一時的な移動も承ります。お気軽にご相談ください。</p>
+        </div>
     </div>
-</section>
+
+    <div class="service-card">
+        <div class="image-container">
+            <div class="case-badge">CASE03</div>
+            <img src="https://via.placeholder.com/150" alt="遺品整理">
+        </div>
+        <div class="text-content">
+            <h3 class="title">遺品整理</h3>
+            <div class="price">30,000円～</div>
+            <p class="description">大切な思い出を丁寧に整理いたします。資格を持ったスタッフが真心を込めて対応させていただきます。</p>
+        </div>
+    </div>
+
+    <div class="service-card">
+        <div class="image-container">
+            <div class="case-badge">CASE04</div>
+            <img src="https://via.placeholder.com/150" alt="草刈り・庭の手入れ">
+        </div>
+        <div class="text-content">
+            <h3 class="title">草刈り・庭手入れ</h3>
+            <div class="price">5,000円～</div>
+            <p class="description">お庭の雑草対策や枝切りなど、面倒な作業はすべてお任せください。定期的な管理も可能です。</p>
+        </div>
+    </div>
+
+</div>
+
+<a href="tel:000-0000-0000" class="footer-btn">📞 電話で問合せる</a>
 
 </body>
 </html>
