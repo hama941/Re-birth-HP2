@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> 便利屋マスターズ 統合LP</title>
+    <title>害獣トラブル119 ＆ 便利屋マスターズ 統合LP</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
@@ -46,6 +46,8 @@
             padding: 0;
             color: #333;
             padding-top: 35px; /* ステータスバー分 */
+            /* ★固定フッター用に下部余白を追加 */
+            padding-bottom: 100px; 
             background-color: var(--bg-body);
             line-height: 1.6;
             overflow-x: hidden; /* 横スクロール防止 */
@@ -157,7 +159,6 @@
         }
         .hero-image-wrapper {
             width: 100%;
-            /* 画面幅いっぱいに画像を表示 */
             margin: 0;
             padding: 0;
             overflow: hidden;
@@ -167,8 +168,6 @@
             height: auto;
             display: block;
             object-fit: cover;
-            /* PCでの画像の高さを適切に見せる場合、max-heightを設定しても良いが
-               「はみ出して」という要望に合わせて基本は制限なしで表示 */
         }
 
         /* ヒーロー下のコンテンツ（帯とボタン） */
@@ -723,6 +722,115 @@
             .footer-form-title { font-size: 20px; }
         }
 
+        /* =========================================
+           ★ ここから追加: 固定フッター用CSS
+           ========================================= */
+        .fixed-footer-cta {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 9999;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+            text-decoration: none;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 0;
+            height: 80px;
+            transition: background 0.3s;
+        }
+
+        /* 表示・非表示切り替え用クラス */
+        .is-hidden {
+            display: none !important;
+        }
+
+        /* [A] 電話用スタイル (10:00-20:00) */
+        .cta-tel {
+            background: linear-gradient(to bottom, #FF9800, #F57C00); /* オレンジ */
+        }
+
+        /* [B] メール用スタイル (時間外) */
+        .cta-mail {
+            background: linear-gradient(to bottom, #4CAF50, #2E7D32); /* 緑 */
+        }
+
+        /* コンテンツ幅 */
+        .footer-inner {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 左側の黄色いバッジ */
+        .discount-badge {
+            position: absolute;
+            left: 10px;
+            bottom: 5px;
+            width: 80px;
+            height: 80px;
+            background-color: #FFEB3B;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #D50000;
+            font-weight: bold;
+            line-height: 1;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            transform: rotate(-10deg);
+            z-index: 2;
+        }
+        .badge-top { font-size: 10px; position: absolute; top: 8px; color: #333; }
+        .badge-main { font-size: 28px; font-weight: 900; margin-top: 5px; }
+        .badge-sub { font-size: 14px; }
+
+        /* 右側のテキストエリア */
+        .text-content {
+            text-align: center;
+            padding-left: 60px;
+            width: 100%;
+        }
+
+        /* ステータステキスト */
+        .status-text {
+            font-size: 11px;
+            line-height: 1.4;
+            opacity: 0.95;
+            margin-bottom: 2px;
+            font-weight: normal;
+        }
+        
+        /* メインアクションテキスト */
+        .action-text {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* アイコン装飾 */
+        .icon-phone::before { content: "📞"; font-size: 20px; }
+        .icon-mail::before { content: "✉️"; font-size: 20px; }
+
+        /* スマホ調整 */
+        @media (max-width: 375px) {
+            .action-text { font-size: 19px; }
+            .status-text { font-size: 10px; }
+            .discount-badge { width: 70px; height: 70px; left: 5px; }
+            .badge-main { font-size: 24px; }
+        }
+
     </style>
 </head>
 <body>
@@ -744,7 +852,7 @@
             <div class="logo-section">
                 <div class="catch-copy">関西全域対応！！</div>
                 <h1 class="main-title">
-                    おうちのトラブル<span>119</span>
+                    害獣トラブル<span>119</span>
                 </h1>
             </div>
 
@@ -1398,6 +1506,40 @@
         </div>
     </section>
 
+    <a href="tel:0120-000-000" id="footer-tel" class="fixed-footer-cta cta-tel is-hidden">
+      <div class="footer-inner">
+        <div class="discount-badge">
+          <span class="badge-top">「HP見た」<br>で</span>
+          <span class="badge-main">20<span style="font-size:60%">%</span></span>
+          <span class="badge-sub">OFF</span>
+        </div>
+        <div class="text-content">
+          <p class="status-text">
+            お急ぎください！今すぐつながります<br>
+            <span style="background:rgba(0,0,0,0.1); padding:0 5px; border-radius:4px;">10:00 - 20:00 受付中</span>
+          </p>
+          <p class="action-text icon-phone">電話で相談する</p>
+        </div>
+      </div>
+    </a>
+
+    <a href="#contact-form-area" id="footer-mail" class="fixed-footer-cta cta-mail is-hidden">
+      <div class="footer-inner">
+        <div class="discount-badge">
+          <span class="badge-top">「HP見た」<br>で</span>
+          <span class="badge-main">20<span style="font-size:60%">%</span></span>
+          <span class="badge-sub">OFF</span>
+        </div>
+        <div class="text-content">
+          <p class="status-text">
+            現在はお電話での受付時間外です。<br>
+            フォームよりお問い合わせください。
+          </p>
+          <p class="action-text icon-mail">メールでお問い合わせ</p>
+        </div>
+      </div>
+    </a>
+
     <script>
         /* --- ステータスバー用スクリプト --- */
         function updateStatusBarDateTime() {
@@ -1418,7 +1560,12 @@
             const isBusinessTime = (currentHour >= 10 && currentHour < 20);
 
             document.querySelectorAll('.status-text').forEach(el => {
-                el.textContent = isBusinessTime ? "受付可能！" : "メールでの受付中";
+                // フッター内のstatus-textを書き換えてしまうと崩れるので、ステータスバー用のものだけ更新するよう条件分岐するか、
+                // あるいはフッターのstatus-textには別のクラスをつけるのがベストですが、
+                // 簡易的に「もしフッターのテキストなら書き換えない」処理を入れます
+                if(!el.closest('.fixed-footer-cta')) {
+                    el.textContent = isBusinessTime ? "受付可能！" : "メールでの受付中";
+                }
             });
             document.querySelectorAll('.arrival-msg').forEach(el => {
                 el.style.display = isBusinessTime ? "inline" : "none";
@@ -1548,11 +1695,34 @@
             });
         });
 
+        /* --- ★ ここから追加: 固定フッター切り替え用スクリプト --- */
+        function updateFooter() {
+            const now = new Date();
+            const hour = now.getHours();
+            const footerTel = document.getElementById('footer-tel');
+            const footerMail = document.getElementById('footer-mail');
+            
+            if (hour >= 10 && hour < 20) {
+                // 10:00〜19:59 は電話を表示
+                if(footerTel) footerTel.classList.remove('is-hidden');
+                if(footerMail) footerMail.classList.add('is-hidden');
+            } else {
+                // それ以外はメールを表示
+                if(footerMail) footerMail.classList.remove('is-hidden');
+                if(footerTel) footerTel.classList.add('is-hidden');
+            }
+        }
+
         window.onload = function() {
             updateStatusBarDateTime();
+            // ステータスバーは1分ごとに更新
             setInterval(updateStatusBarDateTime, 60000);
+
+            // フッター初期表示
+            updateFooter();
+            // フッターも1分ごとにチェック
+            setInterval(updateFooter, 60000);
         };
     </script>
 </body>
 </html>
-
