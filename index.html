@@ -3,212 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>街の便利屋 助っ人本舗 | 関西全域 24時間即日対応</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
-        /* --- 共通設定 --- */
-        :root {
-            --primary-blue: #2563eb;
-            --accent-yellow: #ffde00;
-            --bg-light: #f9f7f2;
-            --text-dark: #333;
-        }
-
-        body, html {
-            margin: 0; padding: 0;
+        /* --- お客様の声セクション専用スタイル --- */
+        #reviews-section {
+            background-color: #f9f7f2;
+            padding: 80px 0;
+            overflow: hidden; /* はみ出しを隠す */
             font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-            background-color: #fff; color: var(--text-dark); line-height: 1.6;
-            padding-top: 35px; /* ステータスバー用 */
-            padding-bottom: 80px; /* 固定ボタン用 */
         }
 
-        /* --- 1. 自動更新ステータスバー --- */
-        .status-bar {
-            position: fixed; top: 0; left: 0; width: 100%; height: 35px;
-            background-color: #000; color: #fff; font-weight: bold; font-size: 0.85rem;
-            z-index: 10000; overflow: hidden; display: flex; align-items: center;
+        .section-h2 {
+            text-align: center;
+            margin-bottom: 50px;
+            color: #333;
+            font-size: 28px;
+            font-weight: 900;
         }
-        .scroll-container { display: flex; white-space: nowrap; width: 100%; overflow: hidden; }
-        .scroll-content {
-            display: flex; white-space: nowrap; width: max-content;
-            animation: scroll-left 20s linear infinite;
-        }
-        @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-25%); } }
-        .text-item { padding-right: 50px; display: flex; align-items: center; }
-        .bar-highlight { color: #ffcc00; margin: 0 5px; }
 
-        /* --- 2. ヘッダー --- */
-        .header-container {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 15px 20px; max-width: 1200px; margin: 0 auto;
+        /* スライダーの外枠 */
+        .slider-viewport {
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            cursor: grab;
         }
-        .main-title { font-size: 28px; font-weight: 900; color: var(--primary-blue); margin: 0; font-style: italic; }
-        .main-title span { color: #333; font-style: normal; margin-left: 5px; }
-        .contact-btns { display: flex; gap: 10px; }
-        .btn-circle {
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            width: 70px; height: 70px; border-radius: 10px; text-decoration: none; color: #fff; font-size: 11px; font-weight: bold;
+
+        /* 横に並ぶカードの入れ物（アニメーション本体） */
+        .slider-track {
+            display: flex;
+            width: max-content;
+            /* 50秒で1周。速度を調整したい場合は数字を変更 */
+            animation: loop-scroll 50s linear infinite;
         }
-        .bg-orange { background-color: #f36d21; }
-        .bg-green { background-color: #228b22; }
 
-        /* --- 3. サービス一覧 (便利屋仕様) --- */
-        .svc-section { padding: 60px 20px; max-width: 1000px; margin: 0 auto; }
-        .svc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .svc-card { border: 1px solid #eee; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        .svc-img { width: 100%; height: 200px; background: #ddd; object-fit: cover; }
-        .svc-content { padding: 20px; }
-        .svc-name { font-size: 20px; font-weight: bold; margin-bottom: 5px; }
-        .svc-price { color: #d00; font-size: 24px; font-weight: 900; display: block; margin-bottom: 10px; }
+        /* マウスホバーまたは指で触れている間は一時停止 */
+        .slider-track:hover,
+        .slider-track:active {
+            animation-play-state: paused;
+        }
 
-        /* --- 4. お客様の声 (スライダー) --- */
-        #reviews-section { background-color: var(--bg-light); padding: 80px 0; overflow: hidden; }
-        .slider-viewport { width: 100%; overflow: hidden; display: flex; cursor: grab; }
-        .slider-track { display: flex; width: max-content; animation: loop-scroll 60s linear infinite; }
-        .slider-track:hover, .slider-track:active { animation-play-state: paused; }
-        @keyframes loop-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        /* 無限ループのアニメーション：2セット並べたうちの半分（-50%）まで行ったら0に戻る */
+        @keyframes loop-scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* 各レビューカードのスタイル */
         .review-card {
-            flex: 0 0 350px; background: #fff; border-radius: 15px; padding: 25px; margin: 0 15px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.06); border: 1px solid #eee;
+            flex: 0 0 350px; /* カードの幅 */
+            background: #fff;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 0 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            border: 1px solid #eee;
+            box-sizing: border-box;
         }
-        @media (max-width: 600px) { .review-card { flex: 0 0 280px; } }
 
-        /* --- 5. 固定電話バー --- */
-        #fixed-bar {
-            position: fixed; bottom: 0; left: 0; width: 100%; height: 80px;
-            background-color: #f36d21; z-index: 10001; border-top: 2px solid #fff;
+        @media (max-width: 600px) {
+            .review-card { flex: 0 0 280px; padding: 20px; }
+            .section-h2 { font-size: 24px; }
         }
-        #fixed-bar a {
-            display: flex; align-items: center; justify-content: center; height: 100%;
-            text-decoration: none; color: #fff; font-weight: bold;
-        }
+
+        /* カード内パーツ */
+        .user-header { display: flex; align-items: center; margin-bottom: 12px; }
+        .user-avatar { width: 45px; height: 45px; border-radius: 50%; margin-right: 15px; display: flex; align-items: center; justify-content: center; font-size: 22px; background: #eee; }
+        .user-info { font-size: 13px; color: #666; font-weight: bold; }
+        .star-line { color: #f1c40f; font-size: 18px; margin-top: 2px; }
+        .tag-container { display: flex; gap: 8px; margin-bottom: 12px; }
+        .tag-svc { background: #2563eb; color: #fff; font-size: 10px; font-weight: bold; padding: 4px 10px; border-radius: 4px; }
+        .tag-loc { border: 1px solid #333; color: #333; font-size: 10px; font-weight: bold; padding: 3px 10px; border-radius: 4px; }
+        .review-h3 { font-size: 17px; font-weight: bold; line-height: 1.5; margin: 0 0 10px 0; color: #333; border-bottom: 1px dashed #ddd; padding-bottom: 8px; }
+        .review-p { font-size: 14px; line-height: 1.7; color: #555; margin: 0; }
+
+        /* ガイド表示 */
+        .swipe-guide { text-align: center; color: #999; font-size: 12px; margin-top: 20px; }
     </style>
 </head>
 <body>
 
-    <div class="status-bar">
-        <div class="scroll-container">
-            <div id="scroll-target" class="scroll-content">
-                <div class="text-item">【稼働状況】<span class="current-date"></span> <span class="current-time bar-highlight"></span> 現在 <span style="margin-left: 30px;" class="status-text bar-highlight"></span> <span class="arrival-msg">（最短15分で到着可能です！）</span></div>
-                <div class="text-item">【稼働状況】<span class="current-date"></span> <span class="current-time bar-highlight"></span> 現在 <span style="margin-left: 30px;" class="status-text bar-highlight"></span> <span class="arrival-msg">（最短15分で到着可能です！）</span></div>
-                <div class="text-item">【稼働状況】<span class="current-date"></span> <span class="current-time bar-highlight"></span> 現在 <span style="margin-left: 30px;" class="status-text bar-highlight"></span> <span class="arrival-msg">（最短15分で到着可能です！）</span></div>
-                <div class="text-item">【稼働状況】<span class="current-date"></span> <span class="current-time bar-highlight"></span> 現在 <span style="margin-left: 30px;" class="status-text bar-highlight"></span> <span class="arrival-msg">（最短15分で到着可能です！）</span></div>
-            </div>
-        </div>
-    </div>
-
-    <header class="header-container">
-        <div>
-            <div style="background:var(--accent-yellow); font-size:12px; font-weight:bold; padding:2px 10px; border-radius:4px; width:fit-content;">関西全域対応！</div>
-            <h1 class="main-title">助っ人本舗<span>119</span></h1>
-        </div>
-        <div class="contact-btns">
-            <a href="tel:05035280140" class="btn-circle bg-orange"><i class="fas fa-phone-alt" style="font-size:20px; margin-bottom:5px;"></i>電話</a>
-            <a href="#contact" class="btn-circle bg-green"><i class="fas fa-envelope" style="font-size:20px; margin-bottom:5px;"></i>メール</a>
-        </div>
-    </header>
-
-    <section class="svc-section">
-        <h2 style="text-align:center; margin-bottom:40px;">お困りごとは何でもお任せください</h2>
-        <div class="svc-grid">
-            <div class="svc-card">
-                <div class="svc-img" style="background:url('https://images.unsplash.com/photo-1595844730298-b960ff98fee0?auto=format&fit=crop&w=500&q=80') center/cover;"></div>
-                <div class="svc-content">
-                    <div class="svc-name">不用品回収・お片付け</div>
-                    <span class="svc-price">5,500円〜</span>
-                    <p style="font-size:14px; color:#666;">粗大ゴミの処分や引越し前後のお片付けを即日対応。</p>
-                </div>
-            </div>
-            <div class="svc-card">
-                <div class="svc-img" style="background:url('https://images.unsplash.com/photo-1581244276891-6bc618f3a697?auto=format&fit=crop&w=500&q=80') center/cover;"></div>
-                <div class="svc-content">
-                    <div class="svc-name">家具組み立て代行</div>
-                    <span class="svc-price">3,300円〜</span>
-                    <p style="font-size:14px; color:#666;">IKEAやネット通販の大型家具もプロがスピーディに組立。</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="reviews-section">
-        <h2 style="text-align:center; margin-bottom:40px; font-weight:900;">お客様からの喜びの声</h2>
-        <div class="slider-viewport">
-            <div class="slider-track" id="review-track">
-                </div>
-        </div>
-    </section>
-
-    <div id="fixed-bar">
-        <a id="footer-link" href="tel:05035280140">
-            <i id="footer-icon" class="fas fa-phone-alt" style="font-size:28px; margin-right:15px; transform:scaleX(-1);"></i>
-            <div style="display:flex; flex-direction:column;">
-                <span id="footer-sub" style="font-size:12px;">24時間受付中！お急ぎの方はこちら</span>
-                <span id="footer-main" style="font-size:24px; letter-spacing:1px;">050-3528-0140</span>
-            </div>
-        </a>
-    </div>
-
-    <script>
-        // 1. ステータスバーと下部リンクの更新
-        function updateStatus() {
-            const now = new Date();
-            const dateStr = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日`;
-            const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+<section id="reviews-section">
+    <h2 class="section-h2">お客様からの喜びの声</h2>
+    
+    <div class="slider-viewport">
+        <div class="slider-track">
             
-            document.querySelectorAll('.current-date').forEach(el => el.textContent = dateStr);
-            document.querySelectorAll('.current-time').forEach(el => el.textContent = timeStr);
+            <div class="review-card">
+                <div class="user-header"><div class="user-avatar">👤</div><div class="user-info">50代 男性（持ち家）<div class="star-line">★★★★★</div></div></div>
+                <div class="tag-container"><span class="tag-svc">不用品回収</span><span class="tag-loc">大阪府大阪市</span></div>
+                <h3 class="review-h3">引越し前日の大量ゴミを即回収！</h3>
+                <p class="review-p">片付けが間に合わずパニックでしたが、電話一本でその日に対応。重い家電もテキパキ運んでくださり本当に助かりました。</p>
+            </div>
+            <div class="review-card">
+                <div class="user-header"><div class="user-avatar" style="background:#e8f5e9;">👤</div><div class="user-info">60代 女性（主婦）<div class="star-line">★★★★★</div></div></div>
+                <div class="tag-container"><span class="tag-svc">庭の草むしり</span><span class="tag-loc">兵庫県西宮市</span></div>
+                <h3 class="review-h3">腰を痛めていたので、本当に救われました</h3>
+                <p class="review-p">荒れ放題だった庭が1日でピカピカに。除草剤の提案もいただき、その後の手入れが楽になりました。またお願いします。</p>
+            </div>
+            <div class="review-card">
+                <div class="user-header"><div class="user-avatar" style="background:#fce4ec;">👤</div><div class="user-info">30代 女性（一人暮らし）<div class="star-line">★★★★★</div></div></div>
+                <div class="tag-container"><span class="tag-svc">家具組み立て</span><span class="tag-loc">京都府京都市</span></div>
+                <h3 class="review-h3">大型家具もプロの手であっという間に完成</h3>
+                <p class="review-p">ネットで買った棚が難解すぎて断念。プロに頼んだら1時間足らずで完成。梱包ゴミも持ち帰ってくれて大満足です。</p>
+            </div>
+            <div class="review-card">
+                <div class="user-header"><div class="user-avatar" style="background:#fff3e0;">👤</div><div class="user-info">70代 男性（独居）<div class="star-line">★★★★★</div></div></div>
+                <div class="tag-container"><span class="tag-svc">買い物代行</span><span class="tag-loc">奈良県奈良市</span></div>
+                <h3 class="review-h3">体調を崩した時の買い物、助かりました</h3>
+                <p class="review-p">数日間動けず困っていたところ、食材の買い出しを快く引き受けてくれました。丁寧な対応で非常に安心できました。</p>
+            </div>
+            <div class="review-card">
+                <div class="user-header"><div class="user-avatar" style="background:#e3f2fd;">👤</div><div class="user-info">40代 男性（持ち家）<div class="star-line">★★★★★</div></div></div>
+                <div class="tag-container"><span class="tag-svc">雨どい掃除</span><span class="tag-loc">滋賀県大津市</span></div>
+                <h3 class="review-h3">自分では危ない高所もお任せできました</h3>
+                <p class="review-p">2階の雨どいが詰まり、困っていました。ハシゴを使って手際よく掃除していただき、料金も良心的でホッとしました。</p>
+            </div>
+            <div class="review-card">
+                <div class="user-header"><div class="user-avatar" style="background:#f3e5f5;">👤</div><div class="user-info">80代 女性（独居）<div class="star-line">★★★★★</div></div></div>
+                <div class="tag-container"><span class="tag-svc">日常の軽作業</span><span class="tag-loc">和歌山県和歌山市</span></div>
+                <h3 class="review-h3">電球1個の交換から、笑顔で対応</h3>
+                <p class="review-p">高い所の電球が切れ、誰にも頼めず不安でした。些細な依頼にも関わらず、優しく対応していただき本当に嬉しかったです。</p>
+            </div>
+            <div class="review-card">
+                <div class="user-header"><div class="user-avatar" style="background:#ffebee;">👤</div><div class="user-info">20代 男性（マンション）<div class="star-line">★★★★★</div></div></div>
+                <div class="tag-container"><span class="tag-svc">模様替え・移動</span><span class="tag-loc">大阪府吹田市</span></div>
+                <h3 class="review-h3">大型ソファの移動、プロの技でした</h3>
+                <p class="review-p">自分一人ではビクともしないソファを移動。壁に傷がつかないようしっかり養生して運び入れてくれました。流石です！</p>
+            </div>
+            <div class="review-card">
+                <div class="user-header"><div class="user-avatar" style="background:#e0f7fa;">👤</div><div class="user-info">40代 女性（主婦）<div class="star-line">★★★★★</div></div></div>
+                <div class="tag-container"><span class="tag-svc">蛇口修理</span><span class="tag-loc">兵庫県明石市</span></div>
+                <h3 class="review-h3">深夜の緊急トラブルに即対応で安心</h3>
+                <p class="review-p">水が止まらなくなりパニック。夜遅くでしたが30分で到着。部品交換で安く修理していただき、本当に助かりました。</p>
+            </div>
+            <div class="review-card">
+                <div class="user-header"><div class="user-avatar" style="background:#f1f8e9;">👤</div><div class="user-info">40代 女性（主婦）<div class="star-line">★★★★★</div></div></div>
+                <div class="tag-container"><span class="tag-svc">窓・サッシ掃除</span><span class="tag-loc">京都府宇治市</span></div>
+                <h3 class="review-h3">手の届かない高い窓がピカピカに</h3>
+                <p class="review-p">吹き抜けの窓汚れがずっと気になっていました。専用の道具で綺麗にしていただき、部屋がパッと明るくなりました！</p>
+            </div>
+            <div class="review-card">
+                <div class="user-header"><div class="user-avatar" style="background:#efebe9;">👤</div><div class="user-info">60代 男性（会社員）<div class="star-line">★★★★★</div></div></div>
+                <div class="tag-container"><span class="tag-svc">実家の整理</span><span class="tag-loc">奈良県生駒市</span></div>
+                <h3 class="review-h3">心のこもった丁寧な作業に感謝</h3>
+                <p class="review-p">遺品の整理を依頼。貴重品を一緒に探しながら丁寧に作業してくれました。寄り添う対応に精神的にも救われました。</p>
+            </div>
 
-            const isBusinessTime = (now.getHours() >= 10 && now.getHours() < 20);
-            document.querySelectorAll('.status-text').forEach(el => el.textContent = isBusinessTime ? "受付可能！" : "メール受付中");
-            document.querySelectorAll('.arrival-msg').forEach(el => el.style.display = isBusinessTime ? "inline" : "none");
+            <div class="review-card">
+                <div class="user-header"><div class="user-avatar">👤</div><div class="user-info">50代 男性（大阪市）<div class="star-line">★★★★★</div></div></div>
+                <div class="tag-container"><span class="tag-svc">不用品回収</span><span class="tag-loc">大阪府</span></div>
+                <h3 class="review-h3">引越し前日のゴミを即回収！</h3>
+                <p class="review-p">片付けが間に合わずパニックでしたが、その日のうちに対応してくれました。</p>
+            </div>
+            <div class="review-card">
+                <div class="user-header"><div class="user-avatar" style="background:#e8f5e9;">👤</div><div class="user-info">60代 女性（西宮市）<div class="star-line">★★★★★</div></div></div>
+                <div class="tag-container"><span class="tag-svc">庭の草むしり</span><span class="tag-loc">兵庫県</span></div>
+                <h3 class="review-h3">腰を痛めていたので助かりました</h3>
+                <p class="review-p">荒れた庭が1日で綺麗に。除草剤の提案も助かりました。</p>
+            </div>
+            </div>
+    </div>
 
-            // 下部バーの切替
-            const link = document.getElementById('footer-link');
-            const icon = document.getElementById('footer-icon');
-            const sub = document.getElementById('footer-sub');
-            const main = document.getElementById('footer-main');
+    <div class="swipe-guide">
+        <i class="fas fa-arrows-alt-h"></i> スワイプ・マウスホバーで停止します
+    </div>
+</section>
 
-            if (!isBusinessTime) {
-                link.href = "#contact";
-                icon.className = "fas fa-envelope";
-                icon.style.transform = "none";
-                sub.textContent = "深夜・早朝はこちらから";
-                main.textContent = "お問い合わせフォームへ";
-            }
-        }
-
-        // 2. お客様の声データの生成
-        const reviews = [
-            { area: "大阪市", svc: "不用品回収", title: "即日対応で助かった", text: "引越し前日のゴミを即回収してくれました。プロの技に感動！" },
-            { area: "西宮市", svc: "草むしり", title: "お庭がピカピカ", text: "腰を痛めていたので大助かり。丁寧な仕事ぶりでした。" },
-            { area: "京都市", svc: "家具組立", title: "大型棚もあっという間", text: "自分では無理だった複雑な棚も、1時間で完成。流石です。" },
-            { area: "奈良市", svc: "買い物代行", title: "体調不良時の救世主", text: "買い出しを快く引き受けてくれました。非常に安心できました。" },
-            { area: "大津市", svc: "高所作業", title: "雨どい詰まり解消", text: "自分では危ない高所もお任せ。料金も良心的でした。" },
-            { area: "和歌山市", svc: "日常の軽作業", title: "電球1個から笑顔で", text: "些細な依頼にも関わらず、優しく対応していただき感謝です。" },
-            { area: "吹田市", svc: "家具移動", title: "ソファの移動が完璧", text: "壁を傷つけない丁寧な養生。次回もお願いしたいです。" },
-            { area: "明石市", svc: "水漏れ修理", title: "深夜の緊急時に感謝", text: "蛇口が止まらずパニックでしたが、30分で駆けつけてくれました。" },
-            { area: "宇治市", svc: "窓掃除", title: "高い窓が綺麗に", text: "吹き抜けの窓がピカピカになり、部屋が明るくなりました！" },
-            { area: "生駒市", svc: "実家整理", title: "心のこもった作業", text: "遺品の整理を丁寧に。親身になって相談に乗ってくれました。" }
-        ];
-
-        function renderReviews() {
-            const track = document.getElementById('review-track');
-            const reviewHTML = reviews.map(r => `
-                <div class="review-card">
-                    <div class="user-header"><div class="user-avatar" style="background:#eee;">👤</div><div class="user-info">${r.area} 顧客<div style="color:#f1c40f">★★★★★</div></div></div>
-                    <div style="display:flex; gap:8px; margin-bottom:12px;"><span class="tag-svc">${r.svc}</span><span class="tag-loc">${r.area}</span></div>
-                    <h3 style="font-size:17px; border-bottom:1px dashed #ddd; padding-bottom:10px;">${r.title}</h3>
-                    <p style="font-size:14px; color:#555;">${r.text}</p>
-                </div>
-            `).join('');
-            // 無限ループ用に2回貼り付け
-            track.innerHTML = reviewHTML + reviewHTML;
-        }
-
-        updateStatus();
-        renderReviews();
-        setInterval(updateStatus, 60000);
-    </script>
 </body>
 </html>
