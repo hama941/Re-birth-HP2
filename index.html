@@ -51,7 +51,7 @@
             font-family: 'Noto Sans JP', "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
             color: #333;
             padding-top: 35px; /* ステータスバー分 */
-            padding-bottom: 110px; /* 固定フッター分（少し多めに確保） */
+            padding-bottom: 110px; /* 固定フッター分 */
             background-color: var(--bg-body);
             line-height: 1.6;
         }
@@ -315,7 +315,7 @@
         }
 
         /* =========================================
-           6. 理由セクション
+           6. 理由セクション（修正：スマホ横並び対応）
            ========================================= */
         .reason-section-wrapper {
             background-color: #fff;
@@ -334,9 +334,17 @@
         .reason-description { font-size: 18px; line-height: 2; text-align: left; margin-bottom: 50px; font-weight: 500; max-width: 800px; margin-left: auto; margin-right: auto;}
         .text-highlight { color: #0099e6; font-weight: 900; background: linear-gradient(transparent 70%, #b3e5fc 70%); }
         
-        .comparison-wrapper { display: flex; justify-content: center; gap: 30px; align-items: stretch; }
+        .comparison-wrapper { 
+            display: flex; 
+            justify-content: center; 
+            gap: 30px; 
+            align-items: stretch; 
+        }
+        
         .comp-box {
-            flex: 1; border-radius: 12px; padding: 30px 20px 0 20px; display: flex; flex-direction: column;
+            flex: 1; 
+            min-width: 300px; /* PCでの最小幅 */
+            border-radius: 12px; padding: 30px 20px 0 20px; display: flex; flex-direction: column;
             align-items: center; background-color: #fff; position: relative; overflow: hidden;
         }
         .box-general { border: 3px solid #e0e0e0; background-color: #fafafa; }
@@ -372,10 +380,42 @@
         .check-item.g::before { content: "✔"; margin-right: 8px; font-size: 18px; }
         .check-item.o::before { content: "✔"; margin-right: 8px; font-size: 20px; color: #ff5722; background: #fff; border-radius: 50%; width: 24px; height: 24px; display: flex; justify-content: center; align-items: center; }
 
+        /* スマホ向け横スクロール・横並び調整 */
         @media (max-width: 768px) {
-            .comparison-wrapper { flex-direction: column; gap: 20px; }
-            .box-ours { transform: none; border: 3px solid var(--primary-navy); }
-            .reason-main-title { font-size: 24px; }
+            .reason-section-wrapper {
+                padding: 40px 0;
+            }
+            .reason-container {
+                padding: 0 10px; /* 左右余白を減らす */
+            }
+            .comparison-wrapper { 
+                /* 横並びを維持する設定 */
+                flex-direction: row; 
+                justify-content: flex-start;
+                gap: 15px; 
+                overflow-x: auto; /* はみ出たらスクロール */
+                padding-bottom: 20px; /* スクロールバー用の余白 */
+                width: 100%;
+                -webkit-overflow-scrolling: touch; /* なめらかスクロール */
+            }
+            .comp-box {
+                flex: 0 0 280px; /* 固定幅にして縮小を防ぐ */
+                transform: none; /* 拡大解除 */
+                min-width: 280px;
+                margin-top: 10px; /* 上部の影が見えるように */
+            }
+            .box-ours {
+                border: 3px solid var(--primary-navy); /* 枠線を少し細く */
+                transform: scale(1); /* スマホでは拡大しない */
+            }
+            
+            /* 文字サイズ調整 */
+            .box-title-general, .box-title-ours { font-size: 16px; margin-bottom: 15px; }
+            .diagram-area { font-size: 12px; margin-bottom: 15px; }
+            .d-icon { font-size: 24px; margin-bottom: 5px; }
+            .middle-agent-box, .dashed-box { height: 80px; }
+            .check-item { font-size: 13px; }
+            .reason-main-title { font-size: 22px; }
         }
 
         /* =========================================
@@ -1313,6 +1353,7 @@
                     </p>
                 </div>
             </div>
+
             <div class="step-card">
                 <div class="step-label">STEP 2</div>
                 <h3 class="step-title">現場まで急行</h3>
@@ -1325,6 +1366,7 @@
                     </p>
                 </div>
             </div>
+
             <div class="step-card">
                 <div class="step-label">STEP 3</div>
                 <h3 class="step-title">無料お見積り</h3>
