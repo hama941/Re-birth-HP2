@@ -3,197 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>お問い合わせフォーム</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* =========================================
-           フォーム専用デザイン (完全再現)
-           ========================================= */
-        
-        /* セクション全体の背景（薄い青のグラデーション） */
-        .footer-form-section {
-            background: linear-gradient(to bottom, #f0faff, #dcefff);
-            padding: 50px 20px;
-            display: flex;
-            justify-content: center;
+        /* --- お客様の声セクション専用スタイル --- */
+        #reviews-section {
+            background-color: #f9f7f2;
+            padding: 80px 0;
+            overflow: hidden;
             font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
         }
 
-        .footer-form-container {
-            width: 100%;
-            max-width: 800px;
-        }
-
-        /* フォームの白い外枠（黄色の太枠デザイン） */
-        .footer-form-box {
-            background-color: #fff;
-            border: 8px solid #fff9c4; /* 特徴的な太い黄枠 */
-            border-radius: 10px;
-            padding: 40px 30px;
-            width: 100%;
-            text-align: left;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            box-sizing: border-box;
-        }
-
-        /* タイトル（点線の下線付き） */
-        .footer-form-title {
+        .section-h2 {
             text-align: center;
-            font-size: 24px;
-            font-weight: 900;
-            color: #005691;
-            margin: 0 0 40px 0;
-            padding-bottom: 15px;
-            border-bottom: 2px dashed #ddd;
-        }
-
-        /* 各入力項目のまとまり */
-        .form-group {
-            margin-bottom: 20px;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* ラベル（項目名） */
-        .form-label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 8px;
-            font-size: 14px;
+            margin-bottom: 50px;
             color: #333;
+            font-size: 28px;
+            font-weight: 900;
         }
 
-        /* 必須バッジ（オレンジ） */
-        .badge {
-            display: inline-block;
-            font-size: 11px;
-            padding: 2px 6px;
-            border-radius: 4px;
-            margin-left: 8px;
-            vertical-align: middle;
-        }
-
-        .badge-required {
-            background-color: #f36e21;
-            color: #fff;
-        }
-
-        /* 入力エリア（インプット・テキストエリア） */
-        .form-input, .form-textarea {
+        .slider-viewport {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 16px;
-            background-color: #f9f9f9;
+            overflow: hidden;
+            display: flex;
+            cursor: grab;
+        }
+
+        .slider-track {
+            display: flex;
+            width: max-content;
+            /* 速度調整：秒数を変えると早くなったり遅くなったりします */
+            animation: loop-scroll 60s linear infinite;
+        }
+
+        .slider-track:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes loop-scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .review-card {
+            flex: 0 0 300px; /* 説明文を消したため幅を少しスリムに調整 */
+            background: #fff;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 0 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            border: 1px solid #eee;
             box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
-        .form-textarea {
-            height: 120px;
-            resize: vertical;
+        @media (max-width: 600px) {
+            .review-card { flex: 0 0 260px; }
+            .section-h2 { font-size: 24px; }
         }
 
-        /* 送信ボタンのエリア */
-        .submit-area {
-            text-align: center;
-            margin-top: 30px;
-        }
+        .user-header { display: flex; align-items: center; margin-bottom: 12px; }
+        .user-avatar { width: 40px; height: 40px; border-radius: 50%; margin-right: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; background: #eee; }
+        .user-info { font-size: 12px; color: #666; font-weight: bold; }
+        .star-line { color: #f1c40f; font-size: 16px; margin-top: 2px; }
+        .tag-container { display: flex; gap: 8px; margin-bottom: 12px; }
+        .tag-svc { background: #2563eb; color: #fff; font-size: 10px; font-weight: bold; padding: 4px 10px; border-radius: 4px; }
+        .tag-loc { border: 1px solid #333; color: #333; font-size: 10px; font-weight: bold; padding: 3px 10px; border-radius: 4px; }
+        .review-h3 { font-size: 16px; font-weight: bold; line-height: 1.4; margin: 0; color: #333; }
 
-        /* 送信ボタン（青のグラデーション） */
-        .submit-btn {
-            background: linear-gradient(to bottom, #5cb1f7, #2d7cd1);
-            color: #fff;
-            font-size: 20px;
-            font-weight: bold;
-            border: none;
-            padding: 15px 60px;
-            border-radius: 8px;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
-            transition: transform 0.1s, opacity 0.2s;
-            display: inline-flex;
-            align-items: center;
-            text-decoration: none;
-        }
-
-        /* ボタン内の矢印アイコン */
-        .submit-btn::after {
-            content: "▶";
-            font-size: 14px;
-            margin-left: 15px;
-        }
-
-        /* ホバー・クリック時の動き */
-        .submit-btn:hover {
-            opacity: 0.9;
-        }
-
-        .submit-btn:active {
-            transform: translateY(2px);
-            box-shadow: none;
-        }
-
-        /* レスポンシブ対応（スマホ表示） */
-        @media (max-width: 768px) {
-            .footer-form-box {
-                padding: 30px 15px;
-            }
-            .footer-form-title {
-                font-size: 20px;
-            }
-            .submit-btn {
-                width: 100%;
-                justify-content: center;
-                padding: 15px 20px;
-                font-size: 18px;
-            }
-        }
+        .swipe-guide { text-align: center; color: #999; font-size: 12px; margin-top: 30px; }
     </style>
 </head>
 <body>
 
-    <section class="footer-form-section" id="contact-form-area">
-        <div class="footer-form-container">
-            <div class="footer-form-box">
-                <h1 class="footer-form-title">お問い合わせフォーム</h1>
-                
-                <form action="" method="post" onsubmit="event.preventDefault(); alert('送信完了しました（デモ）');">
-                    
-                    <div class="form-group">
-                        <label class="form-label">お名前<span class="badge badge-required">必須</span></label>
-                        <input type="text" class="form-input" placeholder="例：山田花子" required>
-                    </div>
+<section id="reviews-section">
+    <h2 class="section-h2">お客様からの喜びの声</h2>
+    
+    <div class="slider-viewport">
+        <div class="slider-track">
+            <div class="review-card">
+                <div class="user-header"><div class="user-avatar">👤</div><div class="user-info">50代 男性（持ち家）<div class="star-line">★★★★★</div></div></div>
+                <div class="tag-container"><span class="tag-svc">不用品回収</span><span class="tag-loc">大阪府大阪市</span></div>
+                <h3 class="review-h3">引越し前日の大量ゴミを即回収！</h3>
+            </div>
+            <div class="review-card">
+                <div class="user-header"><div class="user-avatar" style="background:#e8f5e9;">👤</div><div class="user-info">60代 女性（主婦）<div class="star-line">★★★★★</div></div></div>
+                <div class="tag-container"><span class="tag-svc">庭の草むしり</span><span class="tag-loc">兵庫県西宮市</span></div>
+                <h3 class="review-h3">腰を痛めていたので本当に救われました</h3>
+            </div>
+            <div class="review-card">
+                <div class="user-header"><div class="user-avatar" style="background:#fce4ec;">👤</div><div class="user-info">30代 女性（一人暮らし）<div class="star-line">★★★★★</div></div></div>
+                <div class="tag-container"><span class="tag-svc">家具組み立て</span><span class="tag-loc">京都府京都市</span></div>
+                <h3 class="review-h3">大型家具もプロの手であっという間</h3>
+            </div>
+            <div class="review-card">
+                <div class="user-header"><div class="user-avatar" style="background:#fff3e0;">👤</div><div class="user-info">70代 男性（独居）<div class="star-line">★★★★★</div></div></div>
+                <div class="tag-container"><span class="tag-svc">買い物代行</span><span class="tag-loc">奈良県奈良市</span></div>
+                <h3 class="review-h3">体調を崩した時の買い物、助かりました</h3>
+            </div>
+            <div class="review-card">
+                <div class="user-header"><div class="user-avatar" style="background:#e3f2fd;">👤</div><div class="user-info">40代 男性（持ち家）<div class="star-line">★★★★★</div></div></div>
+                <div class="tag-container"><span class="tag-svc">雨どい掃除</span><span class="tag-loc">滋賀県大津市</span></div>
+                <h3 class="review-h3">自分では危ない高所もお任せできました</h3>
+            </div>
+            <div class="review-card">
+                <div class="user-header"><div class="user-avatar" style="background:#f3e5f5;">👤</div><div class="user-info">80代 女性（独居）<div class="star-line">★★★★★</div></div></div>
+                <div class="tag-container"><span class="tag-svc">日常の軽作業</span><span class="tag-loc">和歌山県和歌山市</span></div>
+                <h3 class="review-h3">電球1個の交換から、笑顔で対応</h3>
+            </div>
+            <div class="review-card">
+                <div class="user-header"><div class="user-avatar" style="background:#ffebee;">👤</div><div class="user-info">20代 男性（マンション）<div class="star-line">★★★★★</div></div></div>
+                <div class="tag-container"><span class="tag-svc">模様替え・移動</span><span class="tag-loc">大阪府吹田市</span></div>
+                <h3 class="review-h3">大型ソファの移動、プロの技でした</h3>
+            </div>
+            <div class="review-card">
+                <div class="user-header"><div class="user-avatar" style="background:#e0f7fa;">👤</div><div class="user-info">40代 女性（主婦）<div class="star-line">★★★★★</div></div></div>
+                <div class="tag-container"><span class="tag-svc">蛇口修理</span><span class="tag-loc">兵庫県明石市</span></div>
+                <h3 class="review-h3">深夜の緊急トラブルに即対応で安心</h3>
+            </div>
+            <div class="review-card">
+                <div class="user-header"><div class="user-avatar" style="background:#f1f8e9;">👤</div><div class="user-info">40代 女性（主婦）<div class="star-line">★★★★★</div></div></div>
+                <div class="tag-container"><span class="tag-svc">窓・サッシ掃除</span><span class="tag-loc">京都府宇治市</span></div>
+                <h3 class="review-h3">手の届かない高い窓がピカピカに</h3>
+            </div>
+            <div class="review-card">
+                <div class="user-header"><div class="user-avatar" style="background:#efebe9;">👤</div><div class="user-info">60代 男性（会社員）<div class="star-line">★★★★★</div></div></div>
+                <div class="tag-container"><span class="tag-svc">実家の整理</span><span class="tag-loc">奈良県生駒市</span></div>
+                <h3 class="review-h3">心のこもった丁寧な作業に感謝</h3>
+            </div>
 
-                    <div class="form-group">
-                        <label class="form-label">電話番号<span class="badge badge-required">必須</span></label>
-                        <input type="tel" class="form-input" placeholder="000-000-0000" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">住所<span class="badge badge-required">必須</span></label>
-                        <input type="text" class="form-input" placeholder="住所を入力してください" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">メールアドレス<span class="badge badge-required">必須</span></label>
-                        <input type="email" class="form-input" placeholder="abc@abc.com" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">お問い合わせ内容<span class="badge badge-required">必須</span></label>
-                        <textarea class="form-textarea" placeholder="お問い合わせ内容を入力してください" required></textarea>
-                    </div>
-
-                    <div class="submit-area">
-                        <button type="submit" class="submit-btn">送信する</button>
-                    </div>
-
-                </form>
+            <div class="review-card">
+                <div class="user-header"><div class="user-avatar">👤</div><div class="user-info">50代 男性（持ち家）<div class="star-line">★★★★★</div></div></div>
+                <div class="tag-container"><span class="tag-svc">不用品回収</span><span class="tag-loc">大阪府大阪市</span></div>
+                <h3 class="review-h3">引越し前日の大量ゴミを即回収！</h3>
+            </div>
+            <div class="review-card">
+                <div class="user-header"><div class="user-avatar" style="background:#e8f5e9;">👤</div><div class="user-info">60代 女性（主婦）<div class="star-line">★★★★★</div></div></div>
+                <div class="tag-container"><span class="tag-svc">庭の草むしり</span><span class="tag-loc">兵庫県西宮市</span></div>
+                <h3 class="review-h3">腰を痛めていたので本当に救われました</h3>
+            </div>
+            <div class="review-card">
+                <div class="user-header"><div class="user-avatar" style="background:#fce4ec;">👤</div><div class="user-info">30代 女性（一人暮らし）<div class="star-line">★★★★★</div></div></div>
+                <div class="tag-container"><span class="tag-svc">家具組み立て</span><span class="tag-loc">京都府京都市</span></div>
+                <h3 class="review-h3">大型家具もプロの手であっという間</h3>
+            </div>
+            <div class="review-card">
+                <div class="user-header"><div class="user-avatar" style="background:#fff3e0;">👤</div><div class="user-info">70代 男性（独居）<div class="star-line">★★★★★</div></div></div>
+                <div class="tag-container"><span class="tag-svc">買い物代行</span><span class="tag-loc">奈良県奈良市</span></div>
+                <h3 class="review-h3">体調を崩した時の買い物、助かりました</h3>
+            </div>
+            <div class="review-card">
+                <div class="user-header"><div class="user-avatar" style="background:#e3f2fd;">👤</div><div class="user-info">40代 男性（持ち家）<div class="star-line">★★★★★</div></div></div>
+                <div class="tag-container"><span class="tag-svc">雨どい掃除</span><span class="tag-loc">滋賀県大津市</span></div>
+                <h3 class="review-h3">自分では危ない高所もお任せできました</h3>
+            </div>
+            <div class="review-card">
+                <div class="user-header"><div class="user-avatar" style="background:#f3e5f5;">👤</div><div class="user-info">80代 女性（独居）<div class="star-line">★★★★★</div></div></div>
+                <div class="tag-container"><span class="tag-svc">日常の軽作業</span><span class="tag-loc">和歌山県和歌山市</span></div>
+                <h3 class="review-h3">電球1個の交換から、笑顔で対応</h3>
+            </div>
+            <div class="review-card">
+                <div class="user-header"><div class="user-avatar" style="background:#ffebee;">👤</div><div class="user-info">20代 男性（マンション）<div class="star-line">★★★★★</div></div></div>
+                <div class="tag-container"><span class="tag-svc">模様替え・移動</span><span class="tag-loc">大阪府吹田市</span></div>
+                <h3 class="review-h3">大型ソファの移動、プロの技でした</h3>
+            </div>
+            <div class="review-card">
+                <div class="user-header"><div class="user-avatar" style="background:#e0f7fa;">👤</div><div class="user-info">40代 女性（主婦）<div class="star-line">★★★★★</div></div></div>
+                <div class="tag-container"><span class="tag-svc">蛇口修理</span><span class="tag-loc">兵庫県明石市</span></div>
+                <h3 class="review-h3">深夜の緊急トラブルに即対応で安心</h3>
+            </div>
+            <div class="review-card">
+                <div class="user-header"><div class="user-avatar" style="background:#f1f8e9;">👤</div><div class="user-info">40代 女性（主婦）<div class="star-line">★★★★★</div></div></div>
+                <div class="tag-container"><span class="tag-svc">窓・サッシ掃除</span><span class="tag-loc">京都府宇治市</span></div>
+                <h3 class="review-h3">手の届かない高い窓がピカピカに</h3>
+            </div>
+            <div class="review-card">
+                <div class="user-header"><div class="user-avatar" style="background:#efebe9;">👤</div><div class="user-info">60代 男性（会社員）<div class="star-line">★★★★★</div></div></div>
+                <div class="tag-container"><span class="tag-svc">実家の整理</span><span class="tag-loc">奈良県生駒市</span></div>
+                <h3 class="review-h3">心のこもった丁寧な作業に感謝</h3>
             </div>
         </div>
-    </section>
+    </div>
+
+    <div class="swipe-guide">
+        <i class="fas fa-arrows-alt-h"></i> マウスホバーで一時停止します
+    </div>
+</section>
 
 </body>
 </html>
+
+
