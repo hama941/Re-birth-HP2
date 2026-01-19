@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>害獣トラブル119 ＆ 便利屋マスターズ 統合LP</title>
+    <title>便利屋マスターズ | 関西全域対応の何でも屋</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
@@ -29,15 +29,15 @@
             --dark-blue: #00254d;
             --faq-main: #65BBE9;
 
-            /* 害獣LP系カラー */
-            --primary-navy: #0f2c52; /* 濃紺 */
-            --accent-gold: #c5a059; /* ゴールド */
-            --accent-orange: #ff9800; /* 明るいオレンジ */
-            --bg-body: #ffffff; /* 全体背景を白に統一 */
-            --solid-shadow: 0 10px 25px rgba(15, 44, 82, 0.15);
-            --area-main-navy: #1a2a45;
-            --area-accent-yellow: #ffcc00;
-            --area-accent-orange: #ff6600;
+            /* 害獣LP系カラーベースを青系に変更 */
+            --primary-navy: #0056b3; /* 便利屋っぽい明るめの青 */
+            --accent-gold: #ffc107; /* 明るい黄色 */
+            --accent-orange: #ff5722; /* 元気なオレンジ */
+            --bg-body: #ffffff; 
+            --solid-shadow: 0 10px 25px rgba(0, 86, 179, 0.15);
+            --area-main-navy: #003366;
+            --area-accent-yellow: #ffeb3b;
+            --area-accent-orange: #ff9800;
         }
 
         body {
@@ -46,24 +46,21 @@
             padding: 0;
             color: #333;
             padding-top: 35px; /* ステータスバー分 */
-            /* ★固定フッター用に下部余白を追加 */
-            padding-bottom: 100px; 
+            padding-bottom: 100px; /* 固定フッター分 */
             background-color: var(--bg-body);
             line-height: 1.6;
-            overflow-x: hidden; /* 横スクロール防止 */
+            overflow-x: hidden;
         }
 
         * { box-sizing: border-box; }
 
-        /* コンテンツ幅制御用ユーティリティクラス */
         .container-pc {
             width: 100%;
-            max-width: 1200px; /* PCでのコンテンツ最大幅 */
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
-        /* セクション共通 */
         section {
             padding: 60px 0;
             width: 100%;
@@ -88,7 +85,7 @@
         .status-bar {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 35px;
-            background-color: #000; color: #fff;
+            background-color: #333; color: #fff;
             font-weight: bold; font-size: 0.85rem;
             z-index: 10000; overflow: hidden;
             display: flex; align-items: center;
@@ -104,7 +101,7 @@
            ========================================= */
         .header-bg {
             background: #fff;
-            border-bottom: 3px solid #003366;
+            border-bottom: 3px solid var(--primary-navy);
             width: 100%;
         }
         .header-container {
@@ -114,21 +111,21 @@
         }
         .logo-section { display: flex; flex-direction: column; }
         .catch-copy {
-            background: #003366; color: #fff; font-weight: bold; font-size: 13px;
+            background: var(--primary-navy); color: #fff; font-weight: bold; font-size: 13px;
             padding: 2px 12px; border-radius: 4px; display: inline-block;
             width: fit-content; margin-bottom: 4px; position: relative;
         }
         .catch-copy::after {
             content: ""; position: absolute; bottom: -5px; left: 15px;
-            border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 5px solid #003366;
+            border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 5px solid var(--primary-navy);
         }
         .main-title {
-            font-size: 32px; font-weight: 900; color: #003366; margin: 0;
+            font-size: 32px; font-weight: 900; color: var(--primary-navy); margin: 0;
             font-style: italic; letter-spacing: -1px; line-height: 1.1;
             display: flex; align-items: baseline;
         }
         .main-title span {
-            font-size: 38px; color: #c90000; margin-left: 4px;
+            font-size: 38px; color: var(--accent-orange); margin-left: 4px;
             -webkit-text-stroke: 1px #fff; text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
         .contact-buttons { display: flex; gap: 10px; }
@@ -142,6 +139,7 @@
         .contact-buttons .btn-tel { background-color: #f39c12; }
         .contact-buttons .btn-mail { background-color: #27ae60; }
         .contact-buttons .btn i { font-size: 28px; margin-bottom: 2px; margin-right: 0; }
+        
         @media (max-width: 600px) {
             .main-title { font-size: 22px; }
             .main-title span { font-size: 26px; }
@@ -149,7 +147,7 @@
         }
 
         /* =========================================
-           4. メインビジュアル (フルワイド修正)
+           4. メインビジュアル
            ========================================= */
         .hero-section {
             width: 100%;
@@ -170,7 +168,6 @@
             object-fit: cover;
         }
 
-        /* ヒーロー下のコンテンツ（帯とボタン） */
         .hero-content {
             background-color: var(--bg-paper);
             padding-bottom: 40px;
@@ -193,7 +190,6 @@
             font-size: 18px; color: #fff; letter-spacing: 6px; font-style: normal;
         }
 
-        /* アクションエリア (PC対応レイアウト) */
         .action-area {
             max-width: 1000px;
             margin: 0 auto;
@@ -203,11 +199,10 @@
             align-items: center;
         }
         
-        /* 箇条書きボックス */
         .solid-box {
             background: #fff; border: 3px solid var(--primary-navy); border-radius: 8px; 
             margin: 0 auto 35px; width: 100%; max-width: 800px;
-            box-shadow: 10px 10px 0 rgba(26, 77, 140, 0.1); overflow: hidden;
+            box-shadow: 10px 10px 0 rgba(0, 86, 179, 0.1); overflow: hidden;
         }
         .box-header-band {
             background: var(--primary-navy); color: #fff; padding: 15px; font-weight: bold; font-size: 22px;
@@ -276,7 +271,7 @@
         .divider { width: 1px; height: 80px; background-color: #ddd; border-right: 1px solid #fff; }
 
         /* =========================================
-           5. エリアカード (PC幅広対応)
+           5. エリアカード
            ========================================= */
         .area-section {
             background: #eef5fa;
@@ -316,7 +311,7 @@
         }
 
         /* =========================================
-           6. 理由セクション (PC幅広対応)
+           6. 理由セクション
            ========================================= */
         .reason-section-wrapper {
             background-color: #fff;
@@ -331,7 +326,7 @@
             display: inline-block; font-size: 20px; font-weight: bold; color: #0088ea;
             border-bottom: 4px solid #0088ea; padding-bottom: 5px; margin-bottom: 15px;
         }
-        .reason-main-title { font-size: 36px; font-weight: 900; color: #0056b3; margin: 0; line-height: 1.4; }
+        .reason-main-title { font-size: 36px; font-weight: 900; color: var(--primary-navy); margin: 0; line-height: 1.4; }
         .reason-description { font-size: 18px; line-height: 2; text-align: left; margin-bottom: 50px; font-weight: 500; max-width: 800px; margin-left: auto; margin-right: auto;}
         .text-highlight { color: #0099e6; font-weight: 900; background: linear-gradient(transparent 70%, #b3e5fc 70%); }
         
@@ -342,8 +337,8 @@
         }
         .box-general { border: 3px solid #e0e0e0; background-color: #fafafa; }
         .box-title-general { font-weight: bold; color: #666; margin-bottom: 30px; line-height: 1.3; font-size: 18px; }
-        .box-ours { border: 5px solid #0056b3; box-shadow: 0 10px 30px rgba(0,86,179,0.15); transform: scale(1.05); z-index: 1; background-color: #fff; }
-        .box-title-ours { font-weight: bold; color: #0056b3; margin-bottom: 30px; line-height: 1.3; font-size: 22px; position: relative; }
+        .box-ours { border: 5px solid var(--primary-navy); box-shadow: 0 10px 30px rgba(0,86,179,0.15); transform: scale(1.05); z-index: 1; background-color: #fff; }
+        .box-title-ours { font-weight: bold; color: var(--primary-navy); margin-bottom: 30px; line-height: 1.3; font-size: 22px; position: relative; }
         .crown-mark {
             display: block; width: 40px; height: 20px; background-color: #ffd700; margin: 0 auto 10px auto;
             clip-path: polygon(0% 100%, 25% 0%, 50% 100%, 75% 0%, 100% 100%);
@@ -365,7 +360,7 @@
         }
         .banner-general { background-color: #f2f2f2; color: #333; border-top: 1px solid #e0e0e0; }
         .banner-title-g { font-size: 16px; font-weight: bold; margin-bottom: 15px; display: block; }
-        .banner-ours { background-color: #0056b3; color: #fff; }
+        .banner-ours { background-color: var(--primary-navy); color: #fff; }
         .banner-title-o { font-size: 18px; font-weight: bold; margin-bottom: 15px; display: inline-block; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 5px; }
         
         .check-list-comp { list-style: none; padding: 0; margin: 0; display: inline-block; text-align: left; }
@@ -375,7 +370,7 @@
 
         @media (max-width: 768px) {
             .comparison-wrapper { flex-direction: column; gap: 20px; }
-            .box-ours { transform: none; border: 3px solid #0056b3; }
+            .box-ours { transform: none; border: 3px solid var(--primary-navy); }
             .reason-main-title { font-size: 24px; }
         }
 
@@ -393,7 +388,6 @@
             padding: 0 20px;
         }
 
-        /* 赤と青のタグ */
         .top-tags { display: flex; justify-content: center; gap: 20px; margin-bottom: 30px; font-weight: bold; font-size: 1.4rem; }
         .tag { padding: 12px 40px; color: white; position: relative; clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 15% 100%); min-width: 160px; }
         .tag-red { background-color: #d80017; }
@@ -403,7 +397,6 @@
         .logo-area i { color: #007bd9; margin-right: 10px; }
         .main-copy { font-size: 2.8rem; font-weight: 900; line-height: 1.4; margin: 20px 0 30px; color: #0044cc; text-shadow: 2px 2px 0 #fff; }
 
-        /* サービスグリッド (便利屋) */
         .services-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -503,7 +496,6 @@
             border: 2px solid #dce4ec; padding: 40px; margin-bottom: 40px; border-radius: 12px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
-        /* 矢印 (PCでは右向きや下向きなど調整可能だが、今回は下向き維持) */
         .step-card::after {
             content: ""; position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%);
             border-width: 20px 20px 0 20px; border-style: solid; border-color: #dce4ec transparent transparent transparent; z-index: 1;
@@ -558,9 +550,7 @@
             padding: 20px 30px 30px 65px; line-height: 1.8; font-size: 16px; color: #555;
         }
 
-        /* =========================================
-           シミュレーション & フォーム (変更なし・幅調整のみ)
-           ========================================= */
+        /* シミュレーション & フォーム */
         .simulation-wrapper {
             background: linear-gradient(to bottom, #f0faff, #dcefff); padding: 80px 20px;
             display: flex; justify-content: center; align-items: flex-start;
@@ -679,7 +669,7 @@
             .confirm-items { width: 100%; }
         }
 
-        /* お客様の声 (Input 1) */
+        /* お客様の声 */
         #reviews-section {
             background-color: #f9f7f2; padding: 80px 0; overflow: hidden;
         }
@@ -706,7 +696,7 @@
         .review-h3 { font-size: 17px; font-weight: bold; line-height: 1.5; margin: 0 0 10px 0; color: #333; border-bottom: 1px dashed #ddd; padding-bottom: 8px; }
         .review-p { font-size: 14px; line-height: 1.7; color: #555; margin: 0; }
 
-        /* お問い合わせフォーム (Input 1) */
+        /* お問い合わせフォーム */
         .footer-form-section { background: linear-gradient(to bottom, #f0faff, #dcefff); padding: 50px 20px; display: flex; justify-content: center; }
         .footer-form-container { width: 100%; max-width: 800px; }
         .footer-form-box {
@@ -723,7 +713,7 @@
         }
 
         /* =========================================
-           ★ ここから追加: 固定フッター用CSS
+           ★ 固定フッター用CSS (バランス・文言修正済み)
            ========================================= */
         .fixed-footer-cta {
             position: fixed;
@@ -738,45 +728,34 @@
             justify-content: center;
             align-items: center;
             padding: 10px 0;
-            height: 80px;
+            height: 90px; /* スマホで見やすく少し高く */
             transition: background 0.3s;
         }
+        .is-hidden { display: none !important; }
 
-        /* 表示・非表示切り替え用クラス */
-        .is-hidden {
-            display: none !important;
-        }
+        .cta-tel { background: linear-gradient(to bottom, #FF9800, #F57C00); }
+        .cta-mail { background: linear-gradient(to bottom, #4CAF50, #2E7D32); }
 
-        /* [A] 電話用スタイル (10:00-20:00) */
-        .cta-tel {
-            background: linear-gradient(to bottom, #FF9800, #F57C00); /* オレンジ */
-        }
-
-        /* [B] メール用スタイル (時間外) */
-        .cta-mail {
-            background: linear-gradient(to bottom, #4CAF50, #2E7D32); /* 緑 */
-        }
-
-        /* コンテンツ幅 */
         .footer-inner {
             position: relative;
             width: 100%;
-            max-width: 600px;
+            max-width: 700px;
             display: flex;
-            justify-content: center;
+            justify-content: center; /* 中央寄せ */
             align-items: center;
+            height: 100%;
         }
 
-        /* 左側の黄色いバッジ */
+        /* バッジ位置調整 */
         .discount-badge {
             position: absolute;
-            left: 10px;
-            bottom: 5px;
-            width: 80px;
-            height: 80px;
+            left: 15px; /* 左端から少し離す */
+            top: -15px; /* 上にはみ出させる */
+            width: 85px;
+            height: 85px;
             background-color: #FFEB3B;
             border-radius: 50%;
-            border: 2px solid #fff;
+            border: 3px solid #fff;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -784,33 +763,31 @@
             color: #D50000;
             font-weight: bold;
             line-height: 1;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             transform: rotate(-10deg);
-            z-index: 2;
+            z-index: 10;
         }
-        .badge-top { font-size: 10px; position: absolute; top: 8px; color: #333; }
+        .badge-top { font-size: 11px; position: absolute; top: 8px; color: #333; }
         .badge-main { font-size: 28px; font-weight: 900; margin-top: 5px; }
         .badge-sub { font-size: 14px; }
 
-        /* 右側のテキストエリア */
         .text-content {
             text-align: center;
-            padding-left: 60px;
             width: 100%;
+            padding-left: 90px; /* バッジの分だけ右にずらす */
+            padding-right: 15px;
         }
 
-        /* ステータステキスト */
+        /* 文字サイズ最適化 */
         .status-text {
-            font-size: 11px;
+            font-size: 12px;
             line-height: 1.4;
             opacity: 0.95;
             margin-bottom: 2px;
             font-weight: normal;
         }
-        
-        /* メインアクションテキスト */
         .action-text {
-            font-size: 24px;
+            font-size: 26px; /* 大きく */
             font-weight: bold;
             letter-spacing: 1px;
             display: flex;
@@ -819,16 +796,23 @@
             gap: 10px;
         }
 
-        /* アイコン装飾 */
-        .icon-phone::before { content: "📞"; font-size: 20px; }
-        .icon-mail::before { content: "✉️"; font-size: 20px; }
+        .icon-phone::before { content: "📞"; font-size: 24px; }
+        .icon-mail::before { content: "✉️"; font-size: 24px; }
 
-        /* スマホ調整 */
-        @media (max-width: 375px) {
-            .action-text { font-size: 19px; }
+        /* スマホ用最適化 */
+        @media (max-width: 480px) {
+            .fixed-footer-cta { height: 80px; }
+            .discount-badge { 
+                width: 70px; height: 70px; 
+                left: 10px; top: -10px; 
+            }
+            .badge-top { font-size: 9px; top: 6px; }
+            .badge-main { font-size: 22px; margin-top: 4px; }
+            .badge-sub { font-size: 11px; }
+
+            .text-content { padding-left: 80px; padding-right: 5px; }
+            .action-text { font-size: 20px; }
             .status-text { font-size: 10px; }
-            .discount-badge { width: 70px; height: 70px; left: 5px; }
-            .badge-main { font-size: 24px; }
         }
 
     </style>
@@ -852,7 +836,7 @@
             <div class="logo-section">
                 <div class="catch-copy">関西全域対応！！</div>
                 <h1 class="main-title">
-                    害獣トラブル<span>119</span>
+                    便利屋<span>マスターズ</span>
                 </h1>
             </div>
 
@@ -872,8 +856,8 @@
     <div class="hero-section">
         <div class="hero-image-wrapper">
             <picture>
-              <img src="https://via.placeholder.com/1600x600/0f2c52/ffffff?text=しつこい害獣を即日徹底駆除！" 
-                   alt="しつこい害獣を即日徹底駆除！" 
+              <img src="https://via.placeholder.com/1600x600/0056b3/ffffff?text=暮らしのお困りごとを即日解決！" 
+                   alt="暮らしのトラブルを即日解決！" 
                    width="1600" height="600">
             </picture>
         </div>
@@ -891,7 +875,7 @@
                         <ul class="check-list-narrow">
                             <li><i class="fas fa-check-circle"></i> 深夜料金なし</li>
                             <li><i class="fas fa-check-circle"></i> 見積り後のキャンセル無料</li>
-                            <li><i class="fas fa-check-circle"></i> 安心の再発保証あり</li>
+                            <li><i class="fas fa-check-circle"></i> 安心の施工保証あり</li>
                             <li><i class="fas fa-check-circle"></i> 現地調査無料</li>
                         </ul>
                     </div>
@@ -1026,7 +1010,7 @@
             </div>
 
             <div class="logo-area">
-                <i class="fa-solid fa-hammer"></i> 害獣駆除以外も対応！
+                <i class="fa-solid fa-hammer"></i> 小さなお困りごとも対応！
             </div>
 
             <h1 class="main-copy">
@@ -1119,7 +1103,6 @@
             </h2>
 
             <div class="cards-container">
-                
                 <div class="card-navy">
                     <div class="image-area">
                         <div class="card-image-area">
@@ -1137,7 +1120,6 @@
                         </p>
                     </div>
                 </div>
-
                 <div class="card-navy">
                     <div class="image-area">
                         <div class="card-image-area">
@@ -1155,7 +1137,6 @@
                         </p>
                     </div>
                 </div>
-
                 <div class="card-navy">
                     <div class="image-area">
                         <div class="card-image-area">
@@ -1173,7 +1154,6 @@
                         </p>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
@@ -1316,7 +1296,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="step-card">
                 <div class="step-label">STEP 2</div>
                 <h3 class="step-title">現場まで急行</h3>
@@ -1329,7 +1308,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="step-card">
                 <div class="step-label">STEP 3</div>
                 <h3 class="step-title">無料お見積り</h3>
@@ -1349,55 +1327,10 @@
         </div>
     </section>
 
-    <section id="reviews-section">
-        <h2 class="section-h2">お客様からの喜びの声</h2>
-        <div class="slider-viewport">
-            <div class="slider-track">
-                <div class="review-card">
-                    <div class="user-header"><div class="user-avatar">👤</div><div class="user-info">50代 男性（持ち家）<div class="star-line">★★★★★</div></div></div>
-                    <div class="tag-container"><span class="tag-svc">不用品回収</span><span class="tag-loc">大阪府大阪市</span></div>
-                    <h3 class="review-h3">引越し前日のゴミを即回収！</h3>
-                    <p class="review-p">片付けが間に合わず途方に暮れていましたが、電話一本で駆けつけてくれました。作業も丁寧で、本当に助かりました。</p>
-                </div>
-                <div class="review-card">
-                    <div class="user-header"><div class="user-avatar" style="background:#e8f5e9;">👤</div><div class="user-info">60代 女性（主婦）<div class="star-line">★★★★★</div></div></div>
-                    <div class="tag-container"><span class="tag-svc">庭の草むしり</span><span class="tag-loc">兵庫県西宮市</span></div>
-                    <h3 class="review-h3">腰を痛めていたので大助かり</h3>
-                    <p class="review-p">自分では手付かずだった庭が、たった一日で綺麗に。今後の手入れ方法のアドバイスもいただき、誠実さを感じました。</p>
-                </div>
-                <div class="review-card">
-                    <div class="user-header"><div class="user-avatar" style="background:#fce4ec;">👤</div><div class="user-info">30代 女性（単身）<div class="star-line">★★★★★</div></div></div>
-                    <div class="tag-container"><span class="tag-svc">家具組み立て</span><span class="tag-loc">京都府京都市</span></div>
-                    <h3 class="review-h3">大型家具もあっという間に完成</h3>
-                    <p class="review-p">一人では動かせない大きな棚でしたが、手際よく組み立てていただき感動。梱包材もすべて持ち帰ってもらえて楽でした。</p>
-                </div>
-                <div class="review-card">
-                    <div class="user-header"><div class="user-avatar" style="background:#fff3e0;">👤</div><div class="user-info">70代 男性（単身）<div class="star-line">★★★★★</div></div></div>
-                    <div class="tag-container"><span class="tag-svc">買い物代行</span><span class="tag-loc">奈良県奈良市</span></div>
-                    <h3 class="review-h3">体調不良時の買い物に感謝</h3>
-                    <p class="review-p">急に動けなくなり困っていましたが、快く引き受けてくれました。こちらの要望を細かく聞いてくださり、安心できました。</p>
-                </div>
-                <div class="review-card">
-                    <div class="user-header"><div class="user-avatar" style="background:#e3f2fd;">👤</div><div class="user-info">40代 男性（持ち家）<div class="star-line">★★★★★</div></div></div>
-                    <div class="tag-container"><span class="tag-svc">雨どい掃除</span><span class="tag-loc">滋賀県大津市</span></div>
-                    <h3 class="review-h3">高所の作業も安心してお任せ</h3>
-                    <p class="review-p">2階の雨どいの詰まりを解消してもらいました。自分では危険な場所なので、プロに頼んで正解。料金も良心的でした。</p>
-                </div>
-                <div class="review-card">
-                    <div class="user-header"><div class="user-avatar" style="background:#f3e5f5;">👤</div><div class="user-info">80代 女性（単身）<div class="star-line">★★★★★</div></div></div>
-                    <div class="tag-container"><span class="tag-svc">日常の軽作業</span><span class="tag-loc">和歌山県和歌山市</span></div>
-                    <h3 class="review-h3">電球交換ひとつでも笑顔の対応</h3>
-                    <p class="review-p">些細なことかと悩みましたが、優しく丁寧に対応してくれました。こうして頼れる場所があるのは本当に心強いです。</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <div class="faq-section">
         <div class="faq-header">
             <h2>よくあるご質問</h2>
         </div>
-        
         <div class="faq-container">
             <div class="faq-item">
                 <button class="faq-question">どのくらいで到着しますか？</button>
@@ -1407,7 +1340,6 @@
                     </div>
                 </div>
             </div>
-    
             <div class="faq-item">
                 <button class="faq-question">お支払方法は何がありますか？</button>
                 <div class="faq-answer">
@@ -1416,57 +1348,11 @@
                     </div>
                 </div>
             </div>
-            
             <div class="faq-item">
                 <button class="faq-question">作業後に見積もりより高い金額を請求されることはありますか？</button>
                 <div class="faq-answer">
                     <div class="answer-inner">
                         いいえ、ございません。作業前に施工内容と料金の詳細を明確にご説明し、ご納得いただいてから作業に入りますので、どうぞご安心ください。
-                    </div>
-                </div>
-            </div>
-    
-            <div class="faq-item">
-                <button class="faq-question">法人の依頼ですが、後日請求書払いは可能ですか？</button>
-                <div class="faq-answer">
-                    <div class="answer-inner">
-                        法人様のご依頼も柔軟に対応しております。後日の請求書払いについても、お電話や現地調査の際にお申し付けいただければ調整可能です。
-                    </div>
-                </div>
-            </div>
-    
-            <div class="faq-item">
-                <button class="faq-question">作業にあたって、こちらで準備することはありますか？</button>
-                <div class="faq-answer">
-                    <div class="answer-inner">
-                        お客様にご準備いただくことは一切ございません。事前の準備から作業後の片付けまで、すべて弊社の専門スタッフが責任を持って行います。
-                    </div>
-                </div>
-            </div>
-    
-            <div class="faq-item">
-                <button class="faq-question">予約のキャンセルはできますか？</button>
-                <div class="faq-answer">
-                    <div class="answer-inner">
-                        可能です。お見積もり内容をしっかりご確認いただいた上で、ご納得いただけない場合は取り掛かる前にキャンセルいただけます。まずは安心してお見積もりをご依頼ください。
-                    </div>
-                </div>
-            </div>
-    
-            <div class="faq-item">
-                <button class="faq-question">どのエリアまで対応していますか？</button>
-                <div class="faq-answer">
-                    <div class="answer-inner">
-                        大阪、兵庫、奈良、和歌山、京都の各府県に対応しております。詳細な訪問時間などは、お電話の際にお伝えいたします。
-                    </div>
-                </div>
-            </div>
-    
-            <div class="faq-item">
-                <button class="faq-question">出張料や見積もり料はいくらですか？</button>
-                <div class="faq-answer">
-                    <div class="answer-inner">
-                        弊社では、出張料およびお見積もり料はすべて「0円」です。お客様にご提示するのは作業料金のみですので、ご安心ください。
                     </div>
                 </div>
             </div>
@@ -1560,9 +1446,6 @@
             const isBusinessTime = (currentHour >= 10 && currentHour < 20);
 
             document.querySelectorAll('.status-text').forEach(el => {
-                // フッター内のstatus-textを書き換えてしまうと崩れるので、ステータスバー用のものだけ更新するよう条件分岐するか、
-                // あるいはフッターのstatus-textには別のクラスをつけるのがベストですが、
-                // 簡易的に「もしフッターのテキストなら書き換えない」処理を入れます
                 if(!el.closest('.fixed-footer-cta')) {
                     el.textContent = isBusinessTime ? "受付可能！" : "メールでの受付中";
                 }
@@ -1695,7 +1578,7 @@
             });
         });
 
-        /* --- ★ ここから追加: 固定フッター切り替え用スクリプト --- */
+        /* --- 固定フッター切り替え用スクリプト --- */
         function updateFooter() {
             const now = new Date();
             const hour = now.getHours();
@@ -1726,4 +1609,3 @@
     </script>
 </body>
 </html>
-
