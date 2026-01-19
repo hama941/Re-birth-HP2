@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>料金シミュレーション</title>
+    <title>便利屋料金シミュレーション</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
     <style>
@@ -166,38 +166,39 @@
         <div class="simulation-container">
             <div class="sim-header">
                 <div class="sim-sub-title">簡単10秒！</div>
-                <h2 class="sim-main-title">基本料金シミュレーション</h2>
+                <h2 class="sim-main-title">便利屋料金シミュレーション</h2>
             </div>
 
             <div class="step-tabs">
-                <div id="tab-1" class="tab-item active" data-default="種類" onclick="jumpToStep(1)">種類 <span class="tab-arrow">^</span></div>
-                <div id="tab-2" class="tab-item" data-default="トラブル箇所" onclick="jumpToStep(2)">トラブル箇所 <span class="tab-arrow">∨</span></div>
+                <div id="tab-1" class="tab-item active" data-default="依頼内容" onclick="jumpToStep(1)">依頼内容 <span class="tab-arrow">^</span></div>
+                <div id="tab-2" class="tab-item" data-default="作業場所" onclick="jumpToStep(2)">作業場所 <span class="tab-arrow">∨</span></div>
                 <div id="tab-3" class="tab-item" data-default="物件の種類" onclick="jumpToStep(3)">物件の種類 <span class="tab-arrow">∨</span></div>
                 <div id="tab-result" class="tab-item result-btn">結果をみる</div>
             </div>
 
             <div id="main-content-box" class="content-box">
                 <div id="panel-1" class="step-panel active-panel selection-panel">
-                    <div class="box-title-sim">害虫の種類を選択してください。</div>
+                    <div class="box-title-sim">お困りごとの種類を選択してください。</div>
                     <div class="options-grid col-3">
-                        <button class="option-btn" onclick="nextStep(1, 'ゴキブリ')">ゴキブリ</button>
-                        <button class="option-btn" onclick="nextStep(1, 'ハチ・ハチの巣')">ハチ・ハチの巣</button>
-                        <button class="option-btn" onclick="nextStep(1, 'トコジラミ')">トコジラミ</button>
-                        <button class="option-btn" onclick="nextStep(1, 'シロアリ')">シロアリ</button>
-                        <button class="option-btn" onclick="nextStep(1, 'ノミ・ダニ')">ノミ・ダニ</button>
+                        <button class="option-btn" onclick="nextStep(1, '家具の組み立て')">家具の組み立て</button>
+                        <button class="option-btn" onclick="nextStep(1, '掃除・片付け')">掃除・片付け</button>
+                        <button class="option-btn" onclick="nextStep(1, '住まいの修繕')">住まいの修繕</button>
+                        <button class="option-btn" onclick="nextStep(1, '草刈り・剪定')">草刈り・剪定</button>
+                        <button class="option-btn" onclick="nextStep(1, '引越し・運搬')">引越し・運搬</button>
                         <button class="option-btn" onclick="nextStep(1, 'その他')">その他</button>
                     </div>
                 </div>
 
                 <div id="panel-2" class="step-panel selection-panel">
-                    <div class="box-title-sim">トラブル箇所はどこですか？</div>
+                    <div class="box-title-sim">作業場所はどこですか？</div>
                     <div class="options-grid col-4">
-                        <button class="option-btn" onclick="nextStep(2, '屋根裏')">屋根裏</button>
-                        <button class="option-btn" onclick="nextStep(2, '天井裏')">天井裏</button>
-                        <button class="option-btn" onclick="nextStep(2, '床下')">床下</button>
-                        <button class="option-btn" onclick="nextStep(2, '壁の中')">壁の中</button>
-                        <button class="option-btn" onclick="nextStep(2, 'ベランダ・屋外')">ベランダ・屋外</button>
-                        <button class="option-btn" onclick="nextStep(2, '倉庫・物置')">倉庫・物置</button>
+                        <button class="option-btn" onclick="nextStep(2, 'リビング・居室')">リビング・居室</button>
+                        <button class="option-btn" onclick="nextStep(2, 'キッチン・水回り')">キッチン・水回り</button>
+                        <button class="option-btn" onclick="nextStep(2, '庭・ベランダ')">庭・ベランダ</button>
+                        <button class="option-btn" onclick="nextStep(2, '玄関・外壁')">玄関・外壁</button>
+                        <button class="option-btn" onclick="nextStep(2, '車庫・倉庫')">車庫・倉庫</button>
+                        <button class="option-btn" onclick="nextStep(2, '店舗・オフィス')">店舗・オフィス</button>
+                        <button class="option-btn" onclick="nextStep(2, '家全体')">家全体</button>
                         <button class="option-btn" onclick="nextStep(2, 'その他')">その他</button>
                     </div>
                     <div class="back-area">
@@ -221,19 +222,19 @@
                 </div>
                 
                 <div id="panel-result" class="step-panel result-panel-design">
-                    <p class="result-lead">お客様の症状のお見積もりは...</p>
+                    <p class="result-lead">お客様のご依頼のお見積もりは...</p>
                     <div class="result-price">
                         <span id="price-value" class="price-number">2,980</span>
                         <span class="price-unit">円～</span>
-                        <span class="price-note">(調査見積り無料)</span>
+                        <span class="price-note">(基本料金)</span>
                         <span style="font-size:18px;">を想定しています</span>
                     </div>
-                    <p class="discount-info">さらに<span class="red-highlight">「ホームページ見た！」</span>の一言で20%オフ！</p>
-                    <p class="price-disclaimer">※お見積り金額はあくまでも目安です。詳細はご訪問時にお伝えいたします。</p>
+                    <p class="discount-info">さらに<span class="red-highlight">「ホームページ見た！」</span>の一言で初回割引！</p>
+                    <p class="price-disclaimer">※お見積り金額はあくまでも目安（最低基本料金等）です。作業内容・時間により変動します。</p>
                     <div class="call-area">
-                        <p class="call-lead">＼ 症状が悪化する前に、お早めにお電話ください！ ／</p>
-                        <a href="tel:05035280140" class="call-number">050-3528-0140</a>
-                        <p class="call-time">電話無料/24時間受付中</p>
+                        <p class="call-lead">＼ お悩み解決のために、まずはお気軽にお電話ください！ ／</p>
+                        <a href="tel:0000000000" class="call-number">000-0000-0000</a>
+                        <p class="call-time">相談無料/24時間受付中</p>
                     </div>
                     <div class="detail-btn-area">
                         <button class="detail-btn" onclick="showForm()">より詳細な見積もりを確認</button>
@@ -245,9 +246,9 @@
 
                 <div id="panel-form" class="step-panel form-panel-design">
                     <div class="form-intro">
-                        <div class="form-intro-text">お客様のトラブルは・・・</div>
+                        <div class="form-intro-text">お客様のお困りごとは・・・</div>
                         <div class="confirm-items">
-                            <div id="conf-type" class="confirm-btn">種類</div>
+                            <div id="conf-type" class="confirm-btn">依頼内容</div>
                             <div id="conf-place" class="confirm-btn">場所</div>
                             <div id="conf-building" class="confirm-btn">物件</div>
                         </div>
@@ -271,8 +272,8 @@
                             <input type="email" class="form-input" placeholder="abc@abc.com" required>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">お問い合わせ内容<span class="badge badge-required">必須</span></label>
-                            <textarea class="form-textarea" placeholder="お問い合わせ内容を入力してください" required></textarea>
+                            <label class="form-label">具体的なご依頼内容<span class="badge badge-required">必須</span></label>
+                            <textarea class="form-textarea" placeholder="例：IKEAの家具の組み立てをお願いしたいです。個数は..." required></textarea>
                         </div>
                         <div class="submit-area">
                             <button type="submit" class="submit-btn">送信する</button>
@@ -287,7 +288,7 @@
     </div>
 
     <script>
-        let selectedPestType = '';
+        let selectedCategory = '';
         let selectedPlace = '';
         let selectedBuilding = '';
 
@@ -314,25 +315,24 @@
 
             for (let i = 1; i <= 3; i++) {
                 const tab = document.getElementById('tab-' + i);
+                const def = tab.getAttribute('data-default');
                 if (i < targetStep) {
                     tab.classList.remove('active');
                     tab.classList.add('completed');
                 } else if (i === targetStep) {
                     tab.classList.remove('completed');
                     tab.classList.add('active');
-                    const def = tab.getAttribute('data-default');
                     if(def) tab.innerHTML = def + ' <span class="tab-arrow">^</span>';
                 } else {
                     tab.classList.remove('completed');
                     tab.classList.remove('active');
-                    const def = tab.getAttribute('data-default');
                     if(def) tab.innerHTML = def + ' <span class="tab-arrow">∨</span>';
                 }
             }
         }
 
         function nextStep(currentStepNum, selectedText) {
-            if(currentStepNum === 1) selectedPestType = selectedText;
+            if(currentStepNum === 1) selectedCategory = selectedText;
             if(currentStepNum === 2) selectedPlace = selectedText;
 
             const currentTab = document.getElementById('tab-' + currentStepNum);
@@ -362,15 +362,17 @@
             const resultTab = document.getElementById('tab-result');
             resultTab.classList.add('ready');
 
-            // 簡易ロジック：害虫の種類によって金額を変えるデモ
+            // 簡易ロジック：依頼内容によって目安金額を変えるデモ
+            // 2980円～: 家具組み立て、掃除、住まいの修繕
+            // 4980円～: 草刈り、引越し（重作業系）
             let price = '4,980'; 
-            const groupLow = ['ゴキブリ', 'ハチ・ハチの巣', 'ノミ・ダニ'];
-            const groupMid = ['トコジラミ', 'シロアリ'];
-            if (groupLow.includes(selectedPestType)) {
+            const groupLow = ['家具の組み立て', '掃除・片付け', '住まいの修繕'];
+            // const groupMid = ['草刈り・剪定', '引越し・運搬']; // 他は高めに設定
+
+            if (groupLow.includes(selectedCategory)) {
                 price = '2,980';
-            } else if (groupMid.includes(selectedPestType)) {
-                price = '3,980';
             }
+            
             document.getElementById('price-value').innerText = price;
 
             document.getElementById('main-content-box').classList.add('mode-result');
@@ -386,7 +388,7 @@
 
             document.getElementById('panel-form').classList.add('active-panel');
             
-            document.getElementById('conf-type').innerText = selectedPestType || '(未選択)';
+            document.getElementById('conf-type').innerText = selectedCategory || '(未選択)';
             document.getElementById('conf-place').innerText = selectedPlace || '(未選択)';
             document.getElementById('conf-building').innerText = selectedBuilding || '(未選択)';
             
@@ -406,4 +408,3 @@
     </script>
 </body>
 </html>
-
