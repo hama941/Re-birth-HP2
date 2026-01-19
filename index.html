@@ -1,161 +1,32 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        :root {
-            --primary-pink: #ff8e8e;
-            --border-blue: #a3d5ff;
-            --bg-gray: #f9f9f9;
-        }
-
-        body {
-            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-            background-color: var(--bg-gray);
-            margin: 0;
-            padding: 20px;
-            color: #333;
-        }
-
-        .container {
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        /* カード全体のスタイル */
-        .service-card {
-            background: #fff;
-            border: 2px solid var(--border-blue);
-            border-radius: 15px;
-            margin-bottom: 20px;
-            padding: 15px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* 偶数番目のカードは左右反転 */
-        .service-card:nth-child(even) {
-            flex-direction: row-reverse;
-            text-align: left;
-        }
-
-        /* 画像コンテナ（円形） */
-        .image-container {
-            position: relative;
-            flex-shrink: 0;
-            width: 130px;
-            height: 130px;
-        }
-
-        .image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-        }
-
-        /* CASEバッジ */
-        .case-badge {
-            position: absolute;
-            top: 5px;
-            left: -10px;
-            background: #3a5b96;
-            color: #fff;
-            padding: 2px 15px;
-            font-weight: bold;
-            font-size: 12px;
-            transform: rotate(-25deg);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            z-index: 1;
-        }
-
-        /* テキストエリア */
-        .text-content {
-            flex-grow: 1;
-        }
-
-        .title {
-            color: var(--primary-pink);
-            font-size: 1.1rem;
-            font-weight: bold;
-            margin: 0 0 5px 0;
-        }
-
-        .price {
-            color: var(--primary-pink);
-            font-size: 1.4rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .price span {
-            font-size: 0.9rem;
-        }
-
-        .description {
-            font-size: 0.85rem;
-            line-height: 1.5;
-            margin: 0;
-        }
-    </style>
-</head>
-<body>
-
-<div class="container">
-
-    <div class="service-card">
-        <div class="image-container">
-            <div class="case-badge">CASE01</div>
-            <img src="https://via.placeholder.com/150" alt="不用品回収">
-        </div>
-        <div class="text-content">
-            <h3 class="title">不用品回収</h3>
-            <div class="price">5,000円～</div>
-            <p class="description">粗大ゴミや不要になった家具・家電など、一点から回収いたします。分別も不要ですのでお任せください。</p>
+<section class="footer-form-section" id="contact-form-area">
+    <div class="footer-form-container">
+        <div class="footer-form-box">
+            <h1 class="footer-form-title">お問い合わせフォーム</h1>
+            <form action="" method="post" onsubmit="event.preventDefault(); alert('送信完了（デモ）');">
+                <div class="form-group">
+                    <label class="form-label">お名前<span class="badge badge-required">必須</span></label>
+                    <input type="text" class="form-input" placeholder="例：山田花子" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">電話番号<span class="badge badge-required">必須</span></label>
+                    <input type="tel" class="form-input" placeholder="000-000-0000" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">住所<span class="badge badge-required">必須</span></label>
+                    <input type="text" class="form-input" placeholder="住所を入力してください" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">メールアドレス<span class="badge badge-required">必須</span></label>
+                    <input type="email" class="form-input" placeholder="abc@abc.com" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">お問い合わせ内容<span class="badge badge-required">必須</span></label>
+                    <textarea class="form-textarea" placeholder="お問い合わせ内容を入力してください" required></textarea>
+                </div>
+                <div class="submit-area">
+                    <button type="submit" class="submit-btn">送信する</button>
+                </div>
+            </form>
         </div>
     </div>
-
-    <div class="service-card">
-        <div class="image-container">
-            <div class="case-badge">CASE02</div>
-            <img src="https://via.placeholder.com/150" alt="お引っ越し">
-        </div>
-        <div class="text-content">
-            <h3 class="title">お引っ越し</h3>
-            <div class="price">20,000円～</div>
-            <p class="description">単身の方からご家族まで。家具の配置換えや、一時的な移動も承ります。お気軽にご相談ください。</p>
-        </div>
-    </div>
-
-    <div class="service-card">
-        <div class="image-container">
-            <div class="case-badge">CASE03</div>
-            <img src="https://via.placeholder.com/150" alt="遺品整理">
-        </div>
-        <div class="text-content">
-            <h3 class="title">遺品整理</h3>
-            <div class="price">30,000円～</div>
-            <p class="description">大切な思い出を丁寧に整理いたします。資格を持ったスタッフが真心を込めて対応させていただきます。</p>
-        </div>
-    </div>
-
-    <div class="service-card">
-        <div class="image-container">
-            <div class="case-badge">CASE04</div>
-            <img src="https://via.placeholder.com/150" alt="草刈り・庭の手入れ">
-        </div>
-        <div class="text-content">
-            <h3 class="title">草刈り・庭手入れ</h3>
-            <div class="price">5,000円～</div>
-            <p class="description">お庭の雑草対策や枝切りなど、面倒な作業はすべてお任せください。定期的な管理も可能です。</p>
-        </div>
-    </div>
-
-</div>
-
-</body>
-</html>
+</section>
