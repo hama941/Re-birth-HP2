@@ -29,10 +29,10 @@
             --dark-blue: #00254d;
             --faq-main: #65BBE9;
 
-            /* 害獣LP系カラーベースを青系に変更 */
-            --primary-navy: #0056b3; /* 便利屋っぽい明るめの青 */
-            --accent-gold: #ffc107; /* 明るい黄色 */
-            --accent-orange: #ff5722; /* 元気なオレンジ */
+            /* カラーパレット */
+            --primary-navy: #0056b3; 
+            --accent-gold: #ffc107; 
+            --accent-orange: #ff5722; 
             --bg-body: #ffffff; 
             --solid-shadow: 0 10px 25px rgba(0, 86, 179, 0.15);
             --area-main-navy: #003366;
@@ -40,16 +40,20 @@
             --area-accent-orange: #ff9800;
         }
 
-        body {
-            font-family: 'Noto Sans JP', "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+        html, body {
             margin: 0;
             padding: 0;
+            width: 100%;
+            overflow-x: hidden; /* 横スクロールを完全に防止 */
+        }
+
+        body {
+            font-family: 'Noto Sans JP', "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
             color: #333;
             padding-top: 35px; /* ステータスバー分 */
-            padding-bottom: 100px; /* 固定フッター分 */
+            padding-bottom: 110px; /* 固定フッター分（少し多めに確保） */
             background-color: var(--bg-body);
             line-height: 1.6;
-            overflow-x: hidden;
         }
 
         * { box-sizing: border-box; }
@@ -713,7 +717,7 @@
         }
 
         /* =========================================
-           ★ 固定フッター用CSS (バランス・文言修正済み)
+           ★ 固定フッター用CSS (スマホ表示修正版)
            ========================================= */
         .fixed-footer-cta {
             position: fixed;
@@ -727,8 +731,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 10px 0;
-            height: 90px; /* スマホで見やすく少し高く */
+            padding: 5px 0; /* 高さを抑える */
+            height: 85px; /* 高さを少し低く調整 */
             transition: background 0.3s;
         }
         .is-hidden { display: none !important; }
@@ -741,18 +745,19 @@
             width: 100%;
             max-width: 700px;
             display: flex;
-            justify-content: center; /* 中央寄せ */
+            justify-content: center; 
             align-items: center;
             height: 100%;
+            padding-right: 10px; /* 右側に余裕を持たせる */
         }
 
         /* バッジ位置調整 */
         .discount-badge {
             position: absolute;
-            left: 15px; /* 左端から少し離す */
-            top: -15px; /* 上にはみ出させる */
-            width: 85px;
-            height: 85px;
+            left: 10px; /* 左端から少し離す */
+            top: -20px; /* 上に飛び出させる */
+            width: 80px;
+            height: 80px;
             background-color: #FFEB3B;
             border-radius: 50%;
             border: 3px solid #fff;
@@ -767,51 +772,63 @@
             transform: rotate(-10deg);
             z-index: 10;
         }
-        .badge-top { font-size: 11px; position: absolute; top: 8px; color: #333; }
-        .badge-main { font-size: 28px; font-weight: 900; margin-top: 5px; }
-        .badge-sub { font-size: 14px; }
+        .badge-top { font-size: 10px; position: absolute; top: 10px; color: #333; }
+        
+        /* 20% OFFの並びをフレックスボックスで制御 */
+        .badge-main { 
+            display: flex; 
+            align-items: baseline; 
+            justify-content: center;
+            font-size: 26px; 
+            font-weight: 900; 
+            margin-top: 12px; /* 上の文字との間隔 */
+            line-height: 0.8; 
+        }
+        .badge-sub { font-size: 14px; margin-top: 2px; }
 
         .text-content {
             text-align: center;
             width: 100%;
-            padding-left: 90px; /* バッジの分だけ右にずらす */
-            padding-right: 15px;
+            /* バッジの幅(80px) + 余白分(10px) を左に空ける */
+            padding-left: 90px; 
+            padding-right: 5px;
         }
 
         /* 文字サイズ最適化 */
         .status-text {
             font-size: 12px;
-            line-height: 1.4;
+            line-height: 1.3;
             opacity: 0.95;
             margin-bottom: 2px;
             font-weight: normal;
         }
         .action-text {
-            font-size: 26px; /* 大きく */
+            font-size: 24px; /* スマホで折り返さない程度のサイズ */
             font-weight: bold;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+            white-space: nowrap; /* 折り返し禁止 */
         }
 
-        .icon-phone::before { content: "📞"; font-size: 24px; }
-        .icon-mail::before { content: "✉️"; font-size: 24px; }
+        .icon-phone::before { content: "📞"; font-size: 22px; }
+        .icon-mail::before { content: "✉️"; font-size: 22px; }
 
-        /* スマホ用最適化 */
-        @media (max-width: 480px) {
+        /* スマホ用最適化 (画面幅400px以下) */
+        @media (max-width: 400px) {
             .fixed-footer-cta { height: 80px; }
             .discount-badge { 
                 width: 70px; height: 70px; 
-                left: 10px; top: -10px; 
+                left: 5px; top: -15px; 
             }
-            .badge-top { font-size: 9px; top: 6px; }
-            .badge-main { font-size: 22px; margin-top: 4px; }
+            .badge-top { font-size: 9px; top: 8px; }
+            .badge-main { font-size: 22px; margin-top: 8px; }
             .badge-sub { font-size: 11px; }
 
-            .text-content { padding-left: 80px; padding-right: 5px; }
-            .action-text { font-size: 20px; }
+            .text-content { padding-left: 80px; padding-right: 2px; }
+            .action-text { font-size: 19px; }
             .status-text { font-size: 10px; }
         }
 
@@ -1396,7 +1413,7 @@
       <div class="footer-inner">
         <div class="discount-badge">
           <span class="badge-top">「HP見た」<br>で</span>
-          <span class="badge-main">20<span style="font-size:60%">%</span></span>
+          <div class="badge-main">20<span style="font-size:60%">%</span></div>
           <span class="badge-sub">OFF</span>
         </div>
         <div class="text-content">
@@ -1413,7 +1430,7 @@
       <div class="footer-inner">
         <div class="discount-badge">
           <span class="badge-top">「HP見た」<br>で</span>
-          <span class="badge-main">20<span style="font-size:60%">%</span></span>
+          <div class="badge-main">20<span style="font-size:60%">%</span></div>
           <span class="badge-sub">OFF</span>
         </div>
         <div class="text-content">
