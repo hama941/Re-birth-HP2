@@ -40,7 +40,7 @@
             z-index: 10000; overflow: hidden; display: flex; align-items: center;
         }
         .scroll-container { display: flex; white-space: nowrap; width: 100%; overflow: hidden; }
-        .scroll-content { display: flex; white-space: nowrap; width: max-content; animation: scroll-left 20s linear infinite; }
+        .scroll-content { display: flex; width: max-content; animation: scroll-left 20s linear infinite; }
         @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-25%); } }
         .text-item { padding-right: 50px; display: flex; align-items: center; }
         .bar-highlight { color: #ffcc00; margin: 0 5px; }
@@ -68,132 +68,109 @@
         .text-content .description { font-size: 0.85rem; line-height: 1.5; margin: 0; }
 
         /* =========================================
-           3. 料金シミュレーション (完全版)
+           3. 料金シミュレーション
            ========================================= */
-        .simulation-wrapper { background: linear-gradient(to bottom, #f0faff, #dcefff); padding: 80px 20px; display: flex; justify-content: center; align-items: flex-start; }
-        .simulation-container { width: 100%; max-width: 900px; position: relative; }
-        .sim-header { text-align: center; margin-bottom: 25px; position: relative; }
-        .sim-sub-title { display: inline-block; font-size: 16px; color: #0088ea; font-weight: bold; border-bottom: 2px solid #8bd1ff; margin-bottom: 10px; }
-        .sim-main-title { font-size: 32px; font-weight: bold; color: #005691; margin: 0; letter-spacing: 1px; text-shadow: 2px 2px 0px #fff; }
-
+        .simulation-wrapper { background: linear-gradient(to bottom, #f0faff, #dcefff); padding: 80px 20px; }
+        .simulation-container { width: 100%; max-width: 900px; margin: 0 auto; }
+        .sim-header { text-align: center; margin-bottom: 25px; }
+        .sim-main-title { font-size: 32px; font-weight: bold; color: #005691; text-shadow: 2px 2px 0px #fff; }
         .step-tabs { display: flex; width: 100%; border-radius: 5px 5px 0 0; overflow: hidden; box-shadow: 0 -2px 5px rgba(0,0,0,0.05); position: relative; z-index: 2; }
-        .tab-item { flex: 1; padding: 15px 5px; text-align: center; font-weight: bold; font-size: 15px; color: #666; background-color: #aebdce; border-right: 1px solid #999; position: relative; cursor: default; transition: background-color 0.3s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .tab-item.completed, .tab-item.active { cursor: pointer; }
-        .tab-item.active { background-color: #0088ea; color: #fff; border-right: 1px solid #006ebc; }
-        .tab-item.completed { background-color: #9ac6e8; color: #00406b; border-right: 1px solid #8ab6d6; }
-        .tab-arrow { font-size: 10px; margin-left: 5px; display: inline-block; }
-        .tab-item.result-btn { background-color: #fef29e; color: #e85a5a; border-right: none; font-weight: 900; cursor: default; }
+        .tab-item { flex: 1; padding: 15px 5px; text-align: center; font-weight: bold; font-size: 14px; color: #666; background-color: #aebdce; border-right: 1px solid #999; transition: 0.3s; cursor: pointer; }
+        .tab-item.active { background-color: #0088ea; color: #fff; cursor: default; }
+        .tab-item.completed { background-color: #9ac6e8; color: #00406b; }
+        .tab-item.result-btn { background-color: #fef29e; color: #e85a5a; font-weight: 900; cursor: default; }
         .tab-item.result-btn.ready { background-color: #ffeb3b; }
 
-        .content-box { background-color: #fff; border: 3px solid #0088ea; border-radius: 0 0 8px 8px; min-height: 280px; display: flex; flex-direction: column; justify-content: center; position: relative; z-index: 1; transition: all 0.3s ease; }
-        .content-box.mode-result { border-color: #fff9c4; background-color: #fff9c4; padding: 0; }
-        .content-box.mode-form { border: 8px solid #fff9c4; background-color: #fff; padding: 0; }
+        .content-box { background-color: #fff; border: 3px solid #0088ea; border-radius: 0 0 8px 8px; min-height: 350px; position: relative; overflow: hidden; }
+        .content-box.mode-result { border-color: #fff9c4; background-color: #fff9c4; }
+        .content-box.mode-form { border: 8px solid #fff9c4; }
 
-        /* 重要：これでバグを修正 (パネルの表示非表示) */
+        /* 初期状態：パネルは非表示 */
         .step-panel { display: none; animation: fadeIn 0.4s ease; width: 100%; }
+        /* アクティブクラスがついたら表示 */
         .active-panel { display: block !important; }
 
-        .selection-panel { padding: 30px 20px; text-align: center; width: 100%; }
+        .selection-panel { padding: 30px 20px; text-align: center; }
         .box-title-sim { color: #005691; font-size: 20px; font-weight: bold; margin-bottom: 30px; }
-        .options-grid { display: grid; gap: 20px; max-width: 800px; margin: 0 auto; width: 100%; }
-        .col-4 { grid-template-columns: repeat(4, 1fr); }
+        .options-grid { display: grid; gap: 20px; max-width: 800px; margin: 0 auto; }
         .col-3 { grid-template-columns: repeat(3, 1fr); }
+        .col-4 { grid-template-columns: repeat(4, 1fr); }
         .option-btn { display: flex; align-items: center; justify-content: center; background-color: #fff; border: 1px solid #0088ea; border-radius: 50px; color: #333; font-weight: bold; padding: 15px 5px; font-size: 15px; cursor: pointer; transition: all 0.2s; text-decoration: none; line-height: 1.2; }
         .option-btn:hover { background-color: #eaf6ff; transform: translateY(-2px); box-shadow: 0 3px 6px rgba(0,0,0,0.1); }
+        .back-btn { background-color: #eee; color: #666; border: none; padding: 10px 30px; border-radius: 30px; font-weight: bold; cursor: pointer; font-size: 14px; margin-top: 20px; }
 
-        .back-area { margin-top: 30px; text-align: center; }
-        .back-btn { background-color: #eee; color: #666; border: none; padding: 10px 30px; border-radius: 30px; font-weight: bold; cursor: pointer; font-size: 14px; }
-        .back-btn:hover { background-color: #ddd; }
-
-        /* シミュレーション結果画面 */
-        .result-panel-design { background-color: transparent; padding: 40px 20px; text-align: center; width: 100%; }
-        .result-lead { font-size: 18px; font-weight: bold; margin-bottom: 15px; }
-        .result-price { font-size: 24px; font-weight: bold; color: #333; margin-bottom: 20px; }
-        .price-number { font-size: 56px; color: #ff5722; font-weight: 900; line-height: 1; }
-        .price-unit { font-size: 32px; color: #ff5722; }
-        .price-note { font-size: 18px; color: #ff5722; }
-        .discount-info { font-size: 16px; font-weight: bold; margin-bottom: 10px; }
-        .red-highlight { color: #ff0000; font-size: 20px; }
-        .price-disclaimer { font-size: 12px; color: #666; margin-bottom: 30px; }
-        .call-area { margin-bottom: 30px; }
-        .call-lead { color: #0088ea; font-weight: bold; margin-bottom: 5px; font-size: 16px; }
-        .call-number { display: block; font-size: 50px; font-weight: 900; color: #005691; text-decoration: none; line-height: 1.1; }
-        .call-time { font-size: 18px; font-weight: bold; color: #005691; }
-        .detail-btn-area { margin-bottom: 20px; }
-        .detail-btn { background-color: #fff; border: 2px solid #4caf50; color: #4caf50; font-weight: bold; padding: 15px 40px; border-radius: 5px; font-size: 18px; cursor: pointer; transition: all 0.2s; position: relative; }
-        .detail-btn::after { content: "▼"; font-size: 12px; margin-left: 10px; }
-        .detail-btn:hover { background-color: #e8f5e9; }
-
-        /* シミュレーション内フォーム */
-        .form-panel-design { padding: 30px 20px; width: 100%; text-align: left; }
-        .form-intro { text-align: center; margin-bottom: 30px; }
-        .form-intro-text { color: #005691; font-weight: bold; font-size: 18px; margin-bottom: 15px; }
-        .confirm-items { display: flex; flex-direction: column; gap: 10px; max-width: 400px; margin: 0 auto 15px auto; }
-        .confirm-btn { background-color: #0088ea; color: #fff; padding: 12px; border-radius: 30px; text-align: center; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .form-intro-end { color: #005691; font-weight: bold; font-size: 18px; }
+        .result-panel-design { padding: 40px 20px; text-align: center; }
+        .price-number { font-size: 56px; color: #ff5722; font-weight: 900; }
+        .call-number-sim { display: block; font-size: 50px; font-weight: 900; color: #005691; text-decoration: none; margin: 15px 0; }
+        .detail-btn-sim { background-color: #fff; border: 2px solid #4caf50; color: #4caf50; font-weight: bold; padding: 15px 40px; border-radius: 5px; font-size: 18px; cursor: pointer; transition: 0.2s; }
+        
+        .form-panel-design { padding: 30px 20px; text-align: left; }
+        .confirm-btn-sim { background-color: #0088ea; color: #fff; padding: 8px 20px; border-radius: 20px; font-weight: bold; font-size: 14px; text-align: center; margin-bottom: 5px; }
 
         /* =========================================
-           4. お客様の声 (10件完全再現)
+           4. お客様の声 (スライダー修正)
            ========================================= */
-        #reviews-section { background-color: #f9f7f2; padding: 80px 0; overflow: hidden; }
-        .slider-track { display: flex; width: max-content; animation: loop-scroll 70s linear infinite; }
-        .review-card { flex: 0 0 350px; background: #fff; border-radius: 15px; padding: 25px; margin: 0 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.06); border: 1px solid #eee; }
+        #reviews-section { background-color: #f9f7f2; padding: 60px 0; overflow: hidden; }
+        /* トラック幅をCSSで指定せず、JSで中身を複製することで自動で長くする */
+        .slider-track { display: flex; width: max-content; animation: loop-scroll 60s linear infinite; }
+        /* 50%移動して戻るアニメーション */
+        @keyframes loop-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        
+        .review-card {
+            /* PCサイズ */
+            flex: 0 0 350px;
+            background: #fff; border-radius: 15px; padding: 25px; margin: 0 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06); border: 1px solid #eee;
+            /* 読みやすくするための最小設定 */
+            min-height: 250px; display: flex; flex-direction: column; justify-content: center;
+        }
         .user-header { display: flex; align-items: center; margin-bottom: 12px; }
-        .user-avatar { width: 45px; height: 45px; border-radius: 50%; margin-right: 15px; display: flex; align-items: center; justify-content: center; background: #eee; font-size: 20px; }
-        .user-info { font-size: 13px; color: #666; font-weight: bold; }
-        .star-line { color: #f1c40f; font-size: 18px; margin-top: 2px;}
-        .tag-container { display: flex; gap: 8px; margin-bottom: 12px; }
-        .tag-svc { background: #2563eb; color: #fff; font-size: 10px; font-weight: bold; padding: 4px 10px; border-radius: 4px; }
-        .tag-loc { border: 1px solid #333; font-size: 10px; font-weight: bold; padding: 3px 10px; border-radius: 4px; color: #333; }
-        .review-h3 { font-size: 17px; font-weight: bold; line-height: 1.5; margin: 0 0 10px 0; color: #333; border-bottom: 1px dashed #ddd; padding-bottom: 8px; }
-        .review-p { font-size: 14px; line-height: 1.7; color: #555; margin: 0; }
+        .user-avatar { width: 40px; height: 40px; border-radius: 50%; margin-right: 10px; background: #eee; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+        .star-line { color: #f1c40f; font-size: 16px; margin-left: auto; }
+        .tag-svc { background: #2563eb; color: #fff; font-size: 10px; padding: 3px 8px; border-radius: 4px; }
+        .tag-loc { border: 1px solid #333; font-size: 10px; padding: 2px 8px; border-radius: 4px; margin-left: 5px; }
 
         /* =========================================
-           5. フッターお問い合わせフォーム
+           5. フッターフォーム & バナー
            ========================================= */
         .footer-form-section { background: linear-gradient(to bottom, #f0faff, #dcefff); padding: 80px 20px; display: flex; justify-content: center; }
-        .footer-form-box { background-color: #fff; border: 8px solid var(--main-yellow); border-radius: 10px; padding: 40px 30px; width: 100%; max-width: 800px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        .footer-form-title { text-align: center; font-size: 24px; font-weight: 900; color: #005691; margin-bottom: 40px; border-bottom: 2px dashed #ddd; padding-bottom: 15px; }
-
-        /* フォーム共通パーツ */
+        .footer-form-box { background-color: #fff; border: 8px solid var(--main-yellow); border-radius: 10px; padding: 40px 30px; width: 100%; max-width: 800px; }
         .form-group { margin-bottom: 20px; max-width: 500px; margin-left: auto; margin-right: auto; }
-        .form-label { display: block; font-weight: bold; margin-bottom: 8px; font-size: 14px; }
-        .badge { display: inline-block; font-size: 11px; padding: 2px 6px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
-        .badge-required { background-color: var(--required-orange); color: #fff; }
-        .form-input, .form-textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 16px; background-color: #f9f9f9; box-sizing: border-box; }
-        .form-textarea { height: 120px; resize: vertical; }
-        .submit-area { text-align: center; margin-top: 30px; }
-        .submit-btn { background: linear-gradient(to bottom, #5cb1f7, #2d7cd1); color: #fff; font-size: 20px; font-weight: bold; border: none; padding: 15px 60px; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.15); transition: transform 0.1s; display: inline-flex; align-items: center; justify-content: center; }
-        .submit-btn::after { content: "▶"; font-size: 14px; margin-left: 15px; }
-        .submit-btn:hover { opacity: 0.9; transform: translateY(1px); }
+        .form-label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px; }
+        .form-input, .form-textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; background-color: #f9f9f9; }
+        .submit-btn-footer { background: linear-gradient(to bottom, #5cb1f7, #2d7cd1); color: #fff; font-size: 20px; font-weight: bold; border: none; padding: 15px; border-radius: 8px; cursor: pointer; width: 100%; }
+        .badge-required { background-color: var(--required-orange); color: #fff; font-size: 11px; padding: 2px 6px; border-radius: 4px; margin-left: 8px; }
 
-        /* =========================================
-           6. 下部：ダイナミック固定バナー
-           ========================================= */
         .banner-fixed-container { position: fixed; bottom: 0; left: 0; width: 100%; z-index: 9999; filter: drop-shadow(0 -4px 6px rgba(0,0,0,0.1)); }
         .banner-top-bar { background-color: var(--dark-blue); color: white; display: flex; justify-content: space-between; align-items: center; padding: 8px 20px; font-weight: bold; font-size: 1rem; }
         .price-free-tag { background-color: var(--yellow); color: black; padding: 4px 15px; border-radius: 4px; }
-        .price-free-tag span { color: #e60012; font-weight: 900; font-size: 1.2rem; }
         .main-action-button { background: linear-gradient(to bottom, #4caf50, #2e7d32); padding: 15px 20px 15px 110px; position: relative; color: white; text-decoration: none; display: flex; flex-direction: column; justify-content: center; min-height: 90px; border-bottom: 5px solid #1b5e20; }
-        .action-main-text { font-size: 1.8rem; font-weight: bold; text-shadow: 1px 1px 3px rgba(0,0,0,0.3); }
-        .action-sub-text { font-size: 0.85rem; margin-bottom: 2px; }
         .action-icon-badge { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); width: 70px; height: 70px; background-color: var(--icon-bg); border-radius: 50%; display: flex; justify-content: center; align-items: center; }
         .action-icon-badge svg { width: 40px; height: 40px; fill: white; }
+        .action-main-text { font-size: 1.8rem; font-weight: bold; }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* --- スマホ向け調整 (ここを修正) --- */
         @media (max-width: 768px) {
+            /* グリッドを2列に */
             .col-4, .col-3 { grid-template-columns: repeat(2, 1fr); }
+            
+            /* 文字サイズ調整 */
             .sim-main-title { font-size: 22px; }
-            .tab-item { font-size: 11px; padding: 10px 2px; }
-            .selection-panel, .result-panel-design, .form-panel-design { padding: 20px 10px; }
-            .price-number { font-size: 40px; }
-            .call-number { font-size: 32px; }
-            .call-lead { font-size: 14px; }
-            .confirm-items { width: 100%; }
+            .call-number-sim { font-size: 32px; }
+            
+            /* バナー調整 */
             .main-action-button { padding-left: 85px; }
             .action-main-text { font-size: 1.3rem; }
             .action-icon-badge { width: 55px; height: 55px; }
+
+            /* 【修正】お客様の声をスマホで見やすく */
+            .review-card {
+                flex: 0 0 280px; /* 350pxから縮小して、前後が見えるように */
+                margin: 0 10px;
+                padding: 20px;
+            }
         }
     </style>
 </head>
@@ -205,7 +182,6 @@
                 <div class="text-item">【稼働状況】<span class="current-date"></span> <span class="current-time bar-highlight"></span> 現在 <span class="status-text bar-highlight"></span> <span class="arrival-msg">（最短15分で到着可能です！）</span></div>
                 <div class="text-item">【稼働状況】<span class="current-date"></span> <span class="current-time bar-highlight"></span> 現在 <span class="status-text bar-highlight"></span> <span class="arrival-msg">（最短15分で到着可能です！）</span></div>
                 <div class="text-item">【稼働状況】<span class="current-date"></span> <span class="current-time bar-highlight"></span> 現在 <span class="status-text bar-highlight"></span> <span class="arrival-msg">（最短15分で到着可能です！）</span></div>
-                <div class="text-item">【稼働状況】<span class="current-date"></span> <span class="current-time bar-highlight"></span> 現在 <span class="status-text bar-highlight"></span> <span class="arrival-msg">（最短15分で到着可能です！）</span></div>
             </div>
         </div>
     </div>
@@ -213,36 +189,20 @@
     <section class="service-section">
         <div class="service-container">
             <div class="service-card">
-                <div class="image-container"><div class="case-badge">CASE01</div><img src="https://via.placeholder.com/150" alt="不用品回収"></div>
-                <div class="text-content">
-                    <h3 class="title">不用品回収</h3>
-                    <div class="price-display">5,000円～</div>
-                    <p class="description">粗大ゴミや不要になった家具・家電など、一点から回収いたします。分別も不要ですのでお任せください。</p>
-                </div>
+                <div class="image-container"><div class="case-badge">CASE01</div><img src="https://via.placeholder.com/150" alt="不用品"></div>
+                <div class="text-content"><h3 class="title">不用品回収</h3><div class="price-display">5,000円～</div><p class="description">一点から回収。分別不要でお任せください。</p></div>
             </div>
             <div class="service-card">
-                <div class="image-container"><div class="case-badge">CASE02</div><img src="https://via.placeholder.com/150" alt="お引っ越し"></div>
-                <div class="text-content">
-                    <h3 class="title">お引っ越し</h3>
-                    <div class="price-display">20,000円～</div>
-                    <p class="description">単身の方からご家族まで。家具の配置換えや、一時的な移動も承ります。お気軽にご相談ください。</p>
-                </div>
+                <div class="image-container"><div class="case-badge">CASE02</div><img src="https://via.placeholder.com/150" alt="引越し"></div>
+                <div class="text-content"><h3 class="title">お引っ越し</h3><div class="price-display">20,000円～</div><p class="description">単身から家族まで。家具移動も承ります。</p></div>
             </div>
             <div class="service-card">
-                <div class="image-container"><div class="case-badge">CASE03</div><img src="https://via.placeholder.com/150" alt="遺品整理"></div>
-                <div class="text-content">
-                    <h3 class="title">遺品整理</h3>
-                    <div class="price-display">30,000円～</div>
-                    <p class="description">大切な思い出を丁寧に整理いたします。資格を持ったスタッフが真心を込めて対応させていただきます。</p>
-                </div>
+                <div class="image-container"><div class="case-badge">CASE03</div><img src="https://via.placeholder.com/150" alt="遺品"></div>
+                <div class="text-content"><h3 class="title">遺品整理</h3><div class="price-display">30,000円～</div><p class="description">大切な思い出を丁寧に。資格者が伺います。</p></div>
             </div>
             <div class="service-card">
-                <div class="image-container"><div class="case-badge">CASE04</div><img src="https://via.placeholder.com/150" alt="草刈り・庭の手入れ"></div>
-                <div class="text-content">
-                    <h3 class="title">草刈り・庭手入れ</h3>
-                    <div class="price-display">5,000円～</div>
-                    <p class="description">お庭の雑草対策や枝切りなど、面倒な作業はすべてお任せください。定期的な管理も可能です。</p>
-                </div>
+                <div class="image-container"><div class="case-badge">CASE04</div><img src="https://via.placeholder.com/150" alt="草刈り"></div>
+                <div class="text-content"><h3 class="title">草刈り・庭手入れ</h3><div class="price-display">5,000円～</div><p class="description">面倒な作業はすべてお任せ。定期管理も可能。</p></div>
             </div>
         </div>
     </section>
@@ -253,14 +213,12 @@
                 <div class="sim-sub-title">簡単10秒！</div>
                 <h2 class="sim-main-title">便利屋料金シミュレーション</h2>
             </div>
-
             <div class="step-tabs">
                 <div id="tab-1" class="tab-item active" data-default="依頼内容" onclick="jumpToStep(1)">依頼内容 <span class="tab-arrow">^</span></div>
                 <div id="tab-2" class="tab-item" data-default="作業場所" onclick="jumpToStep(2)">作業場所 <span class="tab-arrow">∨</span></div>
                 <div id="tab-3" class="tab-item" data-default="物件の種類" onclick="jumpToStep(3)">物件の種類 <span class="tab-arrow">∨</span></div>
                 <div id="tab-result" class="tab-item result-btn">結果をみる</div>
             </div>
-
             <div id="main-content-box" class="content-box">
                 <div id="panel-1" class="step-panel active-panel selection-panel">
                     <div class="box-title-sim">お困りごとの種類を選択してください。</div>
@@ -273,7 +231,6 @@
                         <button class="option-btn" onclick="nextStep(1, 'その他')">その他</button>
                     </div>
                 </div>
-
                 <div id="panel-2" class="step-panel selection-panel">
                     <div class="box-title-sim">作業場所はどこですか？</div>
                     <div class="options-grid col-4">
@@ -288,7 +245,6 @@
                     </div>
                     <div class="back-area"><button class="back-btn" onclick="jumpToStep(1)">＜ 前に戻る</button></div>
                 </div>
-
                 <div id="panel-3" class="step-panel selection-panel">
                     <div class="box-title-sim">物件の種類を選択してください。</div>
                     <div class="options-grid col-3">
@@ -301,157 +257,56 @@
                     </div>
                     <div class="back-area"><button class="back-btn" onclick="jumpToStep(2)">＜ 前に戻る</button></div>
                 </div>
-
                 <div id="panel-result" class="step-panel result-panel-design">
-                    <p class="result-lead">お客様のご依頼のお見積もりは...</p>
-                    <div class="result-price">
-                        <span id="price-value" class="price-number">2,980</span>
-                        <span class="price-unit">円～</span>
-                        <span class="price-note">(基本料金)</span>
-                        <span style="font-size:18px;">を想定しています</span>
-                    </div>
-                    <p class="discount-info">さらに<span class="red-highlight">「ホームページ見た！」</span>の一言で初回割引！</p>
-                    <p class="price-disclaimer">※お見積り金額はあくまでも目安（最低基本料金等）です。作業内容・時間により変動します。</p>
-                    <div class="call-area">
-                        <p class="call-lead">＼ お悩み解決のために、まずはお気軽にお電話ください！ ／</p>
-                        <a href="tel:0000000000" class="call-number">000-0000-0000</a>
-                        <p class="call-time">相談無料/24時間受付中</p>
-                    </div>
-                    <div class="detail-btn-area">
-                        <button class="detail-btn" onclick="showForm()">より詳細な見積もりを確認</button>
-                    </div>
-                    <div class="back-area" style="margin-top:10px;">
-                        <button class="back-btn" onclick="jumpToStep(3)">＜ 修正する</button>
-                    </div>
+                    <p class="result-lead">お見積もり目安</p>
+                    <div class="result-price"><span id="price-value" class="price-number">2,980</span><span class="price-unit">円～</span></div>
+                    <p class="discount-info">「ホームページ見た！」で初回割引！</p>
+                    <a href="tel:0000000000" class="call-number-sim">000-0000-0000</a>
+                    <div class="detail-btn-area"><button class="detail-btn-sim" onclick="showSimForm()">詳細見積もりを確認</button></div>
+                    <div class="back-area"><button class="back-btn" onclick="jumpToStep(3)">＜ 修正する</button></div>
                 </div>
-
-                <div id="panel-form" class="step-panel form-panel-design">
-                    <div class="form-intro">
-                        <div class="form-intro-text">お客様のお困りごとは・・・</div>
-                        <div class="confirm-items">
-                            <div id="conf-type" class="confirm-btn">依頼内容</div>
-                            <div id="conf-place" class="confirm-btn">場所</div>
-                            <div id="conf-building" class="confirm-btn">物件</div>
-                        </div>
-                        <div class="form-intro-end">で承ります。</div>
+                <div id="panel-form-sim" class="step-panel form-panel-design mode-form">
+                    <div style="text-align:center; margin-bottom:20px;">
+                        <p style="font-weight:bold; color:#005691;">選択内容</p>
+                        <div id="conf-display" style="display:flex; flex-direction:column; gap:8px; max-width:300px; margin:0 auto;"></div>
                     </div>
-                    <form onsubmit="event.preventDefault(); alert('送信しました（デモ）');">
-                        <div class="form-group">
-                            <label class="form-label">お名前<span class="badge badge-required">必須</span></label>
-                            <input type="text" class="form-input" placeholder="例：山田花子" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">電話番号<span class="badge badge-required">必須</span></label>
-                            <input type="tel" class="form-input" placeholder="000-000-0000" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">住所<span class="badge badge-required">必須</span></label>
-                            <input type="text" class="form-input" placeholder="住所を入力してください" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">メールアドレス<span class="badge badge-required">必須</span></label>
-                            <input type="email" class="form-input" placeholder="abc@abc.com" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">具体的なご依頼内容<span class="badge badge-required">必須</span></label>
-                            <textarea class="form-textarea" placeholder="例：IKEAの家具の組み立てをお願いしたいです。個数は..." required></textarea>
-                        </div>
-                        <div class="submit-area">
-                            <button type="submit" class="submit-btn">送信する</button>
-                        </div>
-                    </form>
-                    <div class="back-area">
-                        <button type="button" class="back-btn" onclick="goBackFromForm()">＜ 見積もり画面に戻る</button>
-                    </div>
+                    <div class="form-group"><label class="form-label">お名前</label><input type="text" class="form-input"></div>
+                    <div class="form-group"><label class="form-label">電話番号</label><input type="tel" class="form-input"></div>
+                    <div style="text-align:center;"><button class="submit-btn-footer" onclick="alert('送信')">送信する</button></div>
+                    <div class="back-area"><button class="back-btn" onclick="goBackToResult()">戻る</button></div>
                 </div>
             </div>
         </div>
     </div>
 
     <section id="reviews-section">
-        <h2 style="text-align:center; margin-bottom:50px; font-weight:900;">お客様からの喜びの声</h2>
+        <h2 style="text-align:center; margin-bottom:40px; font-weight:900;">お客様からの喜びの声</h2>
         <div class="slider-viewport">
-            <div class="slider-track">
-                <div class="review-card">
-                    <div class="user-header"><div class="user-avatar">👤</div><div class="user-info">50代 男性（持ち家）<div class="star-line">★★★★★</div></div></div>
-                    <div class="tag-container"><span class="tag-svc">不用品回収</span><span class="tag-loc">大阪府大阪市</span></div>
-                    <h3 class="review-h3">引越し前日のゴミを即回収！</h3>
-                    <p class="review-p">片付けが間に合わず途方に暮れていましたが、電話一本で駆けつけてくれました。作業も丁寧で、本当に助かりました。</p>
-                </div>
-                <div class="review-card">
-                    <div class="user-header"><div class="user-avatar" style="background:#e8f5e9;">👤</div><div class="user-info">60代 女性（主婦）<div class="star-line">★★★★★</div></div></div>
-                    <div class="tag-container"><span class="tag-svc">庭の草むしり</span><span class="tag-loc">兵庫県西宮市</span></div>
-                    <h3 class="review-h3">腰を痛めていたので大助かり</h3>
-                    <p class="review-p">自分では手付かずだった庭が、たった一日で綺麗に。今後の手入れ方法のアドバイスもいただき、誠実さを感じました。</p>
-                </div>
-                <div class="review-card">
-                    <div class="user-header"><div class="user-avatar" style="background:#fce4ec;">👤</div><div class="user-info">30代 女性（単身）<div class="star-line">★★★★★</div></div></div>
-                    <div class="tag-container"><span class="tag-svc">家具組み立て</span><span class="tag-loc">京都府京都市</span></div>
-                    <h3 class="review-h3">大型家具もあっという間に完成</h3>
-                    <p class="review-p">一人では動かせない大きな棚でしたが、手際よく組み立てていただき感動。梱包材もすべて持ち帰ってもらえて楽でした。</p>
-                </div>
-                <div class="review-card">
-                    <div class="user-header"><div class="user-avatar" style="background:#fff3e0;">👤</div><div class="user-info">70代 男性（単身）<div class="star-line">★★★★★</div></div></div>
-                    <div class="tag-container"><span class="tag-svc">買い物代行</span><span class="tag-loc">奈良県奈良市</span></div>
-                    <h3 class="review-h3">体調不良時の買い物に感謝</h3>
-                    <p class="review-p">急に動けなくなり困っていましたが、快く引き受けてくれました。こちらの要望を細かく聞いてくださり、安心できました。</p>
-                </div>
-                <div class="review-card">
-                    <div class="user-header"><div class="user-avatar" style="background:#e3f2fd;">👤</div><div class="user-info">40代 男性（持ち家）<div class="star-line">★★★★★</div></div></div>
-                    <div class="tag-container"><span class="tag-svc">雨どい掃除</span><span class="tag-loc">滋賀県大津市</span></div>
-                    <h3 class="review-h3">高所の作業も安心してお任せ</h3>
-                    <p class="review-p">2階の雨どいの詰まりを解消してもらいました。自分では危険な場所なので、プロに頼んで正解。料金も良心的でした。</p>
-                </div>
-                <div class="review-card">
-                    <div class="user-header"><div class="user-avatar" style="background:#f3e5f5;">👤</div><div class="user-info">80代 女性（単身）<div class="star-line">★★★★★</div></div></div>
-                    <div class="tag-container"><span class="tag-svc">日常の軽作業</span><span class="tag-loc">和歌山県和歌山市</span></div>
-                    <h3 class="review-h3">電球交換ひとつでも笑顔の対応</h3>
-                    <p class="review-p">些細なことかと悩みましたが、優しく丁寧に対応してくれました。こうして頼れる場所があるのは本当に心強いです。</p>
-                </div>
-                <div class="review-card">
-                    <div class="user-header"><div class="user-avatar" style="background:#ffebee;">👤</div><div class="user-info">20代 男性（マンション）<div class="star-line">★★★★★</div></div></div>
-                    <div class="tag-container"><span class="tag-svc">模様替え</span><span class="tag-loc">大阪府吹田市</span></div>
-                    <h3 class="review-h3">大型ソファの移動も傷ひとつなし</h3>
-                    <p class="review-p">壁や床をしっかり養生して作業してくれたので、安心感が違いました。自分一人では絶対無理だったので大満足です。</p>
-                </div>
-                <div class="review-card">
-                    <div class="user-header"><div class="user-avatar" style="background:#e0f7fa;">👤</div><div class="user-info">40代 女性（単身）<div class="star-line">★★★★★</div></div></div>
-                    <div class="tag-container"><span class="tag-svc">蛇口修理</span><span class="tag-loc">兵庫県明石市</span></div>
-                    <h3 class="review-h3">深夜の緊急トラブルに即対応</h3>
-                    <p class="review-p">夜遅くの水漏れで慌てましたが、すぐに駆けつけて修理してくれました。説明もわかりやすく、非常に信頼できる方でした。</p>
-                </div>
-                <div class="review-card">
-                    <div class="user-header"><div class="user-avatar" style="background:#f1f8e9;">👤</div><div class="user-info">40代 女性（主婦）<div class="star-line">★★★★★</div></div></div>
-                    <div class="tag-container"><span class="tag-svc">窓掃除</span><span class="tag-loc">京都府宇治市</span></div>
-                    <h3 class="review-h3">吹き抜けの窓がピカピカに！</h3>
-                    <p class="review-p">ずっと気になっていた高い場所の汚れ。専用の道具であっという間に綺麗にしてもらい、部屋が明るくなりました。</p>
-                </div>
-                <div class="review-card">
-                    <div class="user-header"><div class="user-avatar" style="background:#efebe9;">👤</div><div class="user-info">60代 男性（会社員）<div class="star-line">★★★★★</div></div></div>
-                    <div class="tag-container"><span class="tag-svc">整理・片付け</span><span class="tag-loc">奈良県生駒市</span></div>
-                    <h3 class="review-h3">心のこもった丁寧な作業</h3>
-                    <p class="review-p">実家の整理をお願いしましたが、思い出の品を大切に扱ってくれました。単なる片付けではない、温かい対応に感謝です。</p>
-                </div>
-                <div class="review-card">
-                    <div class="user-header"><div class="user-avatar">👤</div><div class="user-info">50代 男性（持ち家）<div class="star-line">★★★★★</div></div></div>
-                    <div class="tag-container"><span class="tag-svc">不用品回収</span><span class="tag-loc">大阪府大阪市</span></div>
-                    <h3 class="review-h3">引越し前日のゴミを即回収！</h3>
-                    <p class="review-p">片付けが間に合わず途方に暮れていましたが、電話一本で駆けつけてくれました。作業も丁寧で、本当に助かりました。</p>
-                </div>
+            <div class="slider-track" id="review-track">
+                <div class="review-card"><div class="user-header"><div class="user-avatar">👤</div><div class="star-line">★★★★★</div></div><div><span class="tag-svc">不用品回収</span><span class="tag-loc">大阪市</span></div><h3>引越し前日のゴミを即回収！</h3><p style="font-size:13px;">片付けが間に合わず途方に暮れていましたが、すぐに駆けつけてくれました。作業も丁寧で、本当に助かりました。</p></div>
+                <div class="review-card"><div class="user-header"><div class="user-avatar" style="background:#e8f5e9;">👤</div><div class="star-line">★★★★★</div></div><div><span class="tag-svc">庭の草むしり</span><span class="tag-loc">西宮市</span></div><h3>腰を痛めていたので大助かり</h3><p style="font-size:13px;">自分では手付かずだった庭がたった一日で綺麗に。今後の手入れ方法のアドバイスもいただき、誠実さを感じました。</p></div>
+                <div class="review-card"><div class="user-header"><div class="user-avatar" style="background:#fce4ec;">👤</div><div class="star-line">★★★★★</div></div><div><span class="tag-svc">家具組み立て</span><span class="tag-loc">京都市</span></div><h3>大型家具もあっという間</h3><p style="font-size:13px;">一人では動かせない大きな棚を手際よく。梱包材もすべて持ち帰ってもらえて楽でした。</p></div>
+                <div class="review-card"><div class="user-header"><div class="user-avatar" style="background:#fff3e0;">👤</div><div class="star-line">★★★★★</div></div><div><span class="tag-svc">買い物代行</span><span class="tag-loc">奈良市</span></div><h3>体調不良時の買い物に感謝</h3><p style="font-size:13px;">急に動けなくなり困っていましたが、快く引き受けてくれました。安心できました。</p></div>
+                <div class="review-card"><div class="user-header"><div class="user-avatar" style="background:#e3f2fd;">👤</div><div class="star-line">★★★★★</div></div><div><span class="tag-svc">雨どい掃除</span><span class="tag-loc">大津市</span></div><h3>高所の作業も安心してお任せ</h3><p style="font-size:13px;">自分では危険な場所なのでプロに頼んで正解。料金も非常に良心的でした。</p></div>
+                <div class="review-card"><div class="user-header"><div class="user-avatar" style="background:#f3e5f5;">👤</div><div class="star-line">★★★★★</div></div><div><span class="tag-svc">日常の軽作業</span><span class="tag-loc">和歌山市</span></div><h3>電球交換ひとつでも笑顔の対応</h3><p style="font-size:13px;">些細なことかと悩みましたが、優しく丁寧に対応してくれました。頼れる場所があるのは心強いです。</p></div>
+                <div class="review-card"><div class="user-header"><div class="user-avatar" style="background:#ffebee;">👤</div><div class="star-line">★★★★★</div></div><div><span class="tag-svc">模様替え</span><span class="tag-loc">吹田市</span></div><h3>大型ソファの移動も傷ひとつなし</h3><p style="font-size:13px;">壁や床をしっかり養生して作業してくれたので安心感が違いました。大満足です。</p></div>
+                <div class="review-card"><div class="user-header"><div class="user-avatar" style="background:#e0f7fa;">👤</div><div class="star-line">★★★★★</div></div><div><span class="tag-svc">蛇口修理</span><span class="tag-loc">明石市</span></div><h3>深夜の緊急トラブルに即対応</h3><p style="font-size:13px;">夜遅くの水漏れで慌てましたが、すぐに駆けつけて修理してくれました。説明もわかりやすく信頼できました。</p></div>
+                <div class="review-card"><div class="user-header"><div class="user-avatar" style="background:#f1f8e9;">👤</div><div class="star-line">★★★★★</div></div><div><span class="tag-svc">窓掃除</span><span class="tag-loc">宇治市</span></div><h3>吹き抜けの窓がピカピカに！</h3><p style="font-size:13px;">ずっと気になっていた高い場所の汚れ。専用道具であっという間に綺麗にしてもらいました。</p></div>
+                <div class="review-card"><div class="user-header"><div class="user-avatar" style="background:#efebe9;">👤</div><div class="star-line">★★★★★</div></div><div><span class="tag-svc">整理・片付け</span><span class="tag-loc">生駒市</span></div><h3>心のこもった丁寧な作業</h3><p style="font-size:13px;">思い出の品を大切に扱ってくれました。単なる片付けではない温かい対応に感謝です。</p></div>
             </div>
         </div>
     </section>
 
-    <section class="footer-form-section" id="contact-form-area">
+    <section class="footer-form-section">
         <div class="footer-form-box">
-            <h1 class="footer-form-title">お問い合わせフォーム</h1>
-            <form onsubmit="event.preventDefault(); alert('送信完了しました');">
-                <div class="form-group"><label class="form-label">お名前<span class="badge badge-required">必須</span></label><input type="text" class="form-input" placeholder="例：山田花子" required></div>
-                <div class="form-group"><label class="form-label">電話番号<span class="badge badge-required">必須</span></label><input type="tel" class="form-input" placeholder="000-000-0000" required></div>
-                <div class="form-group"><label class="form-label">住所<span class="badge badge-required">必須</span></label><input type="text" class="form-input" placeholder="住所を入力してください" required></div>
-                <div class="form-group"><label class="form-label">メールアドレス<span class="badge badge-required">必須</span></label><input type="email" class="form-input" placeholder="abc@abc.com" required></div>
-                <div class="form-group"><label class="form-label">お問い合わせ内容<span class="badge badge-required">必須</span></label><textarea class="form-textarea" placeholder="お問い合わせ内容を入力してください" required></textarea></div>
-                <div class="submit-area"><button type="submit" class="submit-btn">送信する</button></div>
+            <h2 class="footer-form-title">お問い合わせフォーム</h2>
+            <form onsubmit="event.preventDefault(); alert('送信しました');">
+                <div class="form-group"><label class="form-label">お名前<span class="badge-required">必須</span></label><input type="text" class="form-input" required></div>
+                <div class="form-group"><label class="form-label">電話番号<span class="badge-required">必須</span></label><input type="tel" class="form-input" required></div>
+                <div class="form-group"><label class="form-label">住所<span class="badge-required">必須</span></label><input type="text" class="form-input" required></div>
+                <div class="form-group"><label class="form-label">メールアドレス<span class="badge-required">必須</span></label><input type="email" class="form-input" required></div>
+                <div class="form-group"><label class="form-label">内容<span class="badge-required">必須</span></label><textarea class="form-textarea" required></textarea></div>
+                <button type="submit" class="submit-btn-footer">送信する</button>
             </form>
         </div>
     </section>
@@ -471,10 +326,12 @@
     </div>
 
     <script>
-        // --- 1. 時間連動ステータス更新 ---
-        const phoneIcon = '<svg viewBox="0 0 24 24"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.994.994 0 0 0-1.01.24l-2.2 2.2a15.05 15.05 0 0 1-6.59-6.59l2.2-2.21c.28-.26.36-.65.25-1.01A11.36 11.36 0 0 1 8.5 3.99c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/></svg>';
-        const mailIcon = '<svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>';
+        // --- 1. お客様の声を自動複製して回転させる ---
+        // JSでコンテンツを倍に増やすことで、確実にループさせる
+        const track = document.getElementById('review-track');
+        track.innerHTML += track.innerHTML; 
 
+        // --- 2. 時間連動ステータス更新 ---
         function updateGlobalStatus() {
             const now = new Date();
             const hour = now.getHours();
@@ -493,6 +350,8 @@
             const dynBtn = document.getElementById('dyn-btn');
             const dynLink = document.getElementById('dyn-link');
             const dynIcon = document.getElementById('dyn-icon');
+            const phoneIcon = '<svg viewBox="0 0 24 24"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.994.994 0 0 0-1.01.24l-2.2 2.2a15.05 15.05 0 0 1-6.59-6.59l2.2-2.21c.28-.26.36-.65.25-1.01A11.36 11.36 0 0 1 8.5 3.99c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/></svg>';
+            const mailIcon = '<svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>';
 
             if (isBusiness) {
                 dynStatus.textContent = "お電話での受付時間内です。お気軽におかけください。";
@@ -507,17 +366,15 @@
             }
         }
 
-        // --- 2. シミュレーション完全再現 ---
-        let selectedCategory = '';
-        let selectedPlace = '';
-        let selectedBuilding = '';
+        // --- 3. 料金シミュレーション (完全動作版) ---
+        let sCat = '', sPla = '', sBui = '';
 
         function getCurrentStep() {
             if(document.getElementById('panel-1').classList.contains('active-panel')) return 1;
             if(document.getElementById('panel-2').classList.contains('active-panel')) return 2;
             if(document.getElementById('panel-3').classList.contains('active-panel')) return 3;
             if(document.getElementById('panel-result').classList.contains('active-panel')) return 4;
-            if(document.getElementById('panel-form').classList.contains('active-panel')) return 5;
+            if(document.getElementById('panel-form-sim').classList.contains('active-panel')) return 5;
             return 1;
         }
 
@@ -537,31 +394,27 @@
                 const tab = document.getElementById('tab-' + i);
                 const def = tab.getAttribute('data-default');
                 if (i < targetStep) {
-                    tab.classList.remove('active');
-                    tab.classList.add('completed');
+                    tab.classList.remove('active'); tab.classList.add('completed');
                 } else if (i === targetStep) {
-                    tab.classList.remove('completed');
-                    tab.classList.add('active');
+                    tab.classList.remove('completed'); tab.classList.add('active');
                     if(def) tab.innerHTML = def + ' <span class="tab-arrow">^</span>';
                 } else {
-                    tab.classList.remove('completed');
-                    tab.classList.remove('active');
+                    tab.classList.remove('completed'); tab.classList.remove('active');
                     if(def) tab.innerHTML = def + ' <span class="tab-arrow">∨</span>';
                 }
             }
         }
 
         function nextStep(currentStepNum, selectedText) {
-            if(currentStepNum === 1) selectedCategory = selectedText;
-            if(currentStepNum === 2) selectedPlace = selectedText;
+            if(currentStepNum === 1) sCat = selectedText;
+            if(currentStepNum === 2) sPla = selectedText;
 
             const currentTab = document.getElementById('tab-' + currentStepNum);
-            currentTab.classList.remove('active');
-            currentTab.classList.add('completed');
-            currentTab.innerText = selectedText; 
+            currentTab.classList.remove('active'); currentTab.classList.add('completed');
+            currentTab.innerText = selectedText;
 
             document.getElementById('panel-' + currentStepNum).classList.remove('active-panel');
-
+            
             const nextStepNum = currentStepNum + 1;
             const nextTab = document.getElementById('tab-' + nextStepNum);
             if(nextTab) nextTab.classList.add('active');
@@ -571,11 +424,9 @@
         }
 
         function finishStep(selectedText) {
-            selectedBuilding = selectedText;
-
+            sBui = selectedText;
             const currentTab = document.getElementById('tab-3');
-            currentTab.classList.remove('active');
-            currentTab.classList.add('completed');
+            currentTab.classList.remove('active'); currentTab.classList.add('completed');
             currentTab.innerText = selectedText;
             document.getElementById('panel-3').classList.remove('active-panel');
             
@@ -583,45 +434,36 @@
             resultTab.classList.add('ready');
 
             let price = '4,980'; 
-            const groupLow = ['家具の組み立て', '掃除・片付け', '住まいの修繕'];
-            if (groupLow.includes(selectedCategory)) {
-                price = '2,980';
-            }
+            if (['家具の組み立て', '掃除・片付け', '住まいの修繕'].includes(sCat)) price = '2,980';
             
             document.getElementById('price-value').innerText = price;
-
             document.getElementById('main-content-box').classList.add('mode-result');
             document.getElementById('panel-result').classList.add('active-panel');
         }
 
-        function showForm() {
+        function showSimForm() {
             document.getElementById('panel-result').classList.remove('active-panel');
-            
             const box = document.getElementById('main-content-box');
-            box.classList.remove('mode-result');
-            box.classList.add('mode-form');
-
-            document.getElementById('panel-form').classList.add('active-panel');
+            box.classList.remove('mode-result'); box.classList.add('mode-form');
+            document.getElementById('panel-form-sim').classList.add('active-panel');
             
-            document.getElementById('conf-type').innerText = selectedCategory || '(未選択)';
-            document.getElementById('conf-place').innerText = selectedPlace || '(未選択)';
-            document.getElementById('conf-building').innerText = selectedBuilding || '(未選択)';
-            
-            const container = document.getElementById('simulation-section');
-            if(container) container.scrollIntoView({behavior: "smooth"});
+            const disp = document.getElementById('conf-display');
+            disp.innerHTML = `
+                <div class="confirm-btn-sim">${sCat}</div>
+                <div class="confirm-btn-sim">${sPla}</div>
+                <div class="confirm-btn-sim">${sBui}</div>
+            `;
+            document.getElementById('simulation-section').scrollIntoView({behavior: "smooth"});
         }
 
-        function goBackFromForm() {
-            document.getElementById('panel-form').classList.remove('active-panel');
-            
+        function goBackToResult() {
+            document.getElementById('panel-form-sim').classList.remove('active-panel');
             const box = document.getElementById('main-content-box');
-            box.classList.remove('mode-form');
-            box.classList.add('mode-result');
-
+            box.classList.remove('mode-form'); box.classList.add('mode-result');
             document.getElementById('panel-result').classList.add('active-panel');
         }
 
-        // 初期起動と1分ごとの更新
+        // 起動
         updateGlobalStatus();
         setInterval(updateGlobalStatus, 60000);
     </script>
